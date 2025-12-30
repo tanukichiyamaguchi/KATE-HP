@@ -113,6 +113,10 @@ html {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* 禁則処理 */
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: break-word;
 }
 
 body {
@@ -2524,12 +2528,12 @@ ul, ol {
 }
 
 /* =====================================================
-   Fixed CTA
+   Fixed CTA - 右下配置・3Dボタン
    ===================================================== */
 .fixed-cta {
     position: fixed;
-    bottom: var(--space-lg);
-    right: var(--space-lg);
+    bottom: var(--space-xl);
+    right: var(--space-xl);
     z-index: var(--z-fixed);
     opacity: 0;
     visibility: hidden;
@@ -2545,33 +2549,57 @@ ul, ol {
 
 .fixed-cta-btn {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: var(--space-sm);
-    background: linear-gradient(135deg, #06C755 0%, #05a647 100%);
+    justify-content: center;
+    gap: 2px;
+    background: linear-gradient(145deg, #08d861 0%, #06C755 50%, #05a647 100%);
     color: var(--white);
-    padding: var(--space-md) var(--space-xl);
-    border-radius: var(--radius-full);
-    box-shadow: 0 8px 30px rgba(6, 199, 85, 0.4);
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-xl);
     transition: all var(--transition-base);
     position: relative;
+    /* 3D Button Effect */
+    box-shadow:
+        0 6px 0 #049a3d,
+        0 8px 20px rgba(6, 199, 85, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    min-width: 140px;
 }
 
 .fixed-cta-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(6, 199, 85, 0.5);
+    box-shadow:
+        0 9px 0 #049a3d,
+        0 12px 30px rgba(6, 199, 85, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.fixed-cta-btn:active {
+    transform: translateY(3px);
+    box-shadow:
+        0 2px 0 #049a3d,
+        0 4px 10px rgba(6, 199, 85, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 .fixed-cta-badge {
     position: absolute;
-    top: -8px;
-    right: -8px;
-    font-size: 9px;
+    top: -10px;
+    right: -10px;
+    font-size: 10px;
     font-weight: 700;
-    background: var(--gold);
+    background: linear-gradient(135deg, #ff4757 0%, #e84118 100%);
     color: var(--white);
-    padding: 2px 8px;
+    padding: 4px 10px;
     border-radius: var(--radius-full);
     animation: pulse-badge 2s ease-in-out infinite;
+    box-shadow: 0 2px 8px rgba(232, 65, 24, 0.4);
+    white-space: nowrap;
 }
 
 @keyframes pulse-badge {
@@ -2580,8 +2608,16 @@ ul, ol {
 }
 
 .fixed-cta-text {
-    font-weight: 600;
-    letter-spacing: 0.05em;
+    font-weight: 700;
+    font-size: var(--text-base);
+    letter-spacing: 0.08em;
+}
+
+.fixed-cta-sub {
+    font-size: 10px;
+    font-weight: 400;
+    opacity: 0.9;
+    letter-spacing: 0.02em;
 }
 
 .line-icon {
@@ -3155,45 +3191,48 @@ ul, ol {
     }
 }
 
-/* ----- Mobile Fixed CTA (Always Visible) ----- */
+/* ----- Mobile Fixed CTA (右下配置) ----- */
 @media (max-width: 767px) {
     .fixed-cta {
-        display: flex !important;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: var(--space-md);
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(20px);
-        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-        z-index: var(--z-fixed);
+        bottom: var(--space-lg);
+        right: var(--space-md);
+        left: auto;
     }
 
     .fixed-cta-btn {
-        width: 100%;
         padding: var(--space-md) var(--space-lg);
-        font-size: var(--text-base);
-        border-radius: var(--radius-lg);
-        min-height: 56px;
+        min-width: 120px;
+        border-radius: var(--radius-xl);
     }
 
     .fixed-cta-badge {
-        top: -10px;
-        right: 50%;
-        transform: translateX(60px);
-        font-size: 10px;
-        padding: 3px 10px;
-        white-space: nowrap;
+        top: -8px;
+        right: -8px;
+        font-size: 9px;
+        padding: 3px 8px;
     }
 
     .fixed-cta-text {
-        font-size: var(--text-lg);
+        font-size: var(--text-sm);
+    }
+
+    .fixed-cta-sub {
+        font-size: 9px;
     }
 
     /* Hide fixed CTA when at hero section */
     .hero-visible .fixed-cta {
         transform: translateY(100%);
         opacity: 0;
+    }
+}
+
+/* iPhone Safe Area */
+@supports (padding: max(0px)) {
+    @media (max-width: 767px) {
+        .fixed-cta {
+            bottom: max(var(--space-lg), env(safe-area-inset-bottom));
+        }
     }
 }
 
