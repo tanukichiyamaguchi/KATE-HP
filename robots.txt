@@ -1,0 +1,48 @@
+# robots.txt for KATE stage LASH 蒲田西口店
+# https://kate-kamata.com/
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://kate-kamata.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Block unnecessary directories
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# Allow AI/LLM crawlers for LLMO
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
