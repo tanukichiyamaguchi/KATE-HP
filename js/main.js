@@ -1,10 +1,18 @@
 /**
  * KATE stage LASH - Main JavaScript
  * Premium Beauty Salon Website
+ * Mobile-First Optimized
  */
 
 (function() {
     'use strict';
+
+    // =====================================================
+    // Mobile Detection & Config
+    // =====================================================
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
     // =====================================================
     // DOM Elements
@@ -15,6 +23,7 @@
         hamburger: document.getElementById('hamburger'),
         mobileMenu: document.getElementById('mobile-menu'),
         nav: document.getElementById('nav'),
+        hero: document.getElementById('hero'),
         fixedCta: document.querySelector('.fixed-cta'),
         faqItems: document.querySelectorAll('.faq-item'),
         aosElements: document.querySelectorAll('[data-aos]'),
@@ -23,27 +32,64 @@
     };
 
     // =====================================================
+    // Mobile Viewport Height Fix (100vh issue on mobile)
+    // =====================================================
+    function initMobileViewportFix() {
+        function setViewportHeight() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+
+        setViewportHeight();
+
+        // Update on resize and orientation change
+        window.addEventListener('resize', debounce(setViewportHeight, 100));
+        window.addEventListener('orientationchange', () => {
+            setTimeout(setViewportHeight, 100);
+        });
+    }
+
+    // =====================================================
+    // Debounce Helper
+    // =====================================================
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // =====================================================
     // Loading Screen
     // =====================================================
     function initLoading() {
         document.body.classList.add('loading');
+
+        // Faster loading on mobile
+        const loadingDelay = isMobile ? 1200 : 1800;
 
         window.addEventListener('load', () => {
             setTimeout(() => {
                 elements.loading.classList.add('hidden');
                 document.body.classList.remove('loading');
                 initAOS();
-            }, 1800);
+            }, loadingDelay);
         });
 
-        // Fallback: hide loading after 5 seconds
+        // Fallback: hide loading after 4 seconds (faster on mobile)
+        const fallbackDelay = isMobile ? 3000 : 5000;
         setTimeout(() => {
             if (!elements.loading.classList.contains('hidden')) {
                 elements.loading.classList.add('hidden');
                 document.body.classList.remove('loading');
                 initAOS();
             }
-        }, 5000);
+        }, fallbackDelay);
     }
 
     // =====================================================
@@ -51,7 +97,8 @@
     // =====================================================
     function initHeaderScroll() {
         let lastScroll = 0;
-        const scrollThreshold = 100;
+        const scrollThreshold = isMobile ? 50 : 100;
+        const ctaShowThreshold = isMobile ? 400 : 600;
 
         function handleScroll() {
             const currentScroll = window.pageYOffset;
@@ -63,17 +110,31 @@
                 elements.header.classList.remove('scrolled');
             }
 
-            // Show/hide fixed CTA
-            if (currentScroll > 600) {
-                elements.fixedCta?.classList.add('visible');
+            // Show/hide fixed CTA based on hero visibility
+            if (elements.hero) {
+                const heroRect = elements.hero.getBoundingClientRect();
+                const heroVisible = heroRect.bottom > 100;
+
+                if (heroVisible) {
+                    document.body.classList.add('hero-visible');
+                    elements.fixedCta?.classList.remove('visible');
+                } else {
+                    document.body.classList.remove('hero-visible');
+                    elements.fixedCta?.classList.add('visible');
+                }
             } else {
-                elements.fixedCta?.classList.remove('visible');
+                // Fallback if no hero element
+                if (currentScroll > ctaShowThreshold) {
+                    elements.fixedCta?.classList.add('visible');
+                } else {
+                    elements.fixedCta?.classList.remove('visible');
+                }
             }
 
             lastScroll = currentScroll;
         }
 
-        // Throttle scroll event
+        // Use passive listener for better scroll performance on mobile
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (!ticking) {
@@ -83,7 +144,7 @@
                 });
                 ticking = true;
             }
-        });
+        }, { passive: true });
 
         // Initial check
         handleScroll();
@@ -97,23 +158,66 @@
 
         if (!hamburger || !mobileMenu) return;
 
+        let scrollPosition = 0;
+
+        function lockScroll() {
+            scrollPosition = window.pageYOffset;
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollPosition}px`;
+            document.body.style.width = '100%';
+        }
+
+        function unlockScroll() {
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, scrollPosition);
+        }
+
         function toggleMenu() {
+            const isOpening = !hamburger.classList.contains('active');
+
             hamburger.classList.toggle('active');
             mobileMenu.classList.toggle('active');
             document.body.classList.toggle('menu-open');
+
+            if (isOpening) {
+                lockScroll();
+            } else {
+                unlockScroll();
+            }
         }
 
         function closeMenu() {
             hamburger.classList.remove('active');
             mobileMenu.classList.remove('active');
             document.body.classList.remove('menu-open');
+            unlockScroll();
         }
 
-        hamburger.addEventListener('click', toggleMenu);
+        // Use touchend for faster response on mobile
+        const clickEvent = isTouch ? 'touchend' : 'click';
+
+        hamburger.addEventListener(clickEvent, (e) => {
+            e.preventDefault();
+            toggleMenu();
+        });
+
+        // Also add click listener for accessibility
+        if (isTouch) {
+            hamburger.addEventListener('click', (e) => {
+                e.preventDefault();
+            });
+        }
 
         // Close menu when clicking on nav links
         mobileNavLinks.forEach(link => {
-            link.addEventListener('click', closeMenu);
+            link.addEventListener('click', (e) => {
+                // Small delay for visual feedback
+                setTimeout(closeMenu, 150);
+            });
         });
 
         // Close menu on escape key
@@ -122,6 +226,13 @@
                 closeMenu();
             }
         });
+
+        // Prevent scroll on menu when open (for iOS)
+        mobileMenu.addEventListener('touchmove', (e) => {
+            if (mobileMenu.classList.contains('active')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     }
 
     // =====================================================
@@ -234,9 +345,12 @@
     }
 
     // =====================================================
-    // Parallax Effect (Hero)
+    // Parallax Effect (Hero) - Disabled on Mobile
     // =====================================================
     function initParallax() {
+        // Skip parallax on mobile for better performance
+        if (isMobile || isTouch) return;
+
         const hero = document.querySelector('.hero-bg');
         if (!hero) return;
 
@@ -247,7 +361,7 @@
             if (scrolled < window.innerHeight) {
                 hero.style.transform = `translateY(${rate}px)`;
             }
-        });
+        }, { passive: true });
     }
 
     // =====================================================
@@ -447,9 +561,12 @@
     }
 
     // =====================================================
-    // Hover Effects Enhancement
+    // Hover Effects Enhancement - Desktop Only
     // =====================================================
     function initHoverEffects() {
+        // Skip hover effects on touch devices
+        if (isTouch) return;
+
         // Feature cards magnetic effect
         const featureCards = document.querySelectorAll('.feature-card');
 
@@ -475,9 +592,54 @@
     }
 
     // =====================================================
+    // Mobile-specific Touch Enhancements
+    // =====================================================
+    function initMobileTouchEnhancements() {
+        if (!isTouch) return;
+
+        // Add active state feedback for buttons
+        const buttons = document.querySelectorAll('.btn-3d, .btn-line, .faq-question');
+
+        buttons.forEach(btn => {
+            btn.addEventListener('touchstart', () => {
+                btn.classList.add('touch-active');
+            }, { passive: true });
+
+            btn.addEventListener('touchend', () => {
+                setTimeout(() => {
+                    btn.classList.remove('touch-active');
+                }, 150);
+            }, { passive: true });
+
+            btn.addEventListener('touchcancel', () => {
+                btn.classList.remove('touch-active');
+            }, { passive: true });
+        });
+
+        // Prevent zoom on double tap for specific elements
+        const preventZoomElements = document.querySelectorAll('button, a, .btn-3d');
+        let lastTouchEnd = 0;
+
+        preventZoomElements.forEach(el => {
+            el.addEventListener('touchend', (e) => {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                    e.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, { passive: false });
+        });
+    }
+
+    // =====================================================
     // Initialize All
     // =====================================================
     function init() {
+        // Mobile-first initializations
+        initMobileViewportFix();
+        initMobileTouchEnhancements();
+
+        // Core functionality
         initLoading();
         initHeaderScroll();
         initMobileMenu();
@@ -491,6 +653,17 @@
         initAccessibility();
         initPerformanceOptimization();
         initHoverEffects();
+
+        // Add device class to body for CSS targeting
+        if (isMobile) {
+            document.body.classList.add('is-mobile');
+        }
+        if (isTouch) {
+            document.body.classList.add('is-touch');
+        }
+
+        // Log device info for debugging (remove in production)
+        console.log(`Device: ${isMobile ? 'Mobile' : 'Desktop'}, Touch: ${isTouch ? 'Yes' : 'No'}`);
     }
 
     // Run initialization

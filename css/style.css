@@ -2635,6 +2635,702 @@ ul, ol {
 }
 
 /* =====================================================
+   MOBILE-FIRST OPTIMIZATIONS (90% Mobile Users)
+   ===================================================== */
+
+/* ----- Mobile Base Optimizations ----- */
+@media (max-width: 767px) {
+    /* Prevent horizontal scroll */
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    /* Smooth scrolling for iOS */
+    html {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Larger tap targets (minimum 44px) */
+    a, button, input, select, textarea {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Better touch feedback */
+    a:active, button:active {
+        opacity: 0.8;
+        transform: scale(0.98);
+    }
+
+    /* Disable hover effects on touch devices */
+    @media (hover: none) {
+        a:hover, button:hover {
+            transform: none;
+        }
+    }
+
+    /* Container padding for mobile */
+    .container {
+        padding: 0 var(--space-md);
+    }
+
+    /* Section padding reduction for mobile */
+    .section {
+        padding: var(--space-3xl) 0;
+    }
+
+    .section-header {
+        margin-bottom: var(--space-2xl);
+    }
+
+    /* Hide decorative elements on mobile */
+    .hero-deco,
+    .hero-scroll,
+    .section-label::before,
+    .section-label::after {
+        display: none;
+    }
+}
+
+/* ----- Mobile Header & Navigation ----- */
+@media (max-width: 767px) {
+    .header-inner {
+        padding: var(--space-md) var(--space-md);
+    }
+
+    .header.scrolled .header-inner {
+        padding: var(--space-sm) var(--space-md);
+    }
+
+    .logo-main {
+        font-size: var(--text-xl);
+    }
+
+    .logo-sub {
+        font-size: 9px;
+    }
+
+    /* Larger hamburger tap area */
+    .hamburger {
+        padding: var(--space-md);
+        margin: calc(-1 * var(--space-md));
+    }
+
+    .hamburger span {
+        width: 28px;
+        height: 2.5px;
+    }
+
+    /* Full screen mobile menu */
+    .mobile-menu {
+        padding-top: 80px;
+    }
+
+    .mobile-nav-link {
+        font-size: var(--text-xl);
+        padding: var(--space-lg) 0;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mobile-cta {
+        padding: var(--space-lg) var(--space-xl);
+        font-size: var(--text-lg);
+        min-height: 60px;
+    }
+}
+
+/* ----- Mobile Hero Section ----- */
+@media (max-width: 767px) {
+    .hero {
+        min-height: 100svh; /* Use svh for mobile address bar */
+    }
+
+    .hero-content {
+        padding: var(--space-2xl) var(--space-md);
+        padding-bottom: 120px; /* Space for fixed CTA */
+    }
+
+    .hero-badge {
+        font-size: var(--text-xs);
+        padding: var(--space-xs) var(--space-md);
+        margin-bottom: var(--space-xl);
+    }
+
+    .hero-title {
+        margin-bottom: var(--space-lg);
+    }
+
+    .hero-title-en {
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        margin-bottom: var(--space-md);
+    }
+
+    .hero-title-main {
+        font-size: clamp(1.75rem, 8vw, 2.5rem);
+        line-height: 1.4;
+    }
+
+    .hero-lead {
+        font-size: var(--text-sm);
+        line-height: 2;
+        margin-bottom: var(--space-xl);
+        padding: 0 var(--space-sm);
+    }
+
+    .hero-stats {
+        gap: var(--space-md);
+        margin-bottom: var(--space-xl);
+    }
+
+    .hero-stat-number {
+        font-size: var(--text-2xl);
+    }
+
+    .hero-stat-label {
+        font-size: 10px;
+    }
+
+    .hero-stat-divider {
+        height: 30px;
+    }
+}
+
+/* ----- Mobile 3D Buttons ----- */
+@media (max-width: 767px) {
+    .btn-3d {
+        width: 100%;
+        max-width: 320px;
+        padding: var(--space-lg) var(--space-xl);
+        font-size: var(--text-base);
+        border-radius: var(--radius-xl);
+    }
+
+    .btn-3d-badge {
+        font-size: 11px;
+        padding: 4px 12px;
+    }
+
+    .btn-3d-text {
+        font-size: var(--text-lg);
+    }
+
+    .btn-3d-sub {
+        font-size: var(--text-xs);
+    }
+
+    /* Remove 3D press effect on mobile for faster response */
+    .btn-3d:active {
+        transform: translateY(2px);
+        box-shadow:
+            0 2px 0 var(--gold-darker),
+            0 4px 10px rgba(201, 169, 98, 0.3);
+    }
+}
+
+/* ----- Mobile Campaign Banner ----- */
+@media (max-width: 767px) {
+    .campaign-banner {
+        padding: var(--space-lg) 0;
+    }
+
+    .campaign-content {
+        gap: var(--space-sm);
+    }
+
+    .campaign-label {
+        font-size: 10px;
+    }
+
+    .campaign-title {
+        font-size: var(--text-lg);
+    }
+}
+
+/* ----- Mobile Concept Section ----- */
+@media (max-width: 767px) {
+    .concept-inner {
+        gap: var(--space-2xl);
+    }
+
+    .concept-lead {
+        font-size: var(--text-sm);
+        line-height: 2;
+    }
+
+    .concept-image-main {
+        margin-bottom: var(--space-lg);
+    }
+
+    .concept-image-sub {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-sm);
+    }
+
+    .concept-image-placeholder {
+        padding: var(--space-xl);
+    }
+
+    .concept-image-placeholder.small {
+        padding: var(--space-lg);
+    }
+}
+
+/* ----- Mobile Features Section ----- */
+@media (max-width: 767px) {
+    .features-list {
+        gap: var(--space-xl);
+    }
+
+    .feature-item {
+        padding: var(--space-xl);
+        gap: var(--space-lg);
+    }
+
+    .feature-number {
+        font-size: var(--text-4xl);
+    }
+
+    .feature-title {
+        font-size: var(--text-lg);
+    }
+
+    .feature-text {
+        font-size: var(--text-sm);
+        line-height: 1.9;
+    }
+
+    .feature-image {
+        max-width: 100%;
+    }
+}
+
+/* ----- Mobile Menu Section ----- */
+@media (max-width: 767px) {
+    .menu-categories {
+        gap: var(--space-3xl);
+    }
+
+    .menu-category-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-lg);
+    }
+
+    .menu-category-title {
+        font-size: var(--text-lg);
+    }
+
+    .menu-list {
+        gap: var(--space-md);
+    }
+
+    .menu-item {
+        padding: var(--space-lg);
+        grid-template-columns: 1fr;
+    }
+
+    .menu-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-xs);
+    }
+
+    .menu-item-title {
+        font-size: var(--text-base);
+        line-height: 1.4;
+    }
+
+    .menu-item-price {
+        font-size: var(--text-xl);
+    }
+
+    .menu-item-desc {
+        font-size: var(--text-xs);
+        line-height: 1.8;
+    }
+
+    .menu-item-image {
+        max-width: 100%;
+        order: -1; /* Move image above text on mobile */
+    }
+
+    .menu-item-ribbon {
+        right: var(--space-md);
+        font-size: 10px;
+        padding: 3px 10px;
+    }
+
+    /* Menu line button for mobile */
+    .menu-item-cta {
+        margin-top: var(--space-md);
+    }
+
+    .menu-item-cta .btn-line {
+        width: 100%;
+        padding: var(--space-md);
+        font-size: var(--text-base);
+        justify-content: center;
+    }
+}
+
+/* ----- Mobile Gallery Section ----- */
+@media (max-width: 767px) {
+    .gallery-main {
+        margin-bottom: var(--space-xl);
+    }
+
+    .gallery-main-placeholder {
+        padding: var(--space-2xl);
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-sm);
+    }
+
+    .gallery-item-placeholder {
+        padding: var(--space-lg);
+    }
+}
+
+/* ----- Mobile Flow Section ----- */
+@media (max-width: 767px) {
+    .flow-steps {
+        gap: var(--space-lg);
+    }
+
+    .flow-step {
+        padding: var(--space-lg);
+        gap: var(--space-md);
+    }
+
+    .flow-step-number {
+        width: 40px;
+        height: 40px;
+        font-size: var(--text-lg);
+    }
+
+    .flow-step-content {
+        flex: 1;
+    }
+
+    .flow-step-title {
+        font-size: var(--text-base);
+    }
+
+    .flow-step-text {
+        font-size: var(--text-sm);
+    }
+
+    .flow-image {
+        display: none; /* Hide flow images on small mobile */
+    }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+    .flow-image {
+        display: block;
+        width: 80px;
+    }
+}
+
+/* ----- Mobile FAQ Section ----- */
+@media (max-width: 767px) {
+    .faq-list {
+        gap: var(--space-md);
+    }
+
+    .faq-question {
+        padding: var(--space-lg);
+        font-size: var(--text-sm);
+        gap: var(--space-md);
+        min-height: 60px;
+    }
+
+    .faq-icon {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+    }
+
+    .faq-answer {
+        padding: 0 var(--space-lg) var(--space-lg);
+    }
+
+    .faq-answer p {
+        font-size: var(--text-sm);
+        line-height: 1.9;
+    }
+}
+
+/* ----- Mobile Salon Info Section ----- */
+@media (max-width: 767px) {
+    .salon-content {
+        gap: var(--space-2xl);
+    }
+
+    .salon-info-list {
+        gap: var(--space-lg);
+    }
+
+    .salon-info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-xs);
+    }
+
+    .salon-info-label {
+        font-size: var(--text-xs);
+    }
+
+    .salon-info-value {
+        font-size: var(--text-sm);
+    }
+
+    .salon-map {
+        height: 250px;
+        border-radius: var(--radius-lg);
+    }
+}
+
+/* ----- Mobile Reservation Section ----- */
+@media (max-width: 767px) {
+    .reservation-content {
+        padding: var(--space-2xl) var(--space-lg);
+    }
+
+    .reservation-title {
+        font-size: var(--text-2xl);
+    }
+
+    .reservation-text {
+        font-size: var(--text-sm);
+    }
+
+    .reservation-discount {
+        font-size: var(--text-xl);
+        padding: var(--space-md) var(--space-lg);
+    }
+}
+
+/* ----- Mobile Footer ----- */
+@media (max-width: 767px) {
+    .footer {
+        padding: var(--space-2xl) 0;
+        padding-bottom: 100px; /* Space for fixed CTA */
+    }
+
+    .footer-main {
+        gap: var(--space-xl);
+    }
+
+    .footer-brand {
+        text-align: center;
+    }
+
+    .footer-logo-text {
+        font-size: var(--text-xl);
+    }
+
+    .footer-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-md);
+    }
+
+    .footer-nav-link {
+        font-size: var(--text-xs);
+        padding: var(--space-sm);
+    }
+
+    .footer-copyright {
+        font-size: 10px;
+        padding-top: var(--space-lg);
+    }
+}
+
+/* ----- Mobile Fixed CTA (Always Visible) ----- */
+@media (max-width: 767px) {
+    .fixed-cta {
+        display: flex !important;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: var(--space-md);
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        z-index: var(--z-fixed);
+    }
+
+    .fixed-cta-btn {
+        width: 100%;
+        padding: var(--space-md) var(--space-lg);
+        font-size: var(--text-base);
+        border-radius: var(--radius-lg);
+        min-height: 56px;
+    }
+
+    .fixed-cta-badge {
+        top: -10px;
+        right: 50%;
+        transform: translateX(60px);
+        font-size: 10px;
+        padding: 3px 10px;
+        white-space: nowrap;
+    }
+
+    .fixed-cta-text {
+        font-size: var(--text-lg);
+    }
+
+    /* Hide fixed CTA when at hero section */
+    .hero-visible .fixed-cta {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+/* ----- Mobile Performance Optimizations ----- */
+@media (max-width: 767px) {
+    /* Reduce animation complexity on mobile */
+    [data-aos] {
+        transition-duration: 0.5s;
+    }
+
+    [data-aos="fade-up"] {
+        transform: translateY(30px);
+    }
+
+    /* Disable parallax on mobile */
+    .parallax {
+        transform: none !important;
+    }
+
+    /* Optimize images */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Reduce box-shadow complexity */
+    .feature-item:hover,
+    .menu-item:hover {
+        box-shadow: var(--shadow-md);
+    }
+}
+
+/* ----- Very Small Screens (iPhone SE, etc.) ----- */
+@media (max-width: 374px) {
+    :root {
+        --text-xs: 0.7rem;
+        --text-sm: 0.8rem;
+        --text-base: 0.9rem;
+    }
+
+    .container {
+        padding: 0 var(--space-sm);
+    }
+
+    .hero-title-main {
+        font-size: 1.5rem;
+    }
+
+    .btn-3d {
+        padding: var(--space-md) var(--space-lg);
+    }
+
+    .btn-3d-text {
+        font-size: var(--text-base);
+    }
+}
+
+/* ----- Landscape Mobile ----- */
+@media (max-width: 767px) and (orientation: landscape) {
+    .hero {
+        min-height: 100vh;
+    }
+
+    .hero-content {
+        padding-top: var(--space-4xl);
+        padding-bottom: var(--space-4xl);
+    }
+
+    .hero-stats {
+        flex-direction: row;
+    }
+}
+
+/* ----- Touch Device Specific ----- */
+@media (pointer: coarse) {
+    /* Larger touch targets */
+    .nav-link,
+    .footer-nav-link,
+    .faq-question {
+        min-height: 48px;
+    }
+
+    /* Remove hover states */
+    .feature-item:hover,
+    .menu-item:hover,
+    .faq-item:hover {
+        transform: none;
+    }
+
+    /* Add touch feedback */
+    .btn-3d:active,
+    .faq-question:active {
+        background-color: rgba(201, 169, 98, 0.1);
+    }
+}
+
+/* ----- Touch Active States (JS controlled) ----- */
+.touch-active.btn-3d-gold {
+    transform: translateY(3px) !important;
+    box-shadow:
+        0 2px 0 var(--gold-darker),
+        0 4px 10px rgba(201, 169, 98, 0.3) !important;
+}
+
+.touch-active.faq-question {
+    background-color: var(--gray-100) !important;
+}
+
+/* ----- Mobile Body Classes ----- */
+body.is-mobile .hero-deco {
+    display: none;
+}
+
+body.is-touch * {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Use CSS variable for viewport height (set by JS) */
+.hero {
+    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
+}
+
+/* ----- Safe Area for iPhone X+ ----- */
+@supports (padding: max(0px)) {
+    @media (max-width: 767px) {
+        .fixed-cta {
+            padding-bottom: max(var(--space-md), env(safe-area-inset-bottom));
+        }
+
+        .footer {
+            padding-bottom: max(100px, calc(80px + env(safe-area-inset-bottom)));
+        }
+    }
+}
+
+/* =====================================================
    Print Styles
    ===================================================== */
 @media print {
