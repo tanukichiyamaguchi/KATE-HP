@@ -5059,262 +5059,209 @@ body.mens-theme .hero-overlay-gradient {
 }
 
 /* =====================================================
-   LUXURY REDESIGN v3.0 - World-Class Premium Design
-   高級感・視認性・最先端アニメーション・モバイル最適化
+   REFINED LUXURY DESIGN v4.0
+   視認性完全保証・洗練されたプレミアムデザイン
+
+   【絶対ルール】
+   - 黒背景 → 白系テキスト (#FFF または rgba(255,255,255,0.8+))
+   - 白背景 → 黒系テキスト (#1A1817 または rgba(0,0,0,0.8+))
+   - 同系色の組み合わせは絶対禁止
    ===================================================== */
 
-/* ----- Enhanced Color Contrast System ----- */
+/* ----- Absolute Contrast Color System ----- */
 :root {
-    /* Guaranteed Contrast Colors */
-    --text-on-dark: #FFFFFF;
-    --text-on-dark-secondary: rgba(255, 255, 255, 0.85);
-    --text-on-dark-muted: rgba(255, 255, 255, 0.65);
-    --text-on-light: #1A1817;
-    --text-on-light-secondary: #3D3935;
-    --text-on-light-muted: #5C564E;
+    /* 黒背景用テキスト - 必ず白系 */
+    --text-primary: #FFFFFF;
+    --text-secondary: #E5E5E5;
+    --text-tertiary: #CCCCCC;
+    --text-muted: #999999;
 
-    /* Premium Gold System */
-    --premium-gold: #D4AF37;
-    --premium-gold-light: #E8D5A3;
-    --premium-gold-glow: rgba(212, 175, 55, 0.4);
+    /* アクセントカラー - 黒背景でも白背景でも視認可能 */
+    --accent-gold: #D4AF37;
+    --accent-gold-bright: #F0D078;
+    --accent-gold-soft: #C9A962;
 
-    /* Luxury Dark Backgrounds */
-    --luxury-dark: #0A0A0A;
-    --luxury-dark-card: #141414;
-    --luxury-dark-elevated: #1E1E1E;
+    /* 背景色 - ダーク系 */
+    --bg-primary: #0A0A0A;
+    --bg-secondary: #111111;
+    --bg-card: #161616;
+    --bg-elevated: #1C1C1C;
 
-    /* Glass Effect */
-    --glass-dark: rgba(20, 20, 20, 0.85);
-    --glass-light: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(212, 175, 55, 0.2);
+    /* ボーダー・装飾 */
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    --border-gold: rgba(212, 175, 55, 0.3);
+    --glow-gold: rgba(212, 175, 55, 0.25);
 }
 
-/* ----- Luxury Animation Keyframes ----- */
-@keyframes luxuryFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* ----- Refined Animations ----- */
+@keyframes subtleGlow {
+    0%, 100% { box-shadow: 0 0 20px var(--glow-gold); }
+    50% { box-shadow: 0 0 35px var(--glow-gold); }
 }
 
-@keyframes luxuryGlow {
-    0%, 100% {
-        box-shadow: 0 0 20px var(--premium-gold-glow);
-    }
-    50% {
-        box-shadow: 0 0 40px var(--premium-gold-glow), 0 0 60px rgba(212, 175, 55, 0.2);
-    }
+@keyframes gentlePulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.01); opacity: 0.95; }
 }
 
-@keyframes shimmer {
-    0% {
-        background-position: -200% center;
-    }
-    100% {
-        background-position: 200% center;
-    }
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes floatUp {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
+@keyframes shimmerLine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
 }
 
-@keyframes borderGlow {
-    0%, 100% {
-        border-color: rgba(212, 175, 55, 0.3);
-    }
-    50% {
-        border-color: rgba(212, 175, 55, 0.6);
-    }
-}
-
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.02);
-    }
-}
-
-/* ----- Global Luxury Base ----- */
+/* ----- Global Base - 黒背景に白文字 ----- */
 body {
-    background: var(--luxury-dark) !important;
-    color: var(--text-on-dark) !important;
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
 }
 
-/* ----- Premium Section Styling ----- */
+/* ----- Section Base ----- */
 .section {
-    background: var(--luxury-dark) !important;
-    position: relative;
+    background: var(--bg-primary) !important;
 }
 
-.section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--premium-gold), transparent);
-    opacity: 0.3;
-}
-
-/* ----- Section Headers - Luxury Typography ----- */
-.section-header {
-    margin-bottom: var(--space-2xl);
-}
-
+/* ----- Section Headers - 視認性保証 ----- */
 .section-label {
-    color: var(--premium-gold) !important;
-    font-size: 12px !important;
-    letter-spacing: 0.3em !important;
-    font-weight: 500 !important;
-    text-transform: uppercase;
+    color: var(--accent-gold) !important;
+    font-size: 11px !important;
+    letter-spacing: 0.25em !important;
+    font-weight: 600 !important;
 }
 
 .section-title-en {
-    color: var(--text-on-dark-muted) !important;
-    font-size: 12px !important;
+    color: var(--text-muted) !important;
+    font-size: 11px !important;
     letter-spacing: 0.2em !important;
 }
 
 .section-title-ja {
-    color: var(--text-on-dark) !important;
-    font-size: clamp(1.5rem, 6vw, 2rem) !important;
+    color: var(--text-primary) !important;
+    font-size: clamp(1.4rem, 5.5vw, 1.8rem) !important;
     font-weight: 600 !important;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    line-height: 1.4 !important;
 }
 
 .section-title-ja em {
-    color: var(--premium-gold) !important;
+    color: var(--accent-gold-bright) !important;
     font-style: normal;
-    background: linear-gradient(135deg, var(--premium-gold), var(--premium-gold-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 .section-lead {
-    color: var(--text-on-dark-secondary) !important;
-    font-size: 15px !important;
-    line-height: 2 !important;
+    color: var(--text-secondary) !important;
+    font-size: 14px !important;
+    line-height: 1.9 !important;
 }
 
 /* =====================================================
-   MOBILE LUXURY REDESIGN
+   MOBILE - 洗練デザイン v4.0
+   全テキストの視認性を完全保証
    ===================================================== */
 @media (max-width: 767px) {
 
-    /* ----- Hero Section - Premium Design ----- */
+    /* ===== Hero Section ===== */
     .hero {
-        background: var(--luxury-dark) !important;
+        background: var(--bg-primary) !important;
     }
 
     .hero-video-fallback {
-        background: linear-gradient(180deg, #0A0A0A 0%, #141414 50%, #0A0A0A 100%) !important;
+        background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%) !important;
     }
 
     .hero-badge {
-        background: var(--glass-dark) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid var(--glass-border) !important;
-        padding: 10px 20px !important;
-        border-radius: 50px !important;
-        animation: borderGlow 3s ease-in-out infinite;
+        background: rgba(0, 0, 0, 0.6) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border: 1px solid var(--border-gold) !important;
+        padding: 10px 18px !important;
+        border-radius: 30px !important;
     }
 
+    /* 黒背景にゴールド文字 - 視認性OK */
     .hero-badge span {
-        color: var(--premium-gold-light) !important;
+        color: var(--accent-gold-bright) !important;
         font-size: 12px !important;
         font-weight: 500 !important;
-        letter-spacing: 0.05em;
     }
 
+    /* ゴールドは黒背景で視認性OK */
     .hero-title-en {
-        color: var(--premium-gold) !important;
+        color: var(--accent-gold) !important;
         font-size: 11px !important;
-        letter-spacing: 0.25em !important;
-        font-weight: 400;
+        letter-spacing: 0.2em !important;
     }
 
+    /* 黒背景に白文字 - 視認性OK */
     .hero-title-main {
-        color: var(--text-on-dark) !important;
-        font-size: clamp(1.6rem, 8vw, 2.2rem) !important;
+        color: var(--text-primary) !important;
+        font-size: clamp(1.5rem, 7vw, 2rem) !important;
         font-weight: 700 !important;
-        line-height: 1.35 !important;
-        text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8) !important;
+        line-height: 1.4 !important;
     }
 
+    /* 強調部分はゴールド */
     .hero-title-main em {
-        color: var(--premium-gold) !important;
+        color: var(--accent-gold-bright) !important;
         font-style: normal;
-        text-shadow: 0 0 30px var(--premium-gold-glow);
     }
 
+    /* 黒背景にライトグレー文字 - 視認性OK */
     .hero-lead {
-        color: var(--text-on-dark-secondary) !important;
-        font-size: 14px !important;
-        line-height: 2 !important;
-        background: var(--glass-dark) !important;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        padding: 16px 20px !important;
-        border-radius: 12px !important;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        color: var(--text-secondary) !important;
+        font-size: 13px !important;
+        line-height: 1.9 !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+        padding: 14px 18px !important;
+        border-radius: 10px !important;
+        border: 1px solid var(--border-subtle) !important;
     }
 
     .hero-stats {
-        background: var(--glass-dark) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid var(--glass-border) !important;
-        border-radius: 16px !important;
-        padding: 20px !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+        border: 1px solid var(--border-gold) !important;
+        border-radius: 14px !important;
+        padding: 18px !important;
     }
 
+    /* 数字はゴールド - 視認性OK */
     .hero-stat-number {
-        color: var(--premium-gold) !important;
-        font-size: 1.75rem !important;
+        color: var(--accent-gold-bright) !important;
+        font-size: 1.6rem !important;
         font-weight: 700 !important;
-        text-shadow: 0 0 20px var(--premium-gold-glow);
     }
 
+    /* ラベルは白 - 視認性OK */
     .hero-stat-label {
-        color: var(--text-on-dark-secondary) !important;
+        color: var(--text-secondary) !important;
         font-size: 11px !important;
     }
 
     .hero-reassurance {
-        color: var(--text-on-dark-muted) !important;
-        font-size: 12px !important;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 10px 16px !important;
-        border-radius: 8px;
+        color: var(--text-tertiary) !important;
+        font-size: 11px !important;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 8px 14px !important;
+        border-radius: 6px;
     }
 
-    /* ----- Premium Card Design System ----- */
+    /* ===== Card Design System ===== */
+    /* 背景: 濃いグレー、文字: 白系 - コントラスト保証 */
     .why-item,
     .feature-item {
-        background: var(--luxury-dark-card) !important;
-        border: 1px solid var(--glass-border) !important;
-        border-radius: 20px !important;
-        padding: var(--space-xl) !important;
+        background: var(--bg-card) !important;
+        border: 1px solid var(--border-gold) !important;
+        border-radius: 16px !important;
+        padding: var(--space-lg) !important;
         position: relative;
         overflow: hidden;
         transition: all 0.4s ease !important;
     }
 
+    /* カード上部のアクセントライン */
     .why-item::before,
     .feature-item::before {
         content: '';
@@ -5322,148 +5269,125 @@ body {
         top: 0;
         left: 0;
         right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, var(--premium-gold), var(--premium-gold-light), var(--premium-gold));
-        opacity: 0.8;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-bright), var(--accent-gold));
     }
 
-    .why-item::after,
-    .feature-item::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
-        pointer-events: none;
-    }
-
+    /* 番号 - ゴールドで装飾的に */
     .why-number {
-        color: var(--premium-gold) !important;
-        font-size: 3rem !important;
-        opacity: 0.3 !important;
+        color: var(--accent-gold) !important;
+        font-size: 2.5rem !important;
+        opacity: 0.25 !important;
         font-weight: 700;
         position: absolute;
-        top: 16px;
-        right: 20px;
-        text-shadow: 0 0 30px var(--premium-gold-glow);
+        top: 12px;
+        right: 16px;
     }
 
+    /* タイトル - 白文字で視認性保証 */
     .why-title,
     .feature-title {
-        color: var(--text-on-dark) !important;
-        font-size: 18px !important;
+        color: var(--text-primary) !important;
+        font-size: 17px !important;
         font-weight: 700 !important;
         line-height: 1.5 !important;
-        margin-bottom: var(--space-sm) !important;
-        position: relative;
-        z-index: 1;
+        margin-bottom: var(--space-xs) !important;
     }
 
+    /* 説明文 - ライトグレーで視認性保証 */
     .why-text,
     .feature-text {
-        color: var(--text-on-dark-secondary) !important;
-        font-size: 14px !important;
-        line-height: 2 !important;
-        position: relative;
-        z-index: 1;
-    }
-
-    /* ----- Menu Cards - Premium Design ----- */
-    .menu-item {
-        background: var(--luxury-dark-card) !important;
-        border: 1px solid var(--glass-border) !important;
-        border-radius: 20px !important;
-        padding: var(--space-xl) !important;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .menu-item::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, transparent, var(--premium-gold), transparent);
-    }
-
-    .menu-item-ribbon {
-        background: linear-gradient(135deg, #D4AF37, #F5E6C8) !important;
-        color: var(--luxury-dark) !important;
-        font-weight: 700 !important;
-        font-size: 10px !important;
-        padding: 4px 12px !important;
-        border-radius: 4px !important;
-    }
-
-    .menu-item-title {
-        color: var(--text-on-dark) !important;
-        font-size: 18px !important;
-        font-weight: 700 !important;
-    }
-
-    .menu-item-desc {
-        color: var(--text-on-dark-secondary) !important;
+        color: var(--text-secondary) !important;
         font-size: 14px !important;
         line-height: 1.9 !important;
     }
 
-    .menu-item-price {
-        color: var(--premium-gold) !important;
-        font-size: 1.5rem !important;
-        font-weight: 700 !important;
-        text-shadow: 0 0 20px var(--premium-gold-glow);
+    /* ===== Menu Cards ===== */
+    .menu-item {
+        background: var(--bg-card) !important;
+        border: 1px solid var(--border-gold) !important;
+        border-radius: 16px !important;
+        padding: var(--space-lg) !important;
     }
 
+    /* リボン - ゴールド背景に黒文字 */
+    .menu-item-ribbon {
+        background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-bright)) !important;
+        color: #0A0A0A !important;
+        font-weight: 700 !important;
+        font-size: 10px !important;
+        padding: 4px 10px !important;
+        border-radius: 4px !important;
+    }
+
+    /* メニュータイトル - 白文字 */
+    .menu-item-title {
+        color: var(--text-primary) !important;
+        font-size: 17px !important;
+        font-weight: 700 !important;
+    }
+
+    /* メニュー説明 - ライトグレー */
+    .menu-item-desc {
+        color: var(--text-secondary) !important;
+        font-size: 14px !important;
+        line-height: 1.85 !important;
+    }
+
+    /* 価格 - ゴールドで目立たせる */
+    .menu-item-price {
+        color: var(--accent-gold-bright) !important;
+        font-size: 1.4rem !important;
+        font-weight: 700 !important;
+    }
+
+    /* 割引バッジ - 赤背景に白文字 */
     .menu-item-price-off {
         background: linear-gradient(135deg, #E53E3E, #C53030) !important;
-        color: var(--text-on-dark) !important;
-        font-size: 12px !important;
+        color: #FFFFFF !important;
+        font-size: 11px !important;
         font-weight: 700 !important;
-        padding: 6px 14px !important;
-        border-radius: 8px !important;
-        box-shadow: 0 4px 15px rgba(229, 62, 62, 0.4);
+        padding: 5px 12px !important;
+        border-radius: 6px !important;
     }
 
     .menu-item-time {
-        color: var(--text-on-dark-muted) !important;
+        color: var(--text-muted) !important;
         font-size: 12px !important;
     }
 
     .menu-item-points li {
-        color: var(--text-on-dark-secondary) !important;
+        color: var(--text-secondary) !important;
         font-size: 13px !important;
     }
 
     .menu-item-points li::before {
-        color: var(--premium-gold) !important;
+        color: var(--accent-gold) !important;
     }
 
-    /* ----- Gallery Section - Premium ----- */
+    /* ===== Gallery Section ===== */
     .gallery-main {
-        border-radius: 20px !important;
+        border-radius: 16px !important;
         overflow: hidden;
-        border: 1px solid var(--glass-border);
+        border: 1px solid var(--border-gold);
     }
 
     .gallery-main-placeholder {
-        background: linear-gradient(135deg, var(--luxury-dark-card) 0%, var(--luxury-dark) 100%) !important;
-        min-height: 300px !important;
-        padding: var(--space-3xl) var(--space-lg) 90px !important;
+        background: var(--bg-card) !important;
+        min-height: 280px !important;
+        padding: var(--space-2xl) var(--space-lg) 80px !important;
     }
 
+    /* プレースホルダーテキスト - 薄く目立たなく */
     .gallery-main-placeholder span {
-        color: var(--text-on-dark-muted) !important;
-        font-size: 11px !important;
-        letter-spacing: 0.15em;
-        opacity: 0.4 !important;
+        color: var(--text-muted) !important;
+        font-size: 10px !important;
+        letter-spacing: 0.1em;
+        opacity: 0.3 !important;
     }
 
     .gallery-main-placeholder p {
-        color: var(--text-on-dark-muted) !important;
+        color: var(--text-muted) !important;
         font-size: 10px !important;
         opacity: 0.3 !important;
     }
@@ -5475,46 +5399,46 @@ body {
     }
 
     .gallery-main-label .before {
-        color: var(--text-on-dark-secondary) !important;
+        color: var(--text-secondary) !important;
         font-size: 14px !important;
         font-weight: 600;
         letter-spacing: 0.15em;
     }
 
     .gallery-main-label .after {
-        color: var(--premium-gold) !important;
+        color: var(--accent-gold) !important;
         font-size: 14px !important;
         font-weight: 600;
         letter-spacing: 0.15em;
-        text-shadow: 0 0 20px var(--premium-gold-glow);
+        text-shadow: 0 0 20px var(--glow-gold);
     }
 
     .gallery-main-label .divider {
-        background: var(--premium-gold) !important;
+        background: var(--accent-gold) !important;
         width: 50px !important;
     }
 
     .gallery-item {
         border-radius: 12px !important;
         overflow: hidden;
-        border: 1px solid var(--glass-border);
+        border: 1px solid var(--border-gold);
     }
 
     .gallery-item-placeholder {
-        background: var(--luxury-dark-card) !important;
+        background: var(--bg-card) !important;
         min-height: 140px !important;
     }
 
     .gallery-item-placeholder span {
-        color: var(--text-on-dark-muted) !important;
+        color: var(--text-muted) !important;
         font-size: 10px !important;
         opacity: 0.3 !important;
     }
 
     /* ----- Voice/Review Cards - Premium ----- */
     .voice-card {
-        background: var(--luxury-dark-card) !important;
-        border: 1px solid var(--glass-border) !important;
+        background: var(--bg-card) !important;
+        border: 1px solid var(--border-gold) !important;
         border-radius: 20px !important;
         padding: var(--space-xl) !important;
         position: relative;
@@ -5526,14 +5450,14 @@ body {
         top: 16px;
         left: 20px;
         font-size: 4rem;
-        color: var(--premium-gold);
+        color: var(--accent-gold);
         opacity: 0.2;
         font-family: Georgia, serif;
         line-height: 1;
     }
 
     .voice-text {
-        color: var(--text-on-dark-secondary) !important;
+        color: var(--text-secondary) !important;
         font-size: 14px !important;
         line-height: 2 !important;
         position: relative;
@@ -5541,24 +5465,24 @@ body {
     }
 
     .voice-name {
-        color: var(--text-on-dark) !important;
+        color: var(--text-primary) !important;
         font-size: 14px !important;
         font-weight: 600 !important;
     }
 
     .voice-menu {
-        color: var(--premium-gold) !important;
+        color: var(--accent-gold) !important;
         font-size: 12px !important;
     }
 
     .voice-rating {
-        color: var(--premium-gold) !important;
+        color: var(--accent-gold) !important;
     }
 
     /* ----- FAQ Section - Premium ----- */
     .faq-item {
-        background: var(--luxury-dark-card) !important;
-        border: 1px solid var(--glass-border) !important;
+        background: var(--bg-card) !important;
+        border: 1px solid var(--border-gold) !important;
         border-radius: 16px !important;
         margin-bottom: var(--space-md) !important;
         overflow: hidden;
@@ -5570,14 +5494,14 @@ body {
     }
 
     .faq-question {
-        color: var(--text-on-dark) !important;
+        color: var(--text-primary) !important;
         font-size: 15px !important;
         font-weight: 500 !important;
         padding: var(--space-lg) !important;
     }
 
     .faq-question::after {
-        color: var(--premium-gold) !important;
+        color: var(--accent-gold) !important;
     }
 
     .faq-answer {
@@ -5585,7 +5509,7 @@ body {
     }
 
     .faq-answer p {
-        color: var(--text-on-dark-secondary) !important;
+        color: var(--text-secondary) !important;
         font-size: 14px !important;
         line-height: 2 !important;
         padding: var(--space-lg) !important;
@@ -5593,8 +5517,8 @@ body {
 
     /* ----- Flow Section - Premium ----- */
     .flow-item {
-        background: var(--luxury-dark-card) !important;
-        border: 1px solid var(--glass-border) !important;
+        background: var(--bg-card) !important;
+        border: 1px solid var(--border-gold) !important;
         border-radius: 20px !important;
         padding: var(--space-xl) !important;
         opacity: 1 !important;
@@ -5603,97 +5527,97 @@ body {
     }
 
     .flow-step-number {
-        background: linear-gradient(135deg, var(--premium-gold), var(--premium-gold-light)) !important;
-        color: var(--luxury-dark) !important;
+        background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-bright)) !important;
+        color: var(--bg-primary) !important;
         font-weight: 700 !important;
         width: 50px !important;
         height: 50px !important;
         font-size: 16px !important;
-        box-shadow: 0 8px 25px var(--premium-gold-glow);
+        box-shadow: 0 8px 25px var(--glow-gold);
     }
 
     .flow-title {
-        color: var(--text-on-dark) !important;
+        color: var(--text-primary) !important;
         font-size: 17px !important;
         font-weight: 700 !important;
     }
 
     .flow-desc {
-        color: var(--text-on-dark-secondary) !important;
+        color: var(--text-secondary) !important;
         font-size: 14px !important;
         line-height: 2 !important;
     }
 
     /* ----- Reservation Section - Premium ----- */
     .reservation {
-        background: var(--luxury-dark) !important;
+        background: var(--bg-primary) !important;
     }
 
     .reservation-inner {
-        background: var(--glass-dark) !important;
+        background: rgba(0, 0, 0, 0.6) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid var(--glass-border) !important;
+        border: 1px solid var(--border-gold) !important;
         border-radius: 24px !important;
         padding: var(--space-2xl) var(--space-lg) !important;
     }
 
     .reservation-title {
-        color: var(--text-on-dark) !important;
+        color: var(--text-primary) !important;
         font-size: 1.4rem !important;
         font-weight: 700 !important;
     }
 
     .reservation-title em {
-        color: var(--premium-gold) !important;
+        color: var(--accent-gold) !important;
         font-style: normal;
-        text-shadow: 0 0 20px var(--premium-gold-glow);
+        text-shadow: 0 0 20px var(--glow-gold);
     }
 
     .reservation-desc {
-        color: var(--text-on-dark-secondary) !important;
+        color: var(--text-secondary) !important;
         font-size: 14px !important;
     }
 
     /* ----- Access Section - Premium ----- */
     .access-info {
-        background: var(--luxury-dark-card) !important;
-        border: 1px solid var(--glass-border) !important;
+        background: var(--bg-card) !important;
+        border: 1px solid var(--border-gold) !important;
         border-radius: 20px !important;
         padding: var(--space-xl) !important;
     }
 
     .access-info dt {
-        color: var(--premium-gold) !important;
+        color: var(--accent-gold) !important;
         font-size: 13px !important;
         font-weight: 600 !important;
         letter-spacing: 0.05em;
     }
 
     .access-info dd {
-        color: var(--text-on-dark) !important;
+        color: var(--text-primary) !important;
         font-size: 15px !important;
         line-height: 1.8;
     }
 
     /* ----- Footer - Premium ----- */
     .footer {
-        background: var(--luxury-dark) !important;
-        border-top: 1px solid var(--glass-border);
+        background: var(--bg-primary) !important;
+        border-top: 1px solid var(--border-gold);
     }
 
     .footer-nav-link {
-        color: var(--text-on-dark-secondary) !important;
+        color: var(--text-secondary) !important;
         font-size: 13px !important;
         transition: color 0.3s ease;
     }
 
     .footer-nav-link:hover {
-        color: var(--premium-gold) !important;
+        color: var(--accent-gold) !important;
     }
 
     .footer-copyright {
-        color: var(--text-on-dark-muted) !important;
+        color: var(--text-muted) !important;
         font-size: 11px !important;
     }
 
@@ -5720,7 +5644,7 @@ body {
         position: static !important;
         transform: none !important;
         background: linear-gradient(135deg, #FF4757, #FF3344) !important;
-        color: var(--text-on-dark) !important;
+        color: var(--text-primary) !important;
         font-size: 10px !important;
         font-weight: 700 !important;
         padding: 4px 12px !important;
@@ -5737,7 +5661,7 @@ body {
     }
 
     .fixed-cta-text {
-        color: var(--text-on-dark) !important;
+        color: var(--text-primary) !important;
         font-size: 14px !important;
         font-weight: 700 !important;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -5750,14 +5674,14 @@ body {
 
     /* ----- CTA Buttons - Premium ----- */
     .btn-3d {
-        background: linear-gradient(145deg, var(--premium-gold), var(--premium-gold-light)) !important;
-        color: var(--luxury-dark) !important;
+        background: linear-gradient(145deg, var(--accent-gold), var(--accent-gold-bright)) !important;
+        color: var(--bg-primary) !important;
         padding: 18px 32px !important;
         border-radius: 16px !important;
         font-weight: 700 !important;
         box-shadow:
             0 6px 0 #9A7B2E,
-            0 10px 30px var(--premium-gold-glow) !important;
+            0 10px 30px var(--glow-gold) !important;
         transition: all 0.3s ease !important;
     }
 
@@ -5765,17 +5689,17 @@ body {
         transform: translateY(3px) !important;
         box-shadow:
             0 3px 0 #9A7B2E,
-            0 6px 15px var(--premium-gold-glow) !important;
+            0 6px 15px var(--glow-gold) !important;
     }
 
     .btn-3d-badge {
         background: rgba(0, 0, 0, 0.2) !important;
-        color: var(--luxury-dark) !important;
+        color: var(--bg-primary) !important;
         font-size: 11px !important;
     }
 
     .btn-3d-text {
-        color: var(--luxury-dark) !important;
+        color: var(--bg-primary) !important;
         font-size: 16px !important;
         font-weight: 700 !important;
     }
@@ -5794,15 +5718,15 @@ body {
     .flow,
     .reservation,
     .access {
-        background: var(--luxury-dark) !important;
+        background: var(--bg-primary) !important;
     }
 
     /* ----- Header - Premium Glass ----- */
     .header {
-        background: var(--glass-dark) !important;
+        background: rgba(0, 0, 0, 0.6) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
-        border-bottom: 1px solid var(--glass-border) !important;
+        border-bottom: 1px solid var(--border-gold) !important;
     }
 
     .header.scrolled {
@@ -5810,30 +5734,30 @@ body {
     }
 
     .logo-text {
-        color: var(--premium-gold) !important;
+        color: var(--accent-gold) !important;
     }
 
     .logo-sub {
-        color: var(--text-on-dark-muted) !important;
+        color: var(--text-muted) !important;
     }
 
     /* ----- Mobile Menu - Premium ----- */
     .mobile-menu {
-        background: var(--luxury-dark) !important;
+        background: var(--bg-primary) !important;
     }
 
     .mobile-nav-link {
-        color: var(--text-on-dark) !important;
-        border-bottom: 1px solid var(--glass-border) !important;
+        color: var(--text-primary) !important;
+        border-bottom: 1px solid var(--border-gold) !important;
     }
 
     /* ----- Loading Screen - Premium ----- */
     .loading-screen {
-        background: var(--luxury-dark) !important;
+        background: var(--bg-primary) !important;
     }
 
     .loading-logo {
-        color: var(--premium-gold) !important;
+        color: var(--accent-gold) !important;
     }
 
     /* ----- Placeholder Overrides ----- */
@@ -5846,11 +5770,11 @@ body {
 
     /* ----- Scroll Indicator ----- */
     .hero-scroll span {
-        color: var(--text-on-dark-muted) !important;
+        color: var(--text-muted) !important;
     }
 
     .hero-scroll-line {
-        background: var(--premium-gold) !important;
+        background: var(--accent-gold) !important;
     }
 }
 
@@ -5893,11 +5817,11 @@ body {
 /* ----- Desktop Luxury Enhancements ----- */
 @media (min-width: 768px) {
     body {
-        background: var(--luxury-dark) !important;
+        background: var(--bg-primary) !important;
     }
 
     .section {
-        background: var(--luxury-dark) !important;
+        background: var(--bg-primary) !important;
     }
 
     .why-item:hover,
@@ -5905,7 +5829,7 @@ body {
     .menu-item:hover,
     .faq-item:hover {
         transform: translateY(-5px);
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 30px var(--premium-gold-glow);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 30px var(--glow-gold);
         border-color: rgba(212, 175, 55, 0.5) !important;
     }
 
