@@ -3331,6 +3331,260 @@ body.is-touch * {
 }
 
 /* =====================================================
+   MEN'S THEME - Masculine Color Adjustments
+   ===================================================== */
+body.mens-theme {
+    /* More masculine color adjustments */
+    --gold: #B8963D;
+    --gold-dark: #9A7B2E;
+    --gold-gradient: linear-gradient(135deg, #C9A962 0%, #B8963D 50%, #8A6B1E 100%);
+}
+
+/* Darker, more masculine hero overlay */
+body.mens-theme .hero-overlay {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+body.mens-theme .hero-overlay-gradient {
+    background:
+        linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 60%, rgba(0,0,0,0.6) 100%),
+        radial-gradient(ellipse at 30% 20%, rgba(184, 150, 61, 0.1) 0%, transparent 50%);
+}
+
+/* Hero reassurance text */
+.hero-reassurance {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: var(--space-lg);
+}
+
+/* Why Section Styles */
+.why-eyebrow {
+    background: var(--cream);
+}
+
+.why-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xl);
+}
+
+.why-item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .why-item {
+        grid-template-columns: auto 1fr 300px;
+        gap: var(--space-2xl);
+    }
+
+    .why-item:nth-child(even) {
+        grid-template-columns: 300px 1fr auto;
+    }
+
+    .why-item:nth-child(even) .why-number {
+        order: 3;
+    }
+
+    .why-item:nth-child(even) .why-image {
+        order: 1;
+    }
+
+    .why-item:nth-child(even) .why-content {
+        order: 2;
+    }
+}
+
+.why-number {
+    font-family: var(--font-display);
+    font-size: var(--text-6xl);
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    opacity: 0.3;
+}
+
+.why-content {
+    flex: 1;
+}
+
+.why-title {
+    font-family: var(--font-display);
+    font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
+    font-weight: 500;
+    color: var(--gray-800);
+    margin-bottom: var(--space-md);
+    letter-spacing: 0.02em;
+}
+
+.why-text {
+    font-size: var(--text-base);
+    color: var(--gray-600);
+    line-height: 2;
+}
+
+.why-image {
+    width: 100%;
+    max-width: 300px;
+}
+
+.why-image-placeholder {
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, var(--gray-100) 0%, var(--gold-50) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    color: var(--gray-400);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+}
+
+.why-cta {
+    text-align: center;
+    margin-top: var(--space-4xl);
+    padding-top: var(--space-3xl);
+    border-top: 1px solid var(--gray-200);
+}
+
+.why-cta-text {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--gray-700);
+    margin-bottom: var(--space-xl);
+    letter-spacing: 0.03em;
+}
+
+/* Menu enhancements for men */
+.menu-item-price-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.menu-item-price-off {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: #dc3545;
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+}
+
+.menu-item-time {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--gray-500);
+    margin-bottom: var(--space-md);
+}
+
+.menu-item-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px dashed var(--gray-200);
+    list-style: none;
+}
+
+.menu-item-points li {
+    font-size: var(--text-sm);
+    color: var(--gray-600);
+    font-weight: 500;
+}
+
+/* Voice card for men */
+.voice-avatar.mens {
+    background: linear-gradient(135deg, var(--gray-700) 0%, var(--gray-800) 100%);
+}
+
+/* Discount section styling */
+.reservation-discount {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    padding: var(--space-xl) var(--space-2xl);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(201, 169, 98, 0.3);
+    margin: var(--space-2xl) 0;
+}
+
+.discount-label {
+    font-size: var(--text-sm);
+    letter-spacing: 0.2em;
+    color: var(--gold);
+}
+
+.discount-value {
+    font-family: var(--font-display);
+    font-size: clamp(var(--text-2xl), 5vw, var(--text-4xl));
+    font-weight: 400;
+    color: var(--white);
+}
+
+.discount-value em {
+    font-style: normal;
+    font-size: 1.5em;
+    color: var(--gold);
+}
+
+.discount-example {
+    font-size: var(--text-base);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.discount-example strong {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+/* Reservation note */
+.reservation-note {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    margin-top: var(--space-xl);
+}
+
+/* Mobile adjustments for men's theme */
+@media (max-width: 767px) {
+    .why-number {
+        font-size: var(--text-4xl);
+    }
+
+    .why-item {
+        gap: var(--space-lg);
+    }
+
+    .why-image {
+        max-width: 100%;
+    }
+
+    .menu-item-price-wrap {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--space-md);
+        flex-wrap: wrap;
+    }
+
+    .reservation-discount {
+        padding: var(--space-lg);
+    }
+}
+
+/* =====================================================
    Print Styles
    ===================================================== */
 @media print {
