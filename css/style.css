@@ -5057,3 +5057,860 @@ body.mens-theme .hero-overlay-gradient {
         min-height: 220px !important;
     }
 }
+
+/* =====================================================
+   LUXURY REDESIGN v3.0 - World-Class Premium Design
+   高級感・視認性・最先端アニメーション・モバイル最適化
+   ===================================================== */
+
+/* ----- Enhanced Color Contrast System ----- */
+:root {
+    /* Guaranteed Contrast Colors */
+    --text-on-dark: #FFFFFF;
+    --text-on-dark-secondary: rgba(255, 255, 255, 0.85);
+    --text-on-dark-muted: rgba(255, 255, 255, 0.65);
+    --text-on-light: #1A1817;
+    --text-on-light-secondary: #3D3935;
+    --text-on-light-muted: #5C564E;
+
+    /* Premium Gold System */
+    --premium-gold: #D4AF37;
+    --premium-gold-light: #E8D5A3;
+    --premium-gold-glow: rgba(212, 175, 55, 0.4);
+
+    /* Luxury Dark Backgrounds */
+    --luxury-dark: #0A0A0A;
+    --luxury-dark-card: #141414;
+    --luxury-dark-elevated: #1E1E1E;
+
+    /* Glass Effect */
+    --glass-dark: rgba(20, 20, 20, 0.85);
+    --glass-light: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(212, 175, 55, 0.2);
+}
+
+/* ----- Luxury Animation Keyframes ----- */
+@keyframes luxuryFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes luxuryGlow {
+    0%, 100% {
+        box-shadow: 0 0 20px var(--premium-gold-glow);
+    }
+    50% {
+        box-shadow: 0 0 40px var(--premium-gold-glow), 0 0 60px rgba(212, 175, 55, 0.2);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+@keyframes floatUp {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes borderGlow {
+    0%, 100% {
+        border-color: rgba(212, 175, 55, 0.3);
+    }
+    50% {
+        border-color: rgba(212, 175, 55, 0.6);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+/* ----- Global Luxury Base ----- */
+body {
+    background: var(--luxury-dark) !important;
+    color: var(--text-on-dark) !important;
+}
+
+/* ----- Premium Section Styling ----- */
+.section {
+    background: var(--luxury-dark) !important;
+    position: relative;
+}
+
+.section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--premium-gold), transparent);
+    opacity: 0.3;
+}
+
+/* ----- Section Headers - Luxury Typography ----- */
+.section-header {
+    margin-bottom: var(--space-2xl);
+}
+
+.section-label {
+    color: var(--premium-gold) !important;
+    font-size: 12px !important;
+    letter-spacing: 0.3em !important;
+    font-weight: 500 !important;
+    text-transform: uppercase;
+}
+
+.section-title-en {
+    color: var(--text-on-dark-muted) !important;
+    font-size: 12px !important;
+    letter-spacing: 0.2em !important;
+}
+
+.section-title-ja {
+    color: var(--text-on-dark) !important;
+    font-size: clamp(1.5rem, 6vw, 2rem) !important;
+    font-weight: 600 !important;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.section-title-ja em {
+    color: var(--premium-gold) !important;
+    font-style: normal;
+    background: linear-gradient(135deg, var(--premium-gold), var(--premium-gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-lead {
+    color: var(--text-on-dark-secondary) !important;
+    font-size: 15px !important;
+    line-height: 2 !important;
+}
+
+/* =====================================================
+   MOBILE LUXURY REDESIGN
+   ===================================================== */
+@media (max-width: 767px) {
+
+    /* ----- Hero Section - Premium Design ----- */
+    .hero {
+        background: var(--luxury-dark) !important;
+    }
+
+    .hero-video-fallback {
+        background: linear-gradient(180deg, #0A0A0A 0%, #141414 50%, #0A0A0A 100%) !important;
+    }
+
+    .hero-badge {
+        background: var(--glass-dark) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid var(--glass-border) !important;
+        padding: 10px 20px !important;
+        border-radius: 50px !important;
+        animation: borderGlow 3s ease-in-out infinite;
+    }
+
+    .hero-badge span {
+        color: var(--premium-gold-light) !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.05em;
+    }
+
+    .hero-title-en {
+        color: var(--premium-gold) !important;
+        font-size: 11px !important;
+        letter-spacing: 0.25em !important;
+        font-weight: 400;
+    }
+
+    .hero-title-main {
+        color: var(--text-on-dark) !important;
+        font-size: clamp(1.6rem, 8vw, 2.2rem) !important;
+        font-weight: 700 !important;
+        line-height: 1.35 !important;
+        text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    .hero-title-main em {
+        color: var(--premium-gold) !important;
+        font-style: normal;
+        text-shadow: 0 0 30px var(--premium-gold-glow);
+    }
+
+    .hero-lead {
+        color: var(--text-on-dark-secondary) !important;
+        font-size: 14px !important;
+        line-height: 2 !important;
+        background: var(--glass-dark) !important;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 16px 20px !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-stats {
+        background: var(--glass-dark) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 16px !important;
+        padding: 20px !important;
+    }
+
+    .hero-stat-number {
+        color: var(--premium-gold) !important;
+        font-size: 1.75rem !important;
+        font-weight: 700 !important;
+        text-shadow: 0 0 20px var(--premium-gold-glow);
+    }
+
+    .hero-stat-label {
+        color: var(--text-on-dark-secondary) !important;
+        font-size: 11px !important;
+    }
+
+    .hero-reassurance {
+        color: var(--text-on-dark-muted) !important;
+        font-size: 12px !important;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px 16px !important;
+        border-radius: 8px;
+    }
+
+    /* ----- Premium Card Design System ----- */
+    .why-item,
+    .feature-item {
+        background: var(--luxury-dark-card) !important;
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 20px !important;
+        padding: var(--space-xl) !important;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s ease !important;
+    }
+
+    .why-item::before,
+    .feature-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--premium-gold), var(--premium-gold-light), var(--premium-gold));
+        opacity: 0.8;
+    }
+
+    .why-item::after,
+    .feature-item::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .why-number {
+        color: var(--premium-gold) !important;
+        font-size: 3rem !important;
+        opacity: 0.3 !important;
+        font-weight: 700;
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        text-shadow: 0 0 30px var(--premium-gold-glow);
+    }
+
+    .why-title,
+    .feature-title {
+        color: var(--text-on-dark) !important;
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        line-height: 1.5 !important;
+        margin-bottom: var(--space-sm) !important;
+        position: relative;
+        z-index: 1;
+    }
+
+    .why-text,
+    .feature-text {
+        color: var(--text-on-dark-secondary) !important;
+        font-size: 14px !important;
+        line-height: 2 !important;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* ----- Menu Cards - Premium Design ----- */
+    .menu-item {
+        background: var(--luxury-dark-card) !important;
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 20px !important;
+        padding: var(--space-xl) !important;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .menu-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--premium-gold), transparent);
+    }
+
+    .menu-item-ribbon {
+        background: linear-gradient(135deg, #D4AF37, #F5E6C8) !important;
+        color: var(--luxury-dark) !important;
+        font-weight: 700 !important;
+        font-size: 10px !important;
+        padding: 4px 12px !important;
+        border-radius: 4px !important;
+    }
+
+    .menu-item-title {
+        color: var(--text-on-dark) !important;
+        font-size: 18px !important;
+        font-weight: 700 !important;
+    }
+
+    .menu-item-desc {
+        color: var(--text-on-dark-secondary) !important;
+        font-size: 14px !important;
+        line-height: 1.9 !important;
+    }
+
+    .menu-item-price {
+        color: var(--premium-gold) !important;
+        font-size: 1.5rem !important;
+        font-weight: 700 !important;
+        text-shadow: 0 0 20px var(--premium-gold-glow);
+    }
+
+    .menu-item-price-off {
+        background: linear-gradient(135deg, #E53E3E, #C53030) !important;
+        color: var(--text-on-dark) !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        padding: 6px 14px !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 15px rgba(229, 62, 62, 0.4);
+    }
+
+    .menu-item-time {
+        color: var(--text-on-dark-muted) !important;
+        font-size: 12px !important;
+    }
+
+    .menu-item-points li {
+        color: var(--text-on-dark-secondary) !important;
+        font-size: 13px !important;
+    }
+
+    .menu-item-points li::before {
+        color: var(--premium-gold) !important;
+    }
+
+    /* ----- Gallery Section - Premium ----- */
+    .gallery-main {
+        border-radius: 20px !important;
+        overflow: hidden;
+        border: 1px solid var(--glass-border);
+    }
+
+    .gallery-main-placeholder {
+        background: linear-gradient(135deg, var(--luxury-dark-card) 0%, var(--luxury-dark) 100%) !important;
+        min-height: 300px !important;
+        padding: var(--space-3xl) var(--space-lg) 90px !important;
+    }
+
+    .gallery-main-placeholder span {
+        color: var(--text-on-dark-muted) !important;
+        font-size: 11px !important;
+        letter-spacing: 0.15em;
+        opacity: 0.4 !important;
+    }
+
+    .gallery-main-placeholder p {
+        color: var(--text-on-dark-muted) !important;
+        font-size: 10px !important;
+        opacity: 0.3 !important;
+    }
+
+    .gallery-main-label {
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.8) 100%) !important;
+        backdrop-filter: blur(10px);
+        padding: 20px !important;
+    }
+
+    .gallery-main-label .before {
+        color: var(--text-on-dark-secondary) !important;
+        font-size: 14px !important;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+    }
+
+    .gallery-main-label .after {
+        color: var(--premium-gold) !important;
+        font-size: 14px !important;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-shadow: 0 0 20px var(--premium-gold-glow);
+    }
+
+    .gallery-main-label .divider {
+        background: var(--premium-gold) !important;
+        width: 50px !important;
+    }
+
+    .gallery-item {
+        border-radius: 12px !important;
+        overflow: hidden;
+        border: 1px solid var(--glass-border);
+    }
+
+    .gallery-item-placeholder {
+        background: var(--luxury-dark-card) !important;
+        min-height: 140px !important;
+    }
+
+    .gallery-item-placeholder span {
+        color: var(--text-on-dark-muted) !important;
+        font-size: 10px !important;
+        opacity: 0.3 !important;
+    }
+
+    /* ----- Voice/Review Cards - Premium ----- */
+    .voice-card {
+        background: var(--luxury-dark-card) !important;
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 20px !important;
+        padding: var(--space-xl) !important;
+        position: relative;
+    }
+
+    .voice-card::before {
+        content: '"';
+        position: absolute;
+        top: 16px;
+        left: 20px;
+        font-size: 4rem;
+        color: var(--premium-gold);
+        opacity: 0.2;
+        font-family: Georgia, serif;
+        line-height: 1;
+    }
+
+    .voice-text {
+        color: var(--text-on-dark-secondary) !important;
+        font-size: 14px !important;
+        line-height: 2 !important;
+        position: relative;
+        z-index: 1;
+    }
+
+    .voice-name {
+        color: var(--text-on-dark) !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+    }
+
+    .voice-menu {
+        color: var(--premium-gold) !important;
+        font-size: 12px !important;
+    }
+
+    .voice-rating {
+        color: var(--premium-gold) !important;
+    }
+
+    /* ----- FAQ Section - Premium ----- */
+    .faq-item {
+        background: var(--luxury-dark-card) !important;
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 16px !important;
+        margin-bottom: var(--space-md) !important;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+        border-color: rgba(212, 175, 55, 0.4) !important;
+    }
+
+    .faq-question {
+        color: var(--text-on-dark) !important;
+        font-size: 15px !important;
+        font-weight: 500 !important;
+        padding: var(--space-lg) !important;
+    }
+
+    .faq-question::after {
+        color: var(--premium-gold) !important;
+    }
+
+    .faq-answer {
+        background: rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .faq-answer p {
+        color: var(--text-on-dark-secondary) !important;
+        font-size: 14px !important;
+        line-height: 2 !important;
+        padding: var(--space-lg) !important;
+    }
+
+    /* ----- Flow Section - Premium ----- */
+    .flow-item {
+        background: var(--luxury-dark-card) !important;
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 20px !important;
+        padding: var(--space-xl) !important;
+        opacity: 1 !important;
+        transform: none !important;
+        position: relative;
+    }
+
+    .flow-step-number {
+        background: linear-gradient(135deg, var(--premium-gold), var(--premium-gold-light)) !important;
+        color: var(--luxury-dark) !important;
+        font-weight: 700 !important;
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 16px !important;
+        box-shadow: 0 8px 25px var(--premium-gold-glow);
+    }
+
+    .flow-title {
+        color: var(--text-on-dark) !important;
+        font-size: 17px !important;
+        font-weight: 700 !important;
+    }
+
+    .flow-desc {
+        color: var(--text-on-dark-secondary) !important;
+        font-size: 14px !important;
+        line-height: 2 !important;
+    }
+
+    /* ----- Reservation Section - Premium ----- */
+    .reservation {
+        background: var(--luxury-dark) !important;
+    }
+
+    .reservation-inner {
+        background: var(--glass-dark) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 24px !important;
+        padding: var(--space-2xl) var(--space-lg) !important;
+    }
+
+    .reservation-title {
+        color: var(--text-on-dark) !important;
+        font-size: 1.4rem !important;
+        font-weight: 700 !important;
+    }
+
+    .reservation-title em {
+        color: var(--premium-gold) !important;
+        font-style: normal;
+        text-shadow: 0 0 20px var(--premium-gold-glow);
+    }
+
+    .reservation-desc {
+        color: var(--text-on-dark-secondary) !important;
+        font-size: 14px !important;
+    }
+
+    /* ----- Access Section - Premium ----- */
+    .access-info {
+        background: var(--luxury-dark-card) !important;
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 20px !important;
+        padding: var(--space-xl) !important;
+    }
+
+    .access-info dt {
+        color: var(--premium-gold) !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.05em;
+    }
+
+    .access-info dd {
+        color: var(--text-on-dark) !important;
+        font-size: 15px !important;
+        line-height: 1.8;
+    }
+
+    /* ----- Footer - Premium ----- */
+    .footer {
+        background: var(--luxury-dark) !important;
+        border-top: 1px solid var(--glass-border);
+    }
+
+    .footer-nav-link {
+        color: var(--text-on-dark-secondary) !important;
+        font-size: 13px !important;
+        transition: color 0.3s ease;
+    }
+
+    .footer-nav-link:hover {
+        color: var(--premium-gold) !important;
+    }
+
+    .footer-copyright {
+        color: var(--text-on-dark-muted) !important;
+        font-size: 11px !important;
+    }
+
+    /* ----- LINE CTA - Ultimate Premium Design ----- */
+    .fixed-cta {
+        bottom: 24px !important;
+        right: 20px !important;
+        left: auto !important;
+        z-index: 9999;
+    }
+
+    .fixed-cta-btn {
+        background: linear-gradient(145deg, #08d861 0%, #06C755 50%, #05a647 100%) !important;
+        padding: 16px 24px 14px !important;
+        border-radius: 20px !important;
+        box-shadow:
+            0 6px 0 #049a3d,
+            0 10px 30px rgba(6, 199, 85, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    .fixed-cta-badge {
+        position: static !important;
+        transform: none !important;
+        background: linear-gradient(135deg, #FF4757, #FF3344) !important;
+        color: var(--text-on-dark) !important;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        padding: 4px 12px !important;
+        border-radius: 12px !important;
+        margin-bottom: 6px !important;
+        box-shadow: 0 4px 10px rgba(255, 71, 87, 0.4);
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .fixed-cta .line-icon {
+        width: 22px !important;
+        height: 22px !important;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .fixed-cta-text {
+        color: var(--text-on-dark) !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .fixed-cta-sub {
+        color: rgba(255, 255, 255, 0.9) !important;
+        font-size: 10px !important;
+    }
+
+    /* ----- CTA Buttons - Premium ----- */
+    .btn-3d {
+        background: linear-gradient(145deg, var(--premium-gold), var(--premium-gold-light)) !important;
+        color: var(--luxury-dark) !important;
+        padding: 18px 32px !important;
+        border-radius: 16px !important;
+        font-weight: 700 !important;
+        box-shadow:
+            0 6px 0 #9A7B2E,
+            0 10px 30px var(--premium-gold-glow) !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .btn-3d:active {
+        transform: translateY(3px) !important;
+        box-shadow:
+            0 3px 0 #9A7B2E,
+            0 6px 15px var(--premium-gold-glow) !important;
+    }
+
+    .btn-3d-badge {
+        background: rgba(0, 0, 0, 0.2) !important;
+        color: var(--luxury-dark) !important;
+        font-size: 11px !important;
+    }
+
+    .btn-3d-text {
+        color: var(--luxury-dark) !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+    }
+
+    .btn-3d-sub {
+        color: rgba(0, 0, 0, 0.7) !important;
+        font-size: 11px !important;
+    }
+
+    /* ----- Section Backgrounds ----- */
+    .features,
+    .menu,
+    .gallery,
+    .voice,
+    .faq,
+    .flow,
+    .reservation,
+    .access {
+        background: var(--luxury-dark) !important;
+    }
+
+    /* ----- Header - Premium Glass ----- */
+    .header {
+        background: var(--glass-dark) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-bottom: 1px solid var(--glass-border) !important;
+    }
+
+    .header.scrolled {
+        background: rgba(10, 10, 10, 0.95) !important;
+    }
+
+    .logo-text {
+        color: var(--premium-gold) !important;
+    }
+
+    .logo-sub {
+        color: var(--text-on-dark-muted) !important;
+    }
+
+    /* ----- Mobile Menu - Premium ----- */
+    .mobile-menu {
+        background: var(--luxury-dark) !important;
+    }
+
+    .mobile-nav-link {
+        color: var(--text-on-dark) !important;
+        border-bottom: 1px solid var(--glass-border) !important;
+    }
+
+    /* ----- Loading Screen - Premium ----- */
+    .loading-screen {
+        background: var(--luxury-dark) !important;
+    }
+
+    .loading-logo {
+        color: var(--premium-gold) !important;
+    }
+
+    /* ----- Placeholder Overrides ----- */
+    .why-image-placeholder,
+    .feature-image-placeholder,
+    .menu-item-image-placeholder,
+    .flow-image-placeholder {
+        display: none !important;
+    }
+
+    /* ----- Scroll Indicator ----- */
+    .hero-scroll span {
+        color: var(--text-on-dark-muted) !important;
+    }
+
+    .hero-scroll-line {
+        background: var(--premium-gold) !important;
+    }
+}
+
+/* ----- Very Small Screens Premium ----- */
+@media (max-width: 374px) {
+    .fixed-cta-btn {
+        padding: 14px 20px 12px !important;
+        border-radius: 18px !important;
+    }
+
+    .fixed-cta-badge {
+        font-size: 9px !important;
+        padding: 3px 10px !important;
+    }
+
+    .fixed-cta-text {
+        font-size: 13px !important;
+    }
+
+    .hero-title-main {
+        font-size: clamp(1.4rem, 7vw, 1.8rem) !important;
+    }
+
+    .why-title,
+    .feature-title,
+    .menu-item-title {
+        font-size: 16px !important;
+    }
+
+    .why-text,
+    .feature-text,
+    .menu-item-desc,
+    .voice-text,
+    .flow-desc,
+    .faq-answer p {
+        font-size: 13px !important;
+    }
+}
+
+/* ----- Desktop Luxury Enhancements ----- */
+@media (min-width: 768px) {
+    body {
+        background: var(--luxury-dark) !important;
+    }
+
+    .section {
+        background: var(--luxury-dark) !important;
+    }
+
+    .why-item:hover,
+    .feature-item:hover,
+    .menu-item:hover,
+    .faq-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 30px var(--premium-gold-glow);
+        border-color: rgba(212, 175, 55, 0.5) !important;
+    }
+
+    .gallery-item:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+}
