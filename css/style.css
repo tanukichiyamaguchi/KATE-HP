@@ -4512,3 +4512,548 @@ body.mens-theme .hero-overlay-gradient {
         page-break-inside: avoid;
     }
 }
+
+/* =====================================================
+   COMPREHENSIVE MOBILE UI OVERHAUL v2.0
+   Complete redesign for mobile optimization
+   ===================================================== */
+
+@media (max-width: 767px) {
+
+    /* ----- LINE CTA 完全リデザイン ----- */
+    .fixed-cta {
+        bottom: 20px !important;
+        right: 16px !important;
+        left: auto !important;
+        z-index: 9999;
+    }
+
+    .fixed-cta-btn {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        background: linear-gradient(145deg, #08d861 0%, #06C755 50%, #05a647 100%);
+        color: var(--white);
+        padding: 14px 20px 12px 20px;
+        border-radius: 16px;
+        box-shadow:
+            0 4px 0 #049a3d,
+            0 6px 15px rgba(6, 199, 85, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        min-width: 100px;
+        text-decoration: none;
+    }
+
+    /* バッジをボタン内部に配置 - 見切れ完全解消 */
+    .fixed-cta-badge {
+        position: static !important;
+        transform: none !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 10px;
+        margin-bottom: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        white-space: nowrap;
+    }
+
+    .fixed-cta .line-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .fixed-cta-text {
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .fixed-cta-sub {
+        font-size: 9px;
+        opacity: 0.9;
+    }
+
+    /* ----- ヒーローセクション改善 ----- */
+    .hero-badge {
+        background: rgba(0, 0, 0, 0.7) !important;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(201, 169, 98, 0.3) !important;
+        padding: 8px 16px !important;
+        border-radius: 30px !important;
+        margin-bottom: var(--space-lg);
+    }
+
+    .hero-badge span {
+        font-size: 12px !important;
+        color: var(--gold-light) !important;
+    }
+
+    .hero-title-main {
+        font-size: clamp(1.5rem, 7vw, 2rem) !important;
+        line-height: 1.4 !important;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    .hero-title-en {
+        font-size: 11px !important;
+        letter-spacing: 0.15em;
+        opacity: 0.8;
+    }
+
+    .hero-lead {
+        font-size: 13px !important;
+        line-height: 1.9 !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+        text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
+        background: rgba(0, 0, 0, 0.4) !important;
+        padding: 14px 16px !important;
+        border-radius: 10px !important;
+        margin: var(--space-lg) 0;
+    }
+
+    .hero-stats {
+        background: rgba(0, 0, 0, 0.6) !important;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 16px !important;
+        border-radius: 14px !important;
+        border: 1px solid rgba(201, 169, 98, 0.25) !important;
+    }
+
+    .hero-stat-number {
+        font-size: 1.5rem;
+        text-shadow: 0 2px 10px rgba(201, 169, 98, 0.5);
+    }
+
+    .hero-stat-label {
+        font-size: 11px;
+    }
+
+    .hero-reassurance {
+        font-size: 11px !important;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 8px 14px !important;
+        border-radius: 8px;
+        margin-top: var(--space-md);
+        color: rgba(255, 255, 255, 0.85) !important;
+    }
+
+    /* ----- Features/Whyセクション テキスト視認性大幅改善 ----- */
+    .why-item,
+    .feature-item {
+        background: linear-gradient(145deg, rgba(35, 35, 35, 0.98), rgba(20, 20, 20, 1)) !important;
+        border: 1px solid rgba(201, 169, 98, 0.25) !important;
+        padding: var(--space-xl) var(--space-lg) !important;
+        border-radius: 14px !important;
+        position: relative;
+    }
+
+    .why-title,
+    .feature-title {
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        color: var(--white) !important;
+        margin-bottom: var(--space-sm);
+        line-height: 1.5;
+    }
+
+    .why-text,
+    .feature-text {
+        font-size: 14px !important;
+        line-height: 2 !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    .why-number {
+        font-size: 2.5rem !important;
+        color: var(--gold) !important;
+        opacity: 0.4 !important;
+        position: absolute;
+        top: 12px;
+        right: 16px;
+    }
+
+    /* ----- Gallery/BeforeAfter 文字かぶり完全修正 ----- */
+    .gallery-main {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    .gallery-main-placeholder {
+        min-height: 280px !important;
+        padding: var(--space-3xl) var(--space-lg) 80px var(--space-lg) !important;
+        background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-900) 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .gallery-main-placeholder span {
+        font-size: 11px !important;
+        letter-spacing: 0.15em;
+        color: var(--gray-500) !important;
+        opacity: 0.5 !important;
+    }
+
+    .gallery-main-placeholder p {
+        font-size: 10px !important;
+        color: var(--gray-600) !important;
+        opacity: 0.4 !important;
+    }
+
+    /* Before/After ラベルを下部に完全固定 */
+    .gallery-main-label {
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: auto !important;
+        transform: none !important;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.8) 100%) !important;
+        backdrop-filter: blur(10px);
+        padding: 18px 20px !important;
+        border-radius: 0 !important;
+        justify-content: center;
+        gap: var(--space-lg);
+    }
+
+    .gallery-main-label span {
+        font-size: 14px !important;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+    }
+
+    .gallery-main-label .before {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    .gallery-main-label .after {
+        color: var(--gold) !important;
+    }
+
+    .gallery-main-label .divider {
+        width: 40px !important;
+        background: var(--gold);
+    }
+
+    .gallery-grid {
+        gap: 12px !important;
+        margin-top: var(--space-lg);
+    }
+
+    .gallery-item {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .gallery-item-placeholder {
+        min-height: 130px !important;
+        padding: var(--space-lg) !important;
+        background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-900) 100%);
+    }
+
+    .gallery-item-placeholder span {
+        font-size: 10px !important;
+        color: var(--gray-500) !important;
+        opacity: 0.4 !important;
+    }
+
+    /* ----- メニューセクション 視認性大幅改善 ----- */
+    .menu-item {
+        background: linear-gradient(145deg, rgba(30, 30, 30, 1), rgba(18, 18, 18, 1)) !important;
+        border: 1px solid rgba(201, 169, 98, 0.2) !important;
+        border-radius: 14px !important;
+        padding: var(--space-xl) var(--space-lg) !important;
+    }
+
+    .menu-item-title {
+        font-size: 17px !important;
+        font-weight: 700 !important;
+        color: var(--white) !important;
+        margin-bottom: var(--space-xs);
+    }
+
+    .menu-item-desc {
+        font-size: 14px !important;
+        line-height: 1.9 !important;
+        color: rgba(255, 255, 255, 0.85) !important;
+    }
+
+    .menu-item-price {
+        font-size: 1.3rem !important;
+        color: var(--gold) !important;
+    }
+
+    .menu-item-price-off {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a5a) !important;
+        font-size: 12px !important;
+        padding: 5px 12px !important;
+        border-radius: 8px;
+    }
+
+    .menu-item-time {
+        font-size: 12px !important;
+        color: rgba(255, 255, 255, 0.65) !important;
+    }
+
+    .menu-item-points li {
+        font-size: 13px !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    /* ----- 口コミセクション 視認性改善 ----- */
+    .voice-card {
+        background: linear-gradient(145deg, rgba(35, 35, 35, 0.98), rgba(22, 22, 22, 1)) !important;
+        border: 1px solid rgba(201, 169, 98, 0.2) !important;
+        border-radius: 14px !important;
+        padding: var(--space-xl) var(--space-lg) !important;
+        width: 280px;
+    }
+
+    .voice-text {
+        font-size: 14px !important;
+        line-height: 1.9 !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    .voice-name {
+        font-size: 14px !important;
+        color: var(--white) !important;
+    }
+
+    .voice-menu {
+        font-size: 12px !important;
+        color: var(--gold) !important;
+    }
+
+    /* ----- FAQ 視認性大幅改善 ----- */
+    .faq-item {
+        background: rgba(25, 25, 25, 0.95) !important;
+        border: 1px solid rgba(201, 169, 98, 0.15) !important;
+        border-radius: 12px !important;
+        margin-bottom: var(--space-sm);
+        overflow: hidden;
+    }
+
+    .faq-question {
+        padding: var(--space-md) var(--space-lg) !important;
+        color: var(--white) !important;
+        font-size: 15px !important;
+    }
+
+    .faq-answer {
+        background: rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .faq-answer p {
+        font-size: 14px !important;
+        line-height: 1.9 !important;
+        color: rgba(255, 255, 255, 0.85) !important;
+        padding: var(--space-md) var(--space-lg) !important;
+    }
+
+    /* ----- 施術の流れ 視認性大幅改善 ----- */
+    .flow-item {
+        background: linear-gradient(145deg, rgba(30, 30, 30, 0.98), rgba(18, 18, 18, 1)) !important;
+        border: 1px solid rgba(201, 169, 98, 0.2) !important;
+        border-radius: 14px !important;
+        padding: var(--space-xl) var(--space-lg) !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .flow-step-number {
+        background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%) !important;
+        width: 48px !important;
+        height: 48px !important;
+        font-size: 15px !important;
+        font-weight: 700;
+    }
+
+    .flow-title {
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        color: var(--white) !important;
+    }
+
+    .flow-desc {
+        font-size: 14px !important;
+        line-height: 1.9 !important;
+        color: rgba(255, 255, 255, 0.85) !important;
+    }
+
+    /* ----- セクションヘッダー 視認性改善 ----- */
+    .section-title-ja {
+        font-size: clamp(1.3rem, 5.5vw, 1.6rem) !important;
+        color: var(--white) !important;
+        text-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
+    }
+
+    .section-title-en {
+        font-size: 11px !important;
+        letter-spacing: 0.15em;
+        opacity: 0.75;
+    }
+
+    .section-lead {
+        font-size: 14px !important;
+        line-height: 1.85 !important;
+        color: rgba(255, 255, 255, 0.85) !important;
+    }
+
+    .section-label {
+        font-size: 11px !important;
+        letter-spacing: 0.2em;
+    }
+
+    /* ----- 予約セクション 視認性大幅改善 ----- */
+    .reservation-inner {
+        background: rgba(0, 0, 0, 0.75) !important;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: var(--space-2xl) var(--space-lg) !important;
+        border-radius: 18px !important;
+        border: 1px solid rgba(201, 169, 98, 0.25) !important;
+    }
+
+    .reservation-title {
+        font-size: 1.3rem !important;
+        color: var(--white) !important;
+        text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .reservation-desc {
+        font-size: 14px !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    /* ----- アクセスセクション 視認性改善 ----- */
+    .access-info {
+        background: rgba(25, 25, 25, 0.95) !important;
+        border-radius: 14px !important;
+        padding: var(--space-xl) var(--space-lg) !important;
+        border: 1px solid rgba(201, 169, 98, 0.15);
+    }
+
+    .access-info dt {
+        font-size: 13px !important;
+        color: var(--gold) !important;
+    }
+
+    .access-info dd {
+        font-size: 15px !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+        line-height: 1.7;
+    }
+
+    /* ----- フッター 視認性改善 ----- */
+    .footer-nav-link {
+        font-size: 13px !important;
+        color: rgba(255, 255, 255, 0.75) !important;
+        padding: 10px 14px;
+    }
+
+    .footer-copyright {
+        font-size: 11px !important;
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    /* ----- モバイル動画対応改善 ----- */
+    .hero-video-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .hero-video {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+
+    .hero-video-fallback {
+        background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%) !important;
+    }
+
+    /* ----- プレースホルダー画像非表示 ----- */
+    .why-image-placeholder,
+    .feature-image-placeholder,
+    .menu-item-image-placeholder {
+        display: none !important;
+    }
+
+    /* ----- ボタン全体改善 ----- */
+    .btn-3d {
+        padding: 18px 28px !important;
+        border-radius: 14px !important;
+    }
+
+    .btn-3d-badge {
+        font-size: 11px !important;
+    }
+
+    .btn-3d-text {
+        font-size: 16px !important;
+    }
+
+    .btn-3d-sub {
+        font-size: 11px !important;
+    }
+}
+
+/* ----- 極小画面 (iPhone SE等) 追加調整 v2 ----- */
+@media (max-width: 374px) {
+    .fixed-cta-btn {
+        padding: 12px 16px 10px 16px !important;
+        min-width: 90px !important;
+    }
+
+    .fixed-cta-badge {
+        font-size: 9px !important;
+        padding: 2px 8px !important;
+    }
+
+    .fixed-cta-text {
+        font-size: 12px !important;
+    }
+
+    .hero-title-main {
+        font-size: 1.35rem !important;
+    }
+
+    .hero-lead {
+        font-size: 12px !important;
+        padding: 12px 14px !important;
+    }
+
+    .why-title,
+    .feature-title,
+    .menu-item-title {
+        font-size: 16px !important;
+    }
+
+    .why-text,
+    .feature-text,
+    .menu-item-desc,
+    .voice-text,
+    .flow-desc,
+    .faq-answer p {
+        font-size: 13px !important;
+    }
+
+    .gallery-main-placeholder {
+        min-height: 220px !important;
+    }
+}
