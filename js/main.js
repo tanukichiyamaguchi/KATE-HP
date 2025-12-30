@@ -345,6 +345,49 @@
     }
 
     // =====================================================
+    // Hero Video Handler
+    // =====================================================
+    function initHeroVideo() {
+        const video = document.querySelector('.hero-video');
+        const fallback = document.querySelector('.hero-video-fallback');
+
+        if (!video || !fallback) return;
+
+        // Hide fallback when video can play
+        video.addEventListener('canplay', () => {
+            fallback.style.opacity = '0';
+            fallback.style.visibility = 'hidden';
+        });
+
+        video.addEventListener('playing', () => {
+            fallback.style.opacity = '0';
+            fallback.style.visibility = 'hidden';
+        });
+
+        // Show fallback if video fails to load
+        video.addEventListener('error', () => {
+            fallback.style.opacity = '1';
+            fallback.style.visibility = 'visible';
+            video.style.display = 'none';
+        });
+
+        // If video is already ready (cached)
+        if (video.readyState >= 3) {
+            fallback.style.opacity = '0';
+            fallback.style.visibility = 'hidden';
+        }
+
+        // Try to play video (handles autoplay restrictions)
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => {
+                // Autoplay was prevented, show fallback
+                console.log('Video autoplay prevented');
+            });
+        }
+    }
+
+    // =====================================================
     // Parallax Effect (Hero) - Disabled on Mobile
     // =====================================================
     function initParallax() {
@@ -641,6 +684,7 @@
 
         // Core functionality
         initLoading();
+        initHeroVideo();
         initHeaderScroll();
         initMobileMenu();
         initSmoothScroll();

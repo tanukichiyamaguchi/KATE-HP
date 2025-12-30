@@ -560,6 +560,8 @@ ul, ol {
     background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 50%, var(--gray-900) 100%);
     background-size: cover;
     background-position: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    z-index: 1;
 }
 
 .hero-overlay {
