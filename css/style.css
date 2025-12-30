@@ -17,6 +17,12 @@
     --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F5E6C8 25%, #C9A962 50%, #B8963D 100%);
     --gold-gradient-subtle: linear-gradient(135deg, #C9A962 0%, #D4B978 100%);
 
+    /* LINE Green */
+    --line-green: #06C755;
+    --line-green-dark: #05B34C;
+    --line-green-darker: #049A42;
+    --line-gradient: linear-gradient(180deg, #06C755 0%, #05B34C 100%);
+
     /* Dark Theme Colors */
     --black: #0A0A0A;
     --dark-900: #0D0D0D;
@@ -712,7 +718,7 @@ ul, ol {
 }
 
 /* =====================================================
-   Buttons
+   Buttons - 3D Style with High Visibility
    ===================================================== */
 .btn-3d {
     position: relative;
@@ -720,67 +726,136 @@ ul, ol {
     align-items: center;
     justify-content: center;
     padding: var(--space-lg) var(--space-2xl);
-    font-weight: 500;
+    font-weight: 600;
     text-decoration: none;
     overflow: hidden;
     transition: all var(--transition-base);
     cursor: pointer;
     border: none;
+    border-radius: var(--radius-md);
 }
 
+/* Gold Button - 3D Style */
 .btn-3d-gold {
-    background: var(--gold);
+    background: linear-gradient(180deg, #D4B978 0%, #C9A962 30%, #B8963D 100%);
     color: var(--black);
+    box-shadow:
+        0 5px 0 #8B7632,
+        0 8px 20px rgba(201, 169, 98, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(0);
+}
+
+.btn-3d-gold::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, transparent 100%);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    pointer-events: none;
 }
 
 .btn-3d-gold:hover {
-    background: var(--gold-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-gold);
+    transform: translateY(-3px);
+    box-shadow:
+        0 8px 0 #8B7632,
+        0 12px 28px rgba(201, 169, 98, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.1);
 }
 
+.btn-3d-gold:active {
+    transform: translateY(3px);
+    box-shadow:
+        0 2px 0 #8B7632,
+        0 4px 10px rgba(201, 169, 98, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* White Button - 3D Style */
 .btn-3d-white {
-    background: var(--white);
+    background: linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 30%, #EEEEEE 100%);
     color: var(--black);
+    box-shadow:
+        0 5px 0 #CCCCCC,
+        0 8px 20px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+    transform: translateY(0);
+}
+
+.btn-3d-white::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, transparent 100%);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    pointer-events: none;
 }
 
 .btn-3d-white:hover {
-    background: var(--white-90);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow:
+        0 8px 0 #CCCCCC,
+        0 12px 28px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn-3d-white:active {
+    transform: translateY(3px);
+    box-shadow:
+        0 2px 0 #CCCCCC,
+        0 4px 10px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .btn-3d-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
     position: relative;
     z-index: 1;
 }
 
 .btn-3d-badge {
-    font-size: 10px;
-    font-weight: 600;
+    font-size: 11px;
+    font-weight: 700;
     letter-spacing: 0.05em;
-    background: var(--black);
-    color: var(--gold);
-    padding: 2px 10px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: var(--black);
+    padding: 3px 12px;
     margin-bottom: 4px;
+    border-radius: var(--radius-full);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .btn-3d-white .btn-3d-badge {
-    background: var(--gold);
-    color: var(--black);
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    color: var(--white);
 }
 
 .btn-3d-text {
     font-size: var(--text-lg);
+    font-weight: 700;
     letter-spacing: 0.1em;
 }
 
 .btn-3d-sub {
     font-size: var(--text-xs);
-    opacity: 0.7;
+    font-weight: 500;
+    opacity: 0.8;
     letter-spacing: 0.05em;
 }
 
@@ -790,7 +865,7 @@ ul, ol {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, var(--white-30), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
     transition: left 0.6s ease;
 }
 
@@ -818,21 +893,25 @@ ul, ol {
     margin-right: var(--space-sm);
 }
 
+/* Outline Button */
 .btn-outline-light {
     display: inline-flex;
     align-items: center;
     gap: var(--space-sm);
     font-size: var(--text-sm);
+    font-weight: 500;
     letter-spacing: 0.1em;
     color: var(--white-70);
     border: 1px solid var(--white-30);
     padding: var(--space-md) var(--space-xl);
+    border-radius: var(--radius-md);
     transition: all var(--transition-base);
 }
 
 .btn-outline-light:hover {
     color: var(--gold);
     border-color: var(--gold);
+    background: rgba(201, 169, 98, 0.1);
 }
 
 /* =====================================================
@@ -2149,83 +2228,157 @@ ul, ol {
 }
 
 /* =====================================================
-   Fixed CTA
+   Fixed CTA - LINE Button (3D Green Style)
    ===================================================== */
 .fixed-cta {
     position: fixed;
     bottom: var(--space-xl);
     right: var(--space-xl);
     z-index: var(--z-fixed);
+    filter: drop-shadow(0 8px 24px rgba(6, 199, 85, 0.4));
 }
 
 @media (max-width: 768px) {
     .fixed-cta {
-        bottom: 0;
-        right: 0;
-        left: 0;
+        bottom: var(--space-lg);
+        right: var(--space-lg);
+        left: auto;
     }
 }
 
 .fixed-cta-btn {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: var(--space-sm);
-    background: var(--gold);
-    color: var(--black);
-    padding: var(--space-md) var(--space-xl);
-    font-weight: 500;
-    transition: all var(--transition-base);
+    justify-content: center;
+    gap: 4px;
+    background: linear-gradient(180deg, #06C755 0%, #05a647 50%, #049A42 100%);
+    color: var(--white);
+    padding: var(--space-lg) var(--space-xl);
+    font-weight: 600;
+    border-radius: var(--radius-lg);
     position: relative;
+    transition: all var(--transition-base);
+    box-shadow:
+        0 6px 0 #038a38,
+        0 8px 16px rgba(6, 199, 85, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.15);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    min-width: 160px;
+    transform: translateY(0);
+}
+
+.fixed-cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    pointer-events: none;
+}
+
+.fixed-cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 9px 0 #038a38,
+        0 12px 24px rgba(6, 199, 85, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.fixed-cta-btn:active {
+    transform: translateY(4px);
+    box-shadow:
+        0 2px 0 #038a38,
+        0 4px 8px rgba(6, 199, 85, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 768px) {
     .fixed-cta-btn {
-        justify-content: center;
-        padding: var(--space-lg) var(--space-xl);
+        padding: var(--space-md) var(--space-lg);
+        min-width: 140px;
+        border-radius: var(--radius-xl);
     }
-}
-
-.fixed-cta-btn:hover {
-    background: var(--gold-dark);
 }
 
 .fixed-cta-badge {
     position: absolute;
-    top: -8px;
+    top: -12px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 10px;
-    font-weight: 600;
-    background: var(--black);
-    color: var(--gold);
-    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: var(--black);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
     white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(255, 165, 0, 0.5);
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.05); }
 }
 
 @media (max-width: 768px) {
     .fixed-cta-badge {
-        display: none;
+        font-size: 10px;
+        padding: 3px 10px;
+        top: -10px;
     }
 }
 
+.fixed-cta-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
 .fixed-cta-text {
-    font-size: var(--text-sm);
-    letter-spacing: 0.1em;
+    font-size: var(--text-base);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+@media (max-width: 768px) {
+    .fixed-cta-text {
+        font-size: var(--text-sm);
+    }
 }
 
 .fixed-cta-sub {
     font-size: var(--text-xs);
-    opacity: 0.7;
+    font-weight: 400;
+    opacity: 0.9;
+    letter-spacing: 0.05em;
 }
 
 @media (max-width: 768px) {
     .fixed-cta-sub {
-        display: none;
+        font-size: 10px;
     }
 }
 
 .line-icon {
     flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+}
+
+@media (max-width: 768px) {
+    .line-icon {
+        width: 20px;
+        height: 20px;
+    }
 }
 
 /* =====================================================
