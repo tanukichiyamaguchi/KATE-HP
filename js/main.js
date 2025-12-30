@@ -299,16 +299,15 @@
                 // Close all other items
                 faqItems.forEach(otherItem => {
                     const otherQuestion = otherItem.querySelector('.faq-question');
-                    const otherAnswer = otherItem.querySelector('.faq-answer');
                     if (otherItem !== item) {
                         otherQuestion?.setAttribute('aria-expanded', 'false');
-                        otherAnswer?.classList.remove('active');
+                        otherItem.classList.remove('active');
                     }
                 });
 
                 // Toggle current item
                 question.setAttribute('aria-expanded', !isExpanded);
-                answer.classList.toggle('active');
+                item.classList.toggle('active');
             });
         });
     }
