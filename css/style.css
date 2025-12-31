@@ -28,16 +28,16 @@
     --gold-border-hover: rgba(212, 185, 120, 0.6);
 
     /* Dark Theme Colors - Lightened */
-    --black: #121212;
-    --dark-900: #161616;
-    --dark-800: #1C1C1C;
-    --dark-700: #222222;
-    --dark-600: #2A2A2A;
-    --dark-500: #333333;
-    --dark-400: #3D3D3D;
-    --dark-300: #4A4A4A;
-    --dark-200: #5A5A5A;
-    --dark-100: #6A6A6A;
+    --black: #181818;
+    --dark-900: #1E1E1E;
+    --dark-800: #252525;
+    --dark-700: #2C2C2C;
+    --dark-600: #333333;
+    --dark-500: #3D3D3D;
+    --dark-400: #474747;
+    --dark-300: #525252;
+    --dark-200: #5E5E5E;
+    --dark-100: #6E6E6E;
 
     /* Light Colors */
     --white: #FFFFFF;
@@ -1090,6 +1090,7 @@ ul, ol {
     padding: var(--space-2xl);
     background: var(--dark-800);
     border: 1px solid var(--gold-border);
+    border-radius: var(--radius-lg);
     position: relative;
     transition: border-color var(--transition-base);
 }
@@ -1209,6 +1210,7 @@ ul, ol {
     padding: var(--space-2xl);
     background: var(--white-05);
     border: 1px solid var(--gold-border);
+    border-radius: var(--radius-lg);
     transition: all var(--transition-base);
     position: relative;
 }
@@ -1331,6 +1333,7 @@ ul, ol {
     background: var(--dark-800);
     padding: var(--space-xl);
     border: 1px solid var(--gold-border);
+    border-radius: var(--radius-lg);
     position: relative;
     transition: all var(--transition-base);
 }
@@ -1502,6 +1505,7 @@ ul, ol {
     overflow: hidden;
     background: var(--dark-800);
     border: 1px solid var(--gold-border);
+    border-radius: var(--radius-lg);
 }
 
 .gallery-main-image {
@@ -1583,6 +1587,7 @@ ul, ol {
     overflow: hidden;
     background: var(--dark-800);
     border: 1px solid var(--gold-border);
+    border-radius: var(--radius-lg);
     transition: border-color var(--transition-base);
 }
 
@@ -1691,6 +1696,7 @@ ul, ol {
     flex: 0 0 320px;
     background: var(--dark-800);
     border: 1px solid var(--gold-border);
+    border-radius: var(--radius-lg);
     padding: var(--space-xl);
     transition: border-color var(--transition-base);
 }
@@ -1841,6 +1847,7 @@ ul, ol {
 .faq-item {
     background: var(--dark-800);
     border: 1px solid var(--gold-border);
+    border-radius: var(--radius-lg);
     transition: border-color var(--transition-base);
 }
 
@@ -1974,6 +1981,7 @@ ul, ol {
     padding: var(--space-xl);
     background: var(--dark-800);
     border: 1px solid var(--gold-border);
+    border-radius: var(--radius-lg);
     transition: border-color var(--transition-base);
 }
 
