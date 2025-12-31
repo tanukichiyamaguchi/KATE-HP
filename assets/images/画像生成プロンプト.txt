@@ -1,0 +1,247 @@
+╔══════════════════════════════════════════════════════════════╗
+║         KATE 眉毛サロン - AI画像生成プロンプト集             ║
+║              Midjourney / DALL-E / Stable Diffusion用        ║
+╚══════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+★ 使用方法
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. 以下のプロンプトをコピー
+2. Midjourney/DALL-E/Stable Diffusionに貼り付け
+3. 生成後、squoosh.app でWebP形式に変換
+4. 指定のファイル名で保存してアップロード
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. hero-poster.webp【必須・最優先】
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+サイズ: 1920 × 1080 px（16:9）
+
+【Midjourneyプロンプト】
+Luxury eyebrow beauty salon interior, Japanese aesthetic, dark moody atmosphere with golden accent lighting, professional treatment chair, minimalist black and gold decor, soft diffused lighting from above, high-end spa ambiance, clean modern design, cinematic composition, warm golden highlights on dark background, 8k quality, professional photography --ar 16:9 --v 6
+
+【DALL-Eプロンプト】
+A luxurious Japanese eyebrow beauty salon interior with a dark, sophisticated atmosphere. The space features black walls with subtle golden accent lighting, a professional treatment chair in the center, and minimalist modern decor. Soft ambient lighting creates a high-end spa feel. The overall mood is elegant and premium, with warm golden highlights contrasting against the dark background. Professional architectural photography style, 8k resolution.
+
+【日本語説明】
+高級感のある眉毛サロンの内観。黒を基調とした空間にゴールドのアクセント照明。
+施術チェアが配置され、清潔感と洗練された雰囲気を演出。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. og-image.webp【必須】
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+サイズ: 1200 × 630 px（1.91:1）
+
+【Midjourneyプロンプト】
+Social media banner design for luxury eyebrow salon "KATE", black background with elegant gold typography, before and after eyebrow transformation split image, Japanese male model with perfectly groomed eyebrows, text overlay area on left side, premium gold accent elements, professional marketing design, clean minimal layout --ar 1.91:1 --v 6
+
+【DALL-Eプロンプト】
+A professional social media banner for a luxury eyebrow salon called "KATE". The design features a dark black background with elegant gold typography. On the right side, show a subtle before/after eyebrow transformation. Include decorative gold accent elements and leave space on the left for text overlay. The overall design should feel premium, modern, and suitable for LINE/Twitter sharing. Aspect ratio 1.91:1.
+
+【Canvaで作成する場合の指示】
+- 背景: #0A0A0A（ほぼ黒）
+- メインテキスト「KATE」: #D4AF37（ゴールド）、大きく中央配置
+- サブテキスト「眉毛サロン 蒲田」: #FFFFFF（白）
+- キャッチコピー「初回70%OFF」: #D4AF37（ゴールド）
+- ビフォーアフター画像を右側に配置（任意）
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. logo.webp【推奨】
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+サイズ: 200 × 60 px（3.3:1）
+
+【Midjourneyプロンプト】
+Minimalist luxury logo design, word "KATE" in elegant serif typography, gold color #D4AF37 on transparent background, subtle shine effect, high-end beauty salon branding, clean professional design, vector style --ar 3.3:1 --v 6
+
+【DALL-Eプロンプト】
+A minimalist luxury logo featuring the word "KATE" in elegant serif typography. The text is gold colored (#D4AF37) with a subtle metallic shine. The background should be transparent or very dark. The design conveys premium beauty salon branding with clean, professional aesthetics. Horizontal layout, 3.3:1 aspect ratio.
+
+【Canva/Illustratorで作成する場合の指示】
+- フォント: Didot, Bodoni, または Playfair Display
+- 文字色: #D4AF37（ゴールド）
+- 背景: 透過（PNG/WebP）
+- スタイル: 高級感のあるセリフ体
+- オプション: 文字にゴールドグラデーション
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. menu-mens-brow-wax.webp【重要】
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+サイズ: 800 × 600 px（4:3）
+
+【Midjourneyプロンプト】
+Professional eyebrow waxing treatment on young Japanese businessman, clean groomed eyebrows, close-up of eye and eyebrow area, beauty salon setting, soft professional lighting, natural skin texture, masculine yet refined look, high quality beauty photography, warm tones --ar 4:3 --v 6
+
+【DALL-Eプロンプト】
+A close-up photograph of a young Japanese businessman receiving professional eyebrow waxing treatment at a luxury beauty salon. Focus on the eye and eyebrow area showing clean, perfectly groomed eyebrows. The lighting is soft and professional, highlighting natural skin texture. The overall mood is masculine yet refined, conveying professionalism and cleanliness. Beauty photography style, 4:3 aspect ratio.
+
+【日本語説明】
+眉毛WAX施術のイメージ写真。20-30代の日本人男性。
+眉毛周辺のクローズアップ。清潔感のある仕上がり。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. menu-mens-brow-perm.webp【重要】
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+サイズ: 800 × 600 px（4:3）
+
+【Midjourneyプロンプト】
+Hollywood brow lift result on Japanese male model, eyebrows lifted upward with natural fluffy texture, close-up of perfectly styled eyebrows, modern masculine grooming, professional beauty salon result, soft studio lighting, clean sharp focus on eyebrow detail --ar 4:3 --v 6
+
+【DALL-Eプロンプト】
+A close-up photograph showing the result of a Hollywood brow lift treatment on a Japanese male model. The eyebrows are lifted upward with a natural, fluffy texture that looks styled yet effortless. Focus on the perfectly groomed eyebrows with each hair visible and lifted. Professional beauty photography with soft studio lighting, conveying modern masculine grooming. 4:3 aspect ratio.
+
+【日本語説明】
+ハリウッドブロウリフト（眉毛パーマ）の仕上がり写真。
+眉毛が上向きに立ち上がり、ふんわりとした質感。
+自然でありながらスタイリッシュな印象。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6. gallery-1.webp（20代男性・営業職）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+サイズ: 800 × 800 px（1:1）
+
+【Midjourneyプロンプト】
+Before and after eyebrow grooming comparison, young Japanese salesman in his 20s, split image left-right composition, left side shows messy ungroomed eyebrows, right side shows clean professionally shaped eyebrows, same lighting and angle both sides, professional beauty photography, text overlay "BEFORE" and "AFTER", square format --ar 1:1 --v 6
+
+【DALL-Eプロンプト】
+A before and after comparison photo of eyebrow grooming for a young Japanese salesman in his 20s. The image is split vertically: the left side labeled "BEFORE" shows messy, ungroomed eyebrows, while the right side labeled "AFTER" shows clean, professionally shaped eyebrows. Both sides use identical lighting and camera angle for fair comparison. Professional beauty photography, square format 1:1.
+
+【日本語説明】
+20代営業職男性のビフォーアフター。
+左：ボサボサの眉毛 → 右：整った眉毛
+同じ照明・角度で撮影し、変化がわかりやすいように。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7. gallery-2.webp（30代男性・経営者）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+サイズ: 800 × 800 px（1:1）
+
+【Midjourneyプロンプト】
+Before and after eyebrow transformation, Japanese male CEO in his 30s, sophisticated mature look, split comparison left-right, left shows thick unruly eyebrows, right shows refined elegant eyebrow shape, professional executive appearance, high-end grooming result, studio lighting, "BEFORE AFTER" text overlay --ar 1:1 --v 6
+
+【DALL-Eプロンプト】
+A before and after comparison of eyebrow grooming for a Japanese male CEO in his 30s with a sophisticated, mature appearance. Split vertically: left side "BEFORE" shows thick, unruly eyebrows, right side "AFTER" shows refined, elegantly shaped eyebrows that enhance his executive presence. Professional studio lighting, square format 1:1.
+
+【日本語説明】
+30代経営者男性のビフォーアフター。
+太くて整っていない眉毛が、洗練された形に変化。
+知的で信頼感のある印象に。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+8. gallery-3.webp（20代男性・就活生）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+サイズ: 800 × 800 px（1:1）
+
+【Midjourneyプロンプト】
+Before after eyebrow grooming for Japanese male job seeker student, early 20s, fresh clean appearance, split comparison image, left shows natural untidy eyebrows, right shows neat professional eyebrows suitable for job interviews, bright clean lighting, youthful energy, square format --ar 1:1 --v 6
+
+【DALL-Eプロンプト】
+A before and after eyebrow grooming comparison for a Japanese male university student/job seeker in his early 20s. Split image: left "BEFORE" shows natural, slightly messy eyebrows, right "AFTER" shows neat, professionally groomed eyebrows perfect for job interviews. Bright, clean lighting conveys a fresh and professional appearance. Square format 1:1.
+
+【日本語説明】
+就活生（20代前半）のビフォーアフター。
+就職活動にふさわしい、清潔感のある眉毛に変身。
+第一印象アップを強調。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9. gallery-4.webp（40代男性・管理職）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+サイズ: 800 × 800 px（1:1）
+
+【Midjourneyプロンプト】
+Before after eyebrow grooming transformation, Japanese male manager in his 40s, distinguished mature appearance, split comparison, left shows aging sparse eyebrows with gray hairs, right shows fuller well-groomed eyebrows with refined shape, professional dignified look, warm studio lighting --ar 1:1 --v 6
+
+【DALL-Eプロンプト】
+A before and after eyebrow transformation for a Japanese male manager in his 40s with a distinguished, mature appearance. Left side "BEFORE" shows aging eyebrows that are sparse with some gray hairs. Right side "AFTER" shows fuller, well-groomed eyebrows with a refined shape that looks more youthful. Professional studio lighting, square format 1:1.
+
+【日本語説明】
+40代管理職男性のビフォーアフター。
+年齢による眉毛の薄さ・白髪を整え、若々しい印象に。
+威厳と清潔感を両立。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+10. gallery-5.webp（女性のビフォーアフター）【任意】
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+サイズ: 800 × 800 px（1:1）
+
+【Midjourneyプロンプト】
+Before after eyebrow transformation for young Japanese woman, elegant feminine beauty, split comparison left-right, left shows thin over-plucked eyebrows, right shows natural full fluffy Korean-style eyebrows, soft glamorous lighting, beautiful skin, beauty salon result --ar 1:1 --v 6
+
+【DALL-Eプロンプト】
+A before and after eyebrow transformation for a young Japanese woman. Split comparison: left "BEFORE" shows thin, over-plucked eyebrows, right "AFTER" shows natural, full, fluffy Korean-style eyebrows that frame the face beautifully. Soft, glamorous lighting with beautiful skin texture. Elegant and feminine beauty photography, square format 1:1.
+
+【日本語説明】
+女性のビフォーアフター。
+細すぎる眉毛から、ふんわり自然な韓国風眉毛へ。
+フェミニンで上品な印象。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+11. gallery-6.webp（サロン内観）【任意】
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+サイズ: 800 × 800 px（1:1）
+
+【Midjourneyプロンプト】
+Luxury eyebrow beauty salon interior, Japanese minimalist design, black and gold color scheme, comfortable treatment chair, warm ambient lighting, clean modern aesthetic, premium spa atmosphere, professional salon equipment, square composition --ar 1:1 --v 6
+
+【DALL-Eプロンプト】
+Interior of a luxury Japanese eyebrow beauty salon. Minimalist design with a black and gold color scheme. Features a comfortable treatment chair, warm ambient golden lighting, and clean modern aesthetics. The atmosphere conveys premium spa quality with professional salon equipment visible. Square format 1:1.
+
+【日本語説明】
+サロン内観写真。黒とゴールドを基調とした高級感のある空間。
+施術チェア、間接照明、清潔感のあるインテリア。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+12. salon-main.webp【任意】
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+サイズ: 1200 × 800 px（3:2）
+
+【Midjourneyプロンプト】
+Wide shot of upscale eyebrow beauty salon interior in Japan, multiple treatment stations, elegant black walls with gold accents, professional lighting setup, clean minimalist design, premium beauty establishment, welcoming atmosphere, editorial interior photography --ar 3:2 --v 6
+
+【DALL-Eプロンプト】
+A wide shot of an upscale Japanese eyebrow beauty salon interior showing multiple treatment stations. The space features elegant black walls with subtle gold accent lighting, professional overhead lighting, and clean minimalist design. The atmosphere is premium and welcoming, suitable for Google Business listing. Editorial interior photography style, 3:2 aspect ratio.
+
+【日本語説明】
+サロン全体を見渡せる広角写真。
+複数の施術スペース、プロフェッショナルな設備。
+Google検索結果やGoogleマップに表示される画像として使用。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    プロンプト使用時のヒント
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+【Midjourney用】
+- バージョン: --v 6 を推奨
+- スタイル: --style raw でより自然な仕上がり
+- 品質: --q 2 で高品質
+- アスペクト比は必ず指定すること
+
+【DALL-E用】
+- DALL-E 3を推奨
+- 「photorealistic」を追加するとより写実的に
+- 日本人の顔の特徴を指定するとより適切に
+
+【Stable Diffusion用】
+- 上記プロンプトに以下を追加：
+  - Positive: masterpiece, best quality, ultra detailed, 8k
+  - Negative: low quality, blurry, distorted, ugly
+
+【共通の注意点】
+- 生成後は必ずWebP形式に変換（squoosh.app）
+- 品質80%程度で圧縮
+- ファイル名は指定通りに変更
+- 顔が含まれる場合は肖像権に注意
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
