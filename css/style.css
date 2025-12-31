@@ -23,17 +23,21 @@
     --line-green-darker: #049A42;
     --line-gradient: linear-gradient(180deg, #06C755 0%, #05B34C 100%);
 
-    /* Dark Theme Colors */
-    --black: #0A0A0A;
-    --dark-900: #0D0D0D;
-    --dark-800: #141414;
-    --dark-700: #1A1A1A;
-    --dark-600: #222222;
-    --dark-500: #2A2A2A;
-    --dark-400: #333333;
-    --dark-300: #444444;
-    --dark-200: #555555;
-    --dark-100: #666666;
+    /* Champagne Gold Border */
+    --gold-border: rgba(212, 185, 120, 0.35);
+    --gold-border-hover: rgba(212, 185, 120, 0.6);
+
+    /* Dark Theme Colors - Lightened */
+    --black: #121212;
+    --dark-900: #161616;
+    --dark-800: #1C1C1C;
+    --dark-700: #222222;
+    --dark-600: #2A2A2A;
+    --dark-500: #333333;
+    --dark-400: #3D3D3D;
+    --dark-300: #4A4A4A;
+    --dark-200: #5A5A5A;
+    --dark-100: #6A6A6A;
 
     /* Light Colors */
     --white: #FFFFFF;
@@ -1085,8 +1089,13 @@ ul, ol {
     gap: var(--space-xl);
     padding: var(--space-2xl);
     background: var(--dark-800);
-    border: 1px solid var(--white-05);
+    border: 1px solid var(--gold-border);
     position: relative;
+    transition: border-color var(--transition-base);
+}
+
+.why-item:hover {
+    border-color: var(--gold-border-hover);
 }
 
 @media (min-width: 768px) {
@@ -1199,13 +1208,13 @@ ul, ol {
     gap: var(--space-lg);
     padding: var(--space-2xl);
     background: var(--white-05);
-    border: 1px solid var(--white-10);
+    border: 1px solid var(--gold-border);
     transition: all var(--transition-base);
     position: relative;
 }
 
 .feature-item:hover {
-    border-color: var(--gold);
+    border-color: var(--gold-border-hover);
     background: var(--white-05);
 }
 
@@ -1321,7 +1330,7 @@ ul, ol {
     gap: var(--space-lg);
     background: var(--dark-800);
     padding: var(--space-xl);
-    border: 1px solid var(--white-05);
+    border: 1px solid var(--gold-border);
     position: relative;
     transition: all var(--transition-base);
 }
@@ -1334,7 +1343,7 @@ ul, ol {
 }
 
 .menu-item:hover {
-    border-color: var(--gold);
+    border-color: var(--gold-border-hover);
 }
 
 .menu-item.featured {
@@ -1642,8 +1651,13 @@ ul, ol {
 .voice-card {
     flex: 0 0 320px;
     background: var(--dark-800);
-    border: 1px solid var(--white-05);
+    border: 1px solid var(--gold-border);
     padding: var(--space-xl);
+    transition: border-color var(--transition-base);
+}
+
+.voice-card:hover {
+    border-color: var(--gold-border-hover);
 }
 
 .voice-card-header {
@@ -1787,12 +1801,12 @@ ul, ol {
 
 .faq-item {
     background: var(--dark-800);
-    border: 1px solid var(--white-05);
+    border: 1px solid var(--gold-border);
     transition: border-color var(--transition-base);
 }
 
 .faq-item:hover {
-    border-color: var(--white-20);
+    border-color: var(--gold-border-hover);
 }
 
 .faq-question {
@@ -1920,7 +1934,12 @@ ul, ol {
 .access-card {
     padding: var(--space-xl);
     background: var(--dark-800);
-    border: 1px solid var(--white-05);
+    border: 1px solid var(--gold-border);
+    transition: border-color var(--transition-base);
+}
+
+.access-card:hover {
+    border-color: var(--gold-border-hover);
 }
 
 .access-shop-name {
