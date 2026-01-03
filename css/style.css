@@ -1734,6 +1734,220 @@ ul, ol {
 }
 
 /* =====================================================
+   Eye Revolution Section
+   ===================================================== */
+.eye-revolution {
+    background: linear-gradient(180deg, var(--dark-900) 0%, var(--black) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.eye-revolution::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+}
+
+.revolution-intro {
+    max-width: 800px;
+    margin: 0 auto var(--space-3xl);
+    text-align: center;
+}
+
+.revolution-statement {
+    padding: var(--space-xl);
+    background: var(--dark-800);
+    border: 1px solid var(--white-10);
+    border-left: 3px solid var(--gold);
+}
+
+.revolution-lead {
+    font-size: var(--text-lg);
+    color: var(--white-90);
+    line-height: 2;
+    margin-bottom: var(--space-md);
+}
+
+.revolution-text {
+    font-size: var(--text-base);
+    color: var(--white-60);
+    line-height: 2;
+}
+
+.revolution-lead strong,
+.revolution-text strong {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+.revolution-benefits {
+    margin-bottom: var(--space-3xl);
+}
+
+.revolution-subtitle {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 400;
+    color: var(--white);
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+    letter-spacing: 0.1em;
+}
+
+.revolution-subtitle::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: var(--space-md) auto 0;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+    .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .benefits-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.benefit-card {
+    background: var(--dark-800);
+    border: 1px solid var(--white-05);
+    padding: var(--space-xl);
+    text-align: center;
+    transition: all var(--transition-base);
+}
+
+.benefit-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-gold);
+}
+
+.benefit-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto var(--space-lg);
+    background: linear-gradient(135deg, rgba(201, 169, 98, 0.2) 0%, rgba(201, 169, 98, 0.05) 100%);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+}
+
+.benefit-title {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: var(--space-sm);
+    letter-spacing: 0.05em;
+}
+
+.benefit-text {
+    font-size: var(--text-sm);
+    color: var(--white-60);
+    line-height: 1.9;
+}
+
+.benefit-text strong {
+    color: var(--gold);
+    font-weight: 500;
+}
+
+.revolution-difference {
+    max-width: 800px;
+    margin: 0 auto var(--space-3xl);
+}
+
+.difference-content {
+    background: var(--dark-800);
+    border: 1px solid var(--white-10);
+    padding: var(--space-xl);
+}
+
+.difference-text p {
+    font-size: var(--text-base);
+    color: var(--white-70);
+    line-height: 2;
+    margin-bottom: var(--space-md);
+}
+
+.difference-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-lg) 0;
+}
+
+.difference-list li {
+    position: relative;
+    padding-left: var(--space-xl);
+    font-size: var(--text-sm);
+    color: var(--white-60);
+    line-height: 2;
+    margin-bottom: var(--space-sm);
+}
+
+.difference-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: bold;
+}
+
+.difference-list li strong {
+    color: var(--white);
+    font-weight: 500;
+}
+
+.difference-point {
+    padding: var(--space-lg);
+    background: linear-gradient(135deg, rgba(201, 169, 98, 0.1) 0%, transparent 100%);
+    border-left: 3px solid var(--gold);
+    margin-top: var(--space-lg);
+}
+
+.difference-point strong {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+.revolution-cta {
+    text-align: center;
+    padding-top: var(--space-xl);
+}
+
+.revolution-cta-text {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--white-80);
+    margin-bottom: var(--space-xl);
+    letter-spacing: 0.08em;
+}
+
+.revolution-cta-text strong {
+    color: var(--gold);
+}
+
+/* =====================================================
    Flow Section
    ===================================================== */
 .flow {
@@ -1897,7 +2111,7 @@ ul, ol {
     font-weight: 500;
 }
 
-.faq-item.active .faq-answer {
+.faq-answer.active {
     display: block;
 }
 
