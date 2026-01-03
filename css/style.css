@@ -1127,6 +1127,7 @@ ul, ol {
     border-radius: var(--radius-lg);
     position: relative;
     transition: border-color var(--transition-base);
+    overflow: hidden;
 }
 
 .why-item:hover {
@@ -1151,7 +1152,9 @@ ul, ol {
 }
 
 .why-content {
-    max-width: 600px;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: normal;
 }
 
 .why-title {
@@ -1168,6 +1171,7 @@ ul, ol {
     font-size: var(--text-sm);
     color: var(--white-60);
     line-height: 2;
+    overflow-wrap: break-word;
 }
 
 .why-image {
@@ -1226,13 +1230,19 @@ ul, ol {
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
-    padding: var(--space-2xl);
+    padding: var(--space-xl);
     background: var(--dark-800);
     border: 1px solid var(--gold-border);
     border-radius: var(--radius-lg);
     transition: all var(--transition-base);
     position: relative;
     overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .technique-item {
+        padding: var(--space-2xl);
+    }
 }
 
 .technique-item::before {
@@ -1282,9 +1292,10 @@ ul, ol {
 }
 
 .technique-text {
-    font-size: var(--text-base);
+    font-size: var(--text-sm);
     color: var(--white-60);
-    line-height: 2;
+    line-height: 1.9;
+    overflow-wrap: break-word;
 }
 
 .technique-cta {
