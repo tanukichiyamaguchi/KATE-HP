@@ -611,7 +611,7 @@
         if (isTouch) return;
 
         // Feature cards magnetic effect
-        const featureCards = document.querySelectorAll('.feature-card');
+        const featureCards = document.querySelectorAll('.feature-card, .benefit-card, .menu-item');
 
         featureCards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -622,8 +622,8 @@
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
 
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
+                const rotateX = (y - centerY) / 30;
+                const rotateY = (centerX - x) / 30;
 
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
             });
@@ -632,6 +632,303 @@
                 card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
             });
         });
+
+        // Magnetic button effect
+        const magneticBtns = document.querySelectorAll('.btn-3d, .fixed-cta-btn');
+
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
+        });
+    }
+
+    // =====================================================
+    // Text Split Animation
+    // =====================================================
+    function initTextSplitAnimation() {
+        const splitTexts = document.querySelectorAll('.split-text');
+
+        splitTexts.forEach(text => {
+            const content = text.textContent;
+            text.textContent = '';
+            text.style.opacity = '1';
+
+            [...content].forEach((char, i) => {
+                const span = document.createElement('span');
+                span.textContent = char === ' ' ? '\u00A0' : char;
+                span.style.cssText = `
+                    display: inline-block;
+                    opacity: 0;
+                    transform: translateY(20px);
+                    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+                    transition-delay: ${i * 0.03}s;
+                `;
+                text.appendChild(span);
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('span').forEach(span => {
+                        span.style.opacity = '1';
+                        span.style.transform = 'translateY(0)';
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        splitTexts.forEach(text => observer.observe(text));
+    }
+
+    // =====================================================
+    // Scroll Progress Indicator
+    // =====================================================
+    function initScrollProgress() {
+        const progressBar = document.createElement('div');
+        progressBar.className = 'scroll-progress';
+        progressBar.innerHTML = '<div class="scroll-progress-bar"></div>';
+        document.body.appendChild(progressBar);
+
+        const bar = progressBar.querySelector('.scroll-progress-bar');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            bar.style.width = `${progress}%`;
+        }, { passive: true });
+    }
+
+    // =====================================================
+    // Parallax Mouse Move Effect
+    // =====================================================
+    function initParallaxMouse() {
+        if (isMobile || isTouch) return;
+
+        const hero = document.querySelector('.hero');
+        const layers = document.querySelectorAll('.parallax-layer');
+
+        if (!hero) return;
+
+        hero.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            const { innerWidth, innerHeight } = window;
+
+            const x = (clientX - innerWidth / 2) / innerWidth;
+            const y = (clientY - innerHeight / 2) / innerHeight;
+
+            layers.forEach((layer, index) => {
+                const depth = (index + 1) * 20;
+                const moveX = x * depth;
+                const moveY = y * depth;
+                layer.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+
+            // Move hero floating elements
+            const heroContent = hero.querySelector('.hero-content');
+            if (heroContent) {
+                heroContent.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+            }
+        });
+    }
+
+    // =====================================================
+    // Staggered Reveal Animation
+    // =====================================================
+    function initStaggeredReveal() {
+        const staggerContainers = document.querySelectorAll('.stagger-reveal');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const children = entry.target.children;
+                    [...children].forEach((child, index) => {
+                        setTimeout(() => {
+                            child.classList.add('revealed');
+                        }, index * 100);
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        staggerContainers.forEach(container => observer.observe(container));
+    }
+
+    // =====================================================
+    // Ripple Effect for Buttons
+    // =====================================================
+    function initRippleEffect() {
+        const buttons = document.querySelectorAll('.btn-3d, .faq-question');
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple-effect';
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+
+                this.appendChild(ripple);
+
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+    }
+
+    // =====================================================
+    // Cursor Glow Effect
+    // =====================================================
+    function initCursorGlow() {
+        if (isMobile || isTouch) return;
+
+        const cursor = document.createElement('div');
+        cursor.className = 'cursor-glow';
+        document.body.appendChild(cursor);
+
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animate() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+
+            cursor.style.left = `${cursorX}px`;
+            cursor.style.top = `${cursorY}px`;
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Enlarge on hover over interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .menu-item, .benefit-card, .faq-item');
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+        });
+    }
+
+    // =====================================================
+    // Section Reveal Animation
+    // =====================================================
+    function initSectionReveal() {
+        const sections = document.querySelectorAll('.section');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('section-visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -10% 0px'
+        });
+
+        sections.forEach(section => {
+            section.classList.add('section-hidden');
+            observer.observe(section);
+        });
+    }
+
+    // =====================================================
+    // Number Counter with Easing
+    // =====================================================
+    function initEnhancedCounters() {
+        const counters = document.querySelectorAll('[data-count]');
+
+        const easeOutExpo = (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+
+        const animateCounter = (el, target, suffix = '') => {
+            const duration = 2500;
+            const start = performance.now();
+
+            const update = (now) => {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const easedProgress = easeOutExpo(progress);
+                const current = Math.floor(target * easedProgress);
+
+                el.textContent = current.toLocaleString() + suffix;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = target.toLocaleString() + suffix;
+                }
+            };
+
+            requestAnimationFrame(update);
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.dataset.count);
+                    const suffix = entry.target.dataset.suffix || '';
+                    animateCounter(entry.target, target, suffix);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => observer.observe(counter));
+    }
+
+    // =====================================================
+    // Smooth Scroll Sections
+    // =====================================================
+    function initSmoothSectionScroll() {
+        let isScrolling = false;
+
+        // Add scroll snap hint on section hover
+        const sections = document.querySelectorAll('.section');
+
+        sections.forEach(section => {
+            section.addEventListener('mouseenter', () => {
+                if (!isScrolling) {
+                    section.style.scrollSnapAlign = 'start';
+                }
+            });
+        });
+    }
+
+    // =====================================================
+    // Image Reveal on Scroll
+    // =====================================================
+    function initImageReveal() {
+        const images = document.querySelectorAll('.reveal-image');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('image-revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        images.forEach(img => observer.observe(img));
     }
 
     // =====================================================
@@ -697,6 +994,17 @@
         initAccessibility();
         initPerformanceOptimization();
         initHoverEffects();
+
+        // Enhanced animations
+        initTextSplitAnimation();
+        initScrollProgress();
+        initParallaxMouse();
+        initStaggeredReveal();
+        initRippleEffect();
+        initCursorGlow();
+        initSectionReveal();
+        initEnhancedCounters();
+        initImageReveal();
 
         // Add device class to body for CSS targeting
         if (isMobile) {
