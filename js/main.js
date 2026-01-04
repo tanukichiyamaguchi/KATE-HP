@@ -70,8 +70,8 @@
     function initLoading() {
         document.body.classList.add('loading');
 
-        // Faster loading on mobile
-        const loadingDelay = isMobile ? 1200 : 1800;
+        // Extended loading for dramatic "7" animation
+        const loadingDelay = isMobile ? 4500 : 5000;
 
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -81,8 +81,8 @@
             }, loadingDelay);
         });
 
-        // Fallback: hide loading after 4 seconds (faster on mobile)
-        const fallbackDelay = isMobile ? 3000 : 5000;
+        // Fallback: hide loading after extended time
+        const fallbackDelay = isMobile ? 6000 : 7000;
         setTimeout(() => {
             if (!elements.loading.classList.contains('hidden')) {
                 elements.loading.classList.add('hidden');
