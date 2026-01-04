@@ -182,7 +182,7 @@ ul, ol {
     align-items: center;
     justify-content: center;
     z-index: var(--z-loading);
-    transition: opacity 1s ease, visibility 1s ease;
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.2s ease;
 }
 
 .loading.hidden {
@@ -192,8 +192,206 @@ ul, ol {
 
 .loading-content {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: var(--space-2xl);
 }
 
+/* メッセージコンテナ */
+.loading-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    justify-content: center;
+}
+
+/* 上部テキスト「あなたの人生は」 */
+.loading-text-top {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 3.5vw, 1.8rem);
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    color: var(--white-60);
+    opacity: 0;
+    animation: loadingFadeDown 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+/* 巨大な「7秒」コンテナ */
+.loading-seven-container {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    line-height: 0.8;
+    margin: -0.05em 0;
+}
+
+/* 巨大な「7」 */
+.loading-seven {
+    font-family: var(--font-display);
+    font-size: clamp(12rem, 55vw, 35rem);
+    font-weight: 100;
+    letter-spacing: -0.05em;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.95) 0%,
+        var(--gold-100) 20%,
+        var(--gold) 50%,
+        var(--gold-dark) 80%,
+        var(--gold-darker) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    opacity: 0;
+    transform: scale(0.7) translateY(20px);
+    animation: loadingSevenReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+    filter: drop-shadow(0 0 80px rgba(201, 169, 98, 0.5));
+}
+
+/* 7のシマー効果 */
+.loading-seven::after {
+    content: '7';
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+    letter-spacing: inherit;
+    background: linear-gradient(
+        120deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.5) 50%,
+        transparent 70%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: loadingShimmer 2.5s ease-in-out 1.8s infinite;
+    pointer-events: none;
+}
+
+/* 「秒」 */
+.loading-second {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 12vw, 7rem);
+    font-weight: 200;
+    letter-spacing: 0.05em;
+    color: var(--white-90);
+    margin-left: 0.05em;
+    opacity: 0;
+    transform: translateX(30px);
+    animation: loadingSlideLeft 1s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards;
+}
+
+/* 下部テキスト「で決まる」 */
+.loading-text-bottom {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 3.5vw, 1.8rem);
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    color: var(--white-60);
+    opacity: 0;
+    animation: loadingFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards;
+}
+
+/* ブランド名 */
+.loading-brand {
+    position: absolute;
+    bottom: var(--space-3xl);
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: loadingBrandFade 1s cubic-bezier(0.16, 1, 0.3, 1) 2.2s forwards;
+}
+
+.loading-brand-name {
+    font-family: var(--font-display);
+    font-size: clamp(0.75rem, 2vw, 1rem);
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: none;
+}
+
+/* ローディングアニメーション */
+@keyframes loadingSevenReveal {
+    0% {
+        opacity: 0;
+        transform: scale(0.7) translateY(20px);
+        filter: drop-shadow(0 0 0 rgba(201, 169, 98, 0)) blur(15px);
+    }
+    60% {
+        filter: drop-shadow(0 0 120px rgba(201, 169, 98, 0.7)) blur(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: drop-shadow(0 0 80px rgba(201, 169, 98, 0.5)) blur(0);
+    }
+}
+
+@keyframes loadingShimmer {
+    0% {
+        background-position: 200% center;
+    }
+    100% {
+        background-position: -200% center;
+    }
+}
+
+@keyframes loadingFadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes loadingFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes loadingSlideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes loadingBrandFade {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* 旧スタイル（互換性のため） */
 .loading-logo {
     display: flex;
     flex-direction: column;
@@ -673,165 +871,9 @@ ul, ol {
 }
 
 .hero-title {
-    margin-bottom: var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
+    margin-bottom: var(--space-2xl);
 }
 
-/* 上部テキスト「あなたの人生は」 */
-.hero-title-top {
-    display: block;
-    font-family: var(--font-display);
-    font-size: clamp(1.2rem, 4vw, 2rem);
-    font-weight: 300;
-    letter-spacing: 0.3em;
-    color: var(--white-70);
-    opacity: 0;
-    animation: fadeSlideDown 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-}
-
-/* 巨大な「7秒」コンテナ */
-.hero-title-number {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    line-height: 0.85;
-    margin: -0.1em 0;
-}
-
-/* 巨大な「7」 */
-.hero-seven {
-    font-family: var(--font-display);
-    font-size: clamp(10rem, 45vw, 28rem);
-    font-weight: 200;
-    letter-spacing: -0.05em;
-    background: linear-gradient(
-        180deg,
-        var(--gold-100) 0%,
-        var(--gold) 30%,
-        var(--gold-dark) 70%,
-        var(--gold-darker) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 60px rgba(201, 169, 98, 0.4));
-    position: relative;
-    opacity: 0;
-    transform: scale(0.8);
-    animation: sevenReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
-}
-
-/* 7の装飾エフェクト */
-.hero-seven::before {
-    content: '7';
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-size: inherit;
-    font-weight: inherit;
-    font-family: inherit;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.3) 50%,
-        transparent 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shimmerSweep 3s ease-in-out infinite;
-    pointer-events: none;
-}
-
-/* 「秒」 */
-.hero-second {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 10vw, 6rem);
-    font-weight: 300;
-    letter-spacing: 0.1em;
-    color: var(--white);
-    margin-left: 0.1em;
-    opacity: 0;
-    animation: fadeSlideLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.4s forwards;
-}
-
-/* 下部テキスト「で決まる」 */
-.hero-title-bottom {
-    display: block;
-    font-family: var(--font-display);
-    font-size: clamp(1.2rem, 4vw, 2rem);
-    font-weight: 300;
-    letter-spacing: 0.3em;
-    color: var(--white-70);
-    opacity: 0;
-    animation: fadeSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 1.6s forwards;
-}
-
-/* アニメーション定義 */
-@keyframes sevenReveal {
-    0% {
-        opacity: 0;
-        transform: scale(0.8);
-        filter: drop-shadow(0 0 0 rgba(201, 169, 98, 0)) blur(10px);
-    }
-    50% {
-        filter: drop-shadow(0 0 80px rgba(201, 169, 98, 0.6)) blur(0);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-        filter: drop-shadow(0 0 60px rgba(201, 169, 98, 0.4)) blur(0);
-    }
-}
-
-@keyframes shimmerSweep {
-    0%, 100% {
-        opacity: 0;
-        transform: translateX(-100%);
-    }
-    50% {
-        opacity: 1;
-        transform: translateX(100%);
-    }
-}
-
-@keyframes fadeSlideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeSlideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeSlideLeft {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* 旧スタイル（互換性のため残す） */
 .hero-title-en {
     display: block;
     font-family: var(--font-accent);
