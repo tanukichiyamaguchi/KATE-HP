@@ -206,6 +206,7 @@ ul, ol {
     font-size: clamp(1.5rem, 5vw, 2.5rem);
     font-weight: 300;
     letter-spacing: 0.15em;
+    text-transform: none;
     background: linear-gradient(
         90deg,
         var(--gold) 0%,
@@ -316,6 +317,7 @@ ul, ol {
     font-size: clamp(0.9rem, 2.5vw, 1.25rem);
     font-weight: 300;
     letter-spacing: 0.1em;
+    text-transform: none;
     color: var(--gold);
     line-height: 1;
     transition: color var(--transition-base);
@@ -2417,6 +2419,7 @@ ul, ol {
     font-family: var(--font-display);
     font-size: var(--text-2xl);
     font-weight: 300;
+    text-transform: none;
     color: var(--gold);
     letter-spacing: 0.15em;
 }
@@ -2683,6 +2686,7 @@ ul, ol {
     font-size: clamp(1rem, 3vw, 1.25rem);
     font-weight: 300;
     letter-spacing: 0.1em;
+    text-transform: none;
     color: var(--gold);
 }
 
