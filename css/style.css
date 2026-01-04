@@ -2773,20 +2773,36 @@ ul, ol {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(145deg, #D4B978 0%, #C9A962 50%, #B8963D 100%);
+    /* 3D Button gradient with top highlight */
+    background: linear-gradient(
+        180deg,
+        #E8D4A8 0%,
+        #D4B978 8%,
+        #C9A962 40%,
+        #B8963D 100%
+    );
     color: var(--black);
-    padding: var(--space-lg) var(--space-xl);
+    padding: 10px 16px;
     font-weight: 600;
-    border-radius: var(--radius-lg);
+    border-radius: 12px;
+    /* Deep 3D button shadow */
     box-shadow:
-        0 6px 0 #8B6914,
-        0 8px 20px rgba(0, 0, 0, 0.4),
-        0 15px 40px rgba(201, 169, 98, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
-    transition: all 0.15s ease;
+        /* Bottom edge - creates depth */
+        0 5px 0 #8B6914,
+        0 6px 0 #6B520F,
+        /* Outer glow shadow */
+        0 8px 15px rgba(0, 0, 0, 0.35),
+        0 12px 25px rgba(139, 105, 20, 0.25),
+        /* Inner top highlight */
+        inset 0 2px 3px rgba(255, 255, 255, 0.5),
+        /* Inner bottom shadow */
+        inset 0 -2px 4px rgba(139, 105, 20, 0.3);
+    transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
-    min-width: 140px;
-    animation: pulse3D 3s ease-in-out infinite;
+    min-width: auto;
+    /* Border for extra definition */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Spotlight sweep on CTA */
@@ -2806,21 +2822,25 @@ ul, ol {
 }
 
 .fixed-cta-btn:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     box-shadow:
         0 8px 0 #8B6914,
-        0 12px 25px rgba(0, 0, 0, 0.5),
-        0 20px 50px rgba(201, 169, 98, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        0 9px 0 #6B520F,
+        0 12px 20px rgba(0, 0, 0, 0.4),
+        0 18px 35px rgba(139, 105, 20, 0.3),
+        inset 0 2px 3px rgba(255, 255, 255, 0.5),
+        inset 0 -2px 4px rgba(139, 105, 20, 0.3);
 }
 
 .fixed-cta-btn:active {
     transform: translateY(4px);
     box-shadow:
-        0 2px 0 #8B6914,
-        0 4px 10px rgba(0, 0, 0, 0.3),
-        0 8px 20px rgba(201, 169, 98, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        0 1px 0 #8B6914,
+        0 2px 0 #6B520F,
+        0 3px 8px rgba(0, 0, 0, 0.25),
+        0 5px 12px rgba(139, 105, 20, 0.15),
+        inset 0 2px 5px rgba(139, 105, 20, 0.4),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.3);
 }
 
 /* Pulse Animation Ring */
@@ -2853,45 +2873,40 @@ ul, ol {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
+    gap: 1px;
     position: relative;
     z-index: 1;
 }
 
 .fixed-cta-badge {
-    font-size: 9px;
+    font-size: 8px;
     font-weight: 700;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
     background: var(--black);
     color: var(--gold);
-    padding: 3px 10px;
-    border-radius: var(--radius-sm);
-    margin-bottom: 4px;
-    animation: badgeBounce 2s ease-in-out infinite;
-}
-
-@keyframes badgeBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-2px); }
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-bottom: 2px;
 }
 
 .fixed-cta-main {
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
+    gap: 6px;
 }
 
 .fixed-cta-text {
-    font-size: var(--text-base);
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
 }
 
 .fixed-cta-sub {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 500;
-    opacity: 0.8;
-    letter-spacing: 0.05em;
+    opacity: 0.7;
+    letter-spacing: 0.03em;
+    margin-top: 1px;
 }
 
 /* Shine Effect */
@@ -2915,25 +2930,43 @@ ul, ol {
     left: 100%;
 }
 
-.line-icon {
+.fixed-cta-btn .line-icon {
     flex-shrink: 0;
+    width: 18px;
+    height: 18px;
     filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2));
 }
 
 /* Mobile-specific enhancements */
 @media (max-width: 768px) {
     .fixed-cta-btn {
-        padding: var(--space-md) var(--space-lg);
-        min-width: 120px;
+        padding: 8px 12px;
+        border-radius: 10px;
         box-shadow:
             0 4px 0 #8B6914,
-            0 6px 15px rgba(0, 0, 0, 0.4),
-            0 12px 30px rgba(201, 169, 98, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            0 5px 0 #6B520F,
+            0 6px 12px rgba(0, 0, 0, 0.3),
+            0 10px 20px rgba(139, 105, 20, 0.2),
+            inset 0 2px 3px rgba(255, 255, 255, 0.5),
+            inset 0 -2px 4px rgba(139, 105, 20, 0.3);
     }
 
     .fixed-cta-text {
-        font-size: var(--text-sm);
+        font-size: 12px;
+    }
+
+    .fixed-cta-badge {
+        font-size: 7px;
+        padding: 2px 6px;
+    }
+
+    .fixed-cta-sub {
+        font-size: 8px;
+    }
+
+    .fixed-cta-btn .line-icon {
+        width: 16px;
+        height: 16px;
     }
 }
 
