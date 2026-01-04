@@ -282,7 +282,7 @@
     }
 
     // =====================================================
-    // FAQ Accordion
+    // FAQ Accordion - Enhanced with smooth animations
     // =====================================================
     function initFAQ() {
         const { faqItems } = elements;
@@ -293,22 +293,41 @@
 
             if (!question || !answer) return;
 
+            // Wrap answer content for proper grid animation
+            if (!answer.querySelector('.faq-answer-inner')) {
+                const inner = document.createElement('div');
+                inner.className = 'faq-answer-inner';
+                while (answer.firstChild) {
+                    inner.appendChild(answer.firstChild);
+                }
+                answer.appendChild(inner);
+            }
+
             question.addEventListener('click', () => {
                 const isExpanded = question.getAttribute('aria-expanded') === 'true';
 
-                // Close all other items
-                faqItems.forEach(otherItem => {
+                // Close all other items with staggered timing
+                faqItems.forEach((otherItem, index) => {
                     const otherQuestion = otherItem.querySelector('.faq-question');
-                    const otherAnswer = otherItem.querySelector('.faq-answer');
-                    if (otherItem !== item) {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
                         otherQuestion?.setAttribute('aria-expanded', 'false');
-                        otherAnswer?.classList.remove('active');
+                        otherItem.classList.remove('active');
                     }
                 });
 
-                // Toggle current item
-                question.setAttribute('aria-expanded', !isExpanded);
-                answer.classList.toggle('active');
+                // Toggle current item with slight delay for visual effect
+                setTimeout(() => {
+                    question.setAttribute('aria-expanded', !isExpanded);
+                    item.classList.toggle('active');
+                }, isExpanded ? 0 : 50);
+            });
+
+            // Keyboard accessibility
+            question.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    question.click();
+                }
             });
         });
     }
@@ -675,6 +694,242 @@
     }
 
     // =====================================================
+    // Enhanced Voice Slider with touch & drag
+    // =====================================================
+    function initVoiceSlider() {
+        const slider = document.querySelector('.voice-slider');
+        const track = document.querySelector('.voice-track');
+
+        if (!slider || !track) return;
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        let velocity = 0;
+        let animationId = null;
+
+        // Mouse events
+        track.addEventListener('mousedown', (e) => {
+            if (isTouch) return;
+            isDown = true;
+            track.classList.add('grabbing');
+            startX = e.pageX - track.offsetLeft;
+            scrollLeft = track.scrollLeft;
+            cancelMomentum();
+        });
+
+        track.addEventListener('mouseleave', () => {
+            if (isDown) {
+                isDown = false;
+                track.classList.remove('grabbing');
+                startMomentum();
+            }
+        });
+
+        track.addEventListener('mouseup', () => {
+            if (isDown) {
+                isDown = false;
+                track.classList.remove('grabbing');
+                startMomentum();
+            }
+        });
+
+        track.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - track.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            velocity = track.scrollLeft - (scrollLeft - walk);
+            track.scrollLeft = scrollLeft - walk;
+        });
+
+        // Momentum scrolling
+        function startMomentum() {
+            if (Math.abs(velocity) < 1) return;
+
+            animationId = requestAnimationFrame(() => {
+                track.scrollLeft += velocity * 0.3;
+                velocity *= 0.95;
+                if (Math.abs(velocity) > 0.5) {
+                    startMomentum();
+                }
+            });
+        }
+
+        function cancelMomentum() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            velocity = 0;
+        }
+
+        // Add navigation dots
+        const cards = track.querySelectorAll('.voice-card');
+        if (cards.length > 1 && isMobile) {
+            const dotsContainer = document.createElement('div');
+            dotsContainer.className = 'voice-dots';
+
+            cards.forEach((_, index) => {
+                const dot = document.createElement('button');
+                dot.className = 'voice-dot';
+                dot.setAttribute('aria-label', `Review ${index + 1}`);
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    cards[index].scrollIntoView({
+                        behavior: 'smooth',
+                        inline: 'start',
+                        block: 'nearest'
+                    });
+                });
+                dotsContainer.appendChild(dot);
+            });
+
+            slider.appendChild(dotsContainer);
+
+            // Update active dot on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const index = Array.from(cards).indexOf(entry.target);
+                        dotsContainer.querySelectorAll('.voice-dot').forEach((dot, i) => {
+                            dot.classList.toggle('active', i === index);
+                        });
+                    }
+                });
+            }, { root: track, threshold: 0.6 });
+
+            cards.forEach(card => observer.observe(card));
+        }
+    }
+
+    // =====================================================
+    // Enhanced Button Ripple Effect
+    // =====================================================
+    function initButtonRipple() {
+        const buttons = document.querySelectorAll('.btn-3d');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const ripple = document.createElement('span');
+                const diameter = Math.max(rect.width, rect.height);
+                const radius = diameter / 2;
+
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${diameter}px;
+                    height: ${diameter}px;
+                    left: ${e.clientX - rect.left - radius}px;
+                    top: ${e.clientY - rect.top - radius}px;
+                    background: rgba(255, 255, 255, 0.3);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s ease-out;
+                    pointer-events: none;
+                `;
+
+                this.appendChild(ripple);
+
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add ripple keyframes dynamically
+        if (!document.getElementById('ripple-styles')) {
+            const style = document.createElement('style');
+            style.id = 'ripple-styles';
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+                .voice-dots {
+                    display: flex;
+                    justify-content: center;
+                    gap: 8px;
+                    margin-top: 16px;
+                }
+                .voice-dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.2);
+                    border: none;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    padding: 0;
+                }
+                .voice-dot.active {
+                    background: #C9A962;
+                    transform: scale(1.3);
+                }
+                .voice-dot:hover {
+                    background: rgba(201, 169, 98, 0.6);
+                }
+                .voice-track.grabbing {
+                    cursor: grabbing;
+                    scroll-behavior: auto;
+                }
+                .faq-answer-inner {
+                    padding: 0 32px 24px;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+
+    // =====================================================
+    // Smooth Number Counter Animation
+    // =====================================================
+    function initEnhancedCounters() {
+        const statNumbers = document.querySelectorAll('.hero-stat-number');
+
+        const animateValue = (element, start, end, duration, suffix = '') => {
+            const startTime = performance.now();
+            const isFloat = String(end).includes('.');
+
+            const update = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // Ease out cubic
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const current = start + (end - start) * easeOut;
+
+                element.textContent = isFloat ? current.toFixed(1) : Math.floor(current);
+                if (suffix) element.textContent += suffix;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            };
+
+            requestAnimationFrame(update);
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const text = element.textContent.trim();
+                    const value = parseFloat(text);
+
+                    if (!isNaN(value) && !element.dataset.animated) {
+                        element.dataset.animated = 'true';
+                        animateValue(element, 0, value, 2000);
+                    }
+                    observer.unobserve(element);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        statNumbers.forEach(num => observer.observe(num));
+    }
+
+    // =====================================================
     // Initialize All
     // =====================================================
     function init() {
@@ -698,6 +953,11 @@
         initPerformanceOptimization();
         initHoverEffects();
 
+        // Enhanced UI/UX features
+        initVoiceSlider();
+        initButtonRipple();
+        initEnhancedCounters();
+
         // Add device class to body for CSS targeting
         if (isMobile) {
             document.body.classList.add('is-mobile');
@@ -706,8 +966,8 @@
             document.body.classList.add('is-touch');
         }
 
-        // Log device info for debugging (remove in production)
-        console.log(`Device: ${isMobile ? 'Mobile' : 'Desktop'}, Touch: ${isTouch ? 'Yes' : 'No'}`);
+        // Remove console log for production
+        // console.log(`Device: ${isMobile ? 'Mobile' : 'Desktop'}, Touch: ${isTouch ? 'Yes' : 'No'}`);
     }
 
     // Run initialization
