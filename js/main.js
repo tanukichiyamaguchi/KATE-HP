@@ -314,26 +314,33 @@
     }
 
     // =====================================================
-    // Animate on Scroll (Custom AOS)
+    // Animate on Scroll (Custom AOS) - Smooth Reveal
     // =====================================================
     function initAOS() {
         const { aosElements } = elements;
 
         if (!aosElements.length) return;
 
+        // Trigger animation when element is 15% visible from bottom
+        // This creates a smoother, earlier reveal
         const observerOptions = {
             root: null,
-            rootMargin: '0px 0px -10% 0px',
-            threshold: 0.1
+            rootMargin: '50px 0px -15% 0px',
+            threshold: [0, 0.1, 0.2]
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
                     const delay = entry.target.dataset.aosDelay || 0;
-                    setTimeout(() => {
-                        entry.target.classList.add('aos-animate');
-                    }, parseInt(delay));
+
+                    // Use requestAnimationFrame for smoother animation start
+                    requestAnimationFrame(() => {
+                        setTimeout(() => {
+                            entry.target.classList.add('aos-animate');
+                        }, parseInt(delay));
+                    });
+
                     observer.unobserve(entry.target);
                 }
             });
@@ -829,20 +836,29 @@
     }
 
     // =====================================================
-    // Section Reveal Animation
+    // Section Reveal Animation - Smooth & Elegant
+    // CSS handles the animation, JS just triggers class changes
     // =====================================================
     function initSectionReveal() {
         const sections = document.querySelectorAll('.section');
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('section-visible');
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.03) {
+                    // Slight delay before adding class for smoother perceived animation
+                    requestAnimationFrame(() => {
+                        // Double RAF for guaranteed next frame
+                        requestAnimationFrame(() => {
+                            entry.target.classList.remove('section-hidden');
+                            entry.target.classList.add('section-visible');
+                        });
+                    });
+                    observer.unobserve(entry.target);
                 }
             });
         }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -10% 0px'
+            threshold: [0, 0.03, 0.1],
+            rootMargin: '80px 0px -8% 0px'
         });
 
         sections.forEach(section => {
