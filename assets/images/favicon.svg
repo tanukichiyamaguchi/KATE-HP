@@ -1,20 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#D4AF37"/>
-      <stop offset="50%" style="stop-color:#F5E6C8"/>
-      <stop offset="100%" style="stop-color:#C9A962"/>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b88a3e"/><stop offset=".45" stop-color="#ecd9a6"/><stop offset="1" stop-color="#c9a45c"/>
     </linearGradient>
   </defs>
-
-  <!-- Background Circle -->
-  <circle cx="32" cy="32" r="30" fill="#FFFFFF" stroke="url(#goldGradient)" stroke-width="2"/>
-
-  <!-- Letter K -->
-  <text x="32" y="42"
-        font-family="Cormorant Garamond, Georgia, serif"
-        font-size="32"
-        font-weight="400"
-        fill="url(#goldGradient)"
-        text-anchor="middle">K</text>
+  <rect width="64" height="64" rx="14" fill="#111110"/>
+  <path d="M9 40c1-9 9-17 22-18 9-1 18 3 24 9-7-3-14-4-21-3-10 1-17 6-21 13-2 3-4 2-4-1z" fill="url(#g)"/>
+  <path d="M14 47c7-5 21-6 34-2" fill="none" stroke="#f8f7f3" stroke-width="2.6" stroke-linecap="round" opacity=".9"/>
 </svg>
