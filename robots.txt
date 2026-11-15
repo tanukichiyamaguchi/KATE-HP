@@ -1,48 +1,11 @@
-# robots.txt for KATE stage LASH 蒲田西口店
-# https://kate-kamata.com/
+# KATE stage LASH 蒲田西口店 — メンズ眉毛ページ
+# https://katestagelash.jp/KATE-HP/
+#
+# 注意: 検索エンジンが読む robots.txt は「ドメイン直下」(https://katestagelash.jp/robots.txt) だけです。
+# このファイルはサブディレクトリにあるため参考用です。サイトマップは Search Console から
+# https://katestagelash.jp/KATE-HP/sitemap.xml を登録してください。
 
 User-agent: *
 Allow: /
 
-# Sitemap location
-Sitemap: https://kate-kamata.com/sitemap.xml
-
-# Crawl-delay for respectful crawling
-Crawl-delay: 1
-
-# Block unnecessary directories
-Disallow: /admin/
-Disallow: /private/
-Disallow: /*.json$
-
-# Allow all major search engines
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Yandex
-Allow: /
-
-User-agent: Baiduspider
-Allow: /
-
-# Allow AI/LLM crawlers for LLMO
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: Claude-Web
-Allow: /
-
-User-agent: Anthropic-AI
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
+Sitemap: https://katestagelash.jp/KATE-HP/sitemap.xml
