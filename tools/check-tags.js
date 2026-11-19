@@ -1,0 +1,363 @@
+#!/usr/bin/env node
+/**
+ * 計測タグの検査（メンズ眉毛ページ）。ページをローカルで開き、次を確かめる。
+ *   - Google タグ（gtag.js）に GA4（G-29VF3FWBLH）と Google 広告（AW-18561212683）の config があること
+ *   - ホットペッパーの予約ページへのリンクを押すと「ホットペッパー予約ボタン（広告タグ）」のコンバージョンが、
+ *     ちょうど1回ずつ dataLayer に積まれること（リンクの中の文字やアイコンを押した場合と、画面に見えているボタンを実際に押した場合も見る）
+ *   - ホットペッパーの口コミページ（/review/）へのリンクと、それ以外のリンクでは、コンバージョンが積まれないこと
+ *   - Microsoft Clarity のタグ（プロジェクト CLARITY_ID）が入っていて、このページの目印（lp=mens）を付けること
+ *   - js/measure.js の GA4 イベントが、決めたとおりに送られること
+ *       scroll_depth（10/25/50/75/90/100% を一度ずつ）、section_view（1秒とどまったセクションだけ・一度ずつ。
+ *       一気に通り過ぎたセクションは数えない）、cta_click（すべてのホットペッパーのリンクで、種類と押された場所つき）、
+ *       lp_nav（すべてのページ内リンクで、移動先と押された場所つき）、faq_open（開いた時だけ）。
+ *       どれも send_to で GA4（G-29VF3FWBLH）だけに送っていること（Google 広告へは送らない）
+ *     と、Clarity へのカスタム タグ（押したリンクの種類、Google 広告から来た訪問）
+ *   - フッターからプライバシーポリシー（privacy.html）へリンクしていて、そのページが開け、横スクロールが出ないこと
+ * 問題が1件でもあれば終了コード1で終わる。
+ *
+ * 必要なもの: Node.js と Playwright（Chromium）。
+ * 使い方    : node tools/check-tags.js
+ * 外部への通信はすべて止めている。タグ本体は読み込まれないが、gtag() と clarity() の呼び出しは
+ * dataLayer と clarity.q に残るので、それを見る。
+ * リンク先へは移動しない（押した時の移動は検査用に止めている）。
+ */
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+const { chromium } = require('playwright');
+
+const ROOT = path.resolve(__dirname, '..');
+const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.xml': 'application/xml', '.txt': 'text/plain' };
+const CONFIGS = ['G-29VF3FWBLH', 'AW-18561212683'];
+const CLARITY_ID = 'zfv01oyk04';
+const HPB_BOOK = 'AW-18561212683/3yEOCLPtw7odEIvC1pJF';
+const LINE = 'AW-18561212683/19mHCLbtw7odEIvC1pJF';
+const GA4_ID = 'G-29VF3FWBLH';
+const SCROLL_MARKS = [10, 25, 50, 75, 90, 100];
+/* js/measure.js のセクション名（ページ上の順番） */
+const SECTIONS = [
+    ['.fv', 'メンズ01 ファーストビュー'], ['#check', 'メンズ02 眉のお悩み'], ['#why', 'メンズ03 なぜ眉で印象が変わるのか'],
+    ['.reasons', 'メンズ04 男性に選ばれる5つの理由'], ['.shout', 'メンズ05 第一印象には眉が効く'], ['#process', 'メンズ06 施術の流れ（約50分）'],
+    ['#menu', 'メンズ07 メニュー・料金'], ['#styles', 'メンズ08 仕上がりイメージ'], ['#voice', 'メンズ09 お客様の声'],
+    ['#access', 'メンズ10 アクセス'], ['#flow', 'メンズ11 ご予約の流れ'], ['#faq', 'メンズ12 よくある質問'],
+    ['#reserve', 'メンズ13 ご予約（ページ最後）'], ['.foot', 'メンズ14 フッター']
+];
+const LABELS = SECTIONS.map(s => s[1]);
+const PLACES = ['メンズ 下部固定ボタン', 'メンズ PC左パネル', 'メンズ PC目次', 'メンズ ヘッダー'];
+const TOP_LABEL = 'メンズ00 ページの先頭';
+/* js/measure.js が送るイベント。すべて GA4 だけに送る */
+const MEASURE_EVENTS = ['scroll_depth', 'section_view', 'cta_click', 'lp_nav', 'faq_open'];
+
+function serve() {
+    const server = http.createServer((req, res) => {
+        const rel = decodeURIComponent(req.url.split('?')[0]).replace(/^\/+/, '') || 'index.html';
+        const file = path.join(ROOT, rel);
+        if (!file.startsWith(ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); res.end(); return; }
+        res.writeHead(200, { 'Content-Type': TYPES[path.extname(file)] || 'application/octet-stream' });
+        fs.createReadStream(file).pipe(res);
+    });
+    return new Promise(resolve => server.listen(0, '127.0.0.1', () => resolve(server)));
+}
+
+/* ページの中で実行する：dataLayer・clarity.q の中身と、押した後に積まれたもの */
+function setUp() {
+    window.addEventListener('click', e => e.preventDefault(), true);   /* リンク先へ移動させない */
+    window.__entries = () => Array.prototype.map.call(window.dataLayer, x => Array.prototype.slice.call(x));
+    window.__sentSince = from => window.__entries().slice(from)
+        .filter(x => x[0] === 'event' && x[1] === 'conversion')
+        .map(x => (x[2] && x[2].send_to) || '(send_to なし)');
+    window.__events = (name, from) => window.__entries().slice(from || 0)
+        .filter(x => x[0] === 'event' && x[1] === name).map(x => x[2] || {});
+    window.__clarity = () => (window.clarity && window.clarity.q ? Array.prototype.map.call(window.clarity.q, a => Array.prototype.slice.call(a)) : []);
+    /* リンクごとに、送られるはずのコンバージョンと cta_type */
+    window.__expect = a => {
+        if (a.hostname === 'beauty.hotpepper.jp') {
+            return a.pathname.indexOf('/review/') === -1 ? { conv: window.__HPB, type: 'hotpepper' } : { conv: null, type: 'hotpepper_review' };
+        }
+        if (a.hostname === 's.lmes.jp' || a.hostname === 'lin.ee') { return { conv: window.__LINE, type: 'line' }; }
+        return { conv: null, type: null };
+    };
+}
+
+/* すべてのリンクを、リンク本体と中の要素の両方で押し、コンバージョンの数と送り先を確かめる */
+function pressEveryLink() {
+    const out = { configs: window.__entries().filter(x => x[0] === 'config').map(x => x[1]), counted: { book: 0, review: 0, other: 0 }, bad: [] };
+    document.querySelectorAll('a[href]').forEach(a => {
+        const exp = window.__expect(a);
+        const targets = [a];
+        const inner = a.querySelector('*');
+        if (inner) { targets.push(inner); }
+        targets.forEach(t => {
+            const from = window.dataLayer.length;
+            t.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+            const got = window.__sentSince(from);
+            const ok = exp.conv ? (got.length === 1 && got[0] === exp.conv) : got.length === 0;
+            if (!ok) { out.bad.push((a.getAttribute('href') || '') + '（' + (t === a ? 'a' : t.tagName.toLowerCase()) + '）→ ' + (got.join(', ') || 'なし')); }
+        });
+        if (exp.type === 'hotpepper') { out.counted.book += 1; } else if (exp.type === 'hotpepper_review') { out.counted.review += 1; } else { out.counted.other += 1; }
+    });
+    return out;
+}
+
+/* ホットペッパーのリンクとページ内リンクを1つずつ押し、cta_click / lp_nav の中身を集める（押すのはリンク本体と中の要素） */
+function pressForMeasure(arg) {
+    const out = { cta: [], nav: [], bad: [] };
+    const labelOk = v => arg.labels.includes(v) || arg.places.includes(v);
+    document.querySelectorAll('a[href]').forEach(a => {
+        const type = window.__expect(a).type;
+        const href = a.getAttribute('href') || '';
+        const isNav = href.charAt(0) === '#' && href.length > 1;
+        const targets = [a];
+        const inner = a.querySelector('*');
+        if (inner) { targets.push(inner); }
+        targets.forEach(t => {
+            const from = window.dataLayer.length;
+            const qFrom = window.__clarity().length;
+            t.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+            const cta = window.__events('cta_click', from);
+            const nav = window.__events('lp_nav', from);
+            const tags = window.__clarity().slice(qFrom);
+            const where = href + '（' + (t === a ? 'a' : t.tagName.toLowerCase()) + '）';
+            if (type) {
+                const e = cta[0] || {};
+                if (cta.length !== 1 || nav.length !== 0) { out.bad.push('cta_click の数が違う: ' + where + ' → cta ' + cta.length + ' / nav ' + nav.length); return; }
+                if (e.cta_type !== type) { out.bad.push('cta_type が違う: ' + where + ' → ' + e.cta_type); }
+                if (!labelOk(e.lp_section)) { out.bad.push('押された場所が分からない: ' + where + ' → ' + e.lp_section); }
+                if (!e.link_text) { out.bad.push('link_text が空: ' + where); }
+                if (e.link_url !== a.href) { out.bad.push('link_url が違う: ' + where); }
+                if (!tags.some(x => x[0] === 'set' && x[1] === 'cta' && x[2] === type)) { out.bad.push('Clarity の cta タグがない: ' + where); }
+                if (t === a) { out.cta.push(type + '｜' + e.lp_section); }
+            } else if (isNav) {
+                const e = nav[0] || {};
+                if (nav.length !== 1 || cta.length !== 0) { out.bad.push('lp_nav の数が違う: ' + where + ' → nav ' + nav.length + ' / cta ' + cta.length); return; }
+                if (!(labelOk(e.nav_to) || e.nav_to === arg.top)) { out.bad.push('移動先が分からない: ' + where + ' → ' + e.nav_to); }
+                if (!labelOk(e.lp_section)) { out.bad.push('押された場所が分からない: ' + where + ' → ' + e.lp_section); }
+                if (t === a) { out.nav.push(e.nav_to + '｜' + e.lp_section); }
+            } else if (cta.length || nav.length) {
+                out.bad.push('送らないはずのリンクで送った: ' + where);
+            }
+        });
+    });
+    return out;
+}
+
+/* ページの中で実行する：計測イベントのうち、送り先が GA4 だけになっていないもの */
+function wrongTargets(arg) {
+    const all = window.__entries().filter(x => x[0] === 'event' && arg.names.includes(x[1]));
+    return { total: all.length, bad: all.filter(x => !x[2] || x[2].send_to !== arg.id).map(x => x[1] + '（send_to: ' + ((x[2] && x[2].send_to) || 'なし') + '）') };
+}
+
+/* ページの中で実行する：いま画面に入っているセクション（一番下で止まった時に数えられてよいもの） */
+function onScreen(sections) {
+    return sections.filter(([sel]) => {
+        const r = document.querySelector(sel).getBoundingClientRect();
+        return r.bottom > 0 && r.top < window.innerHeight;
+    }).map(([, label]) => label);
+}
+
+const countBy = list => list.reduce((m, k) => { m[k] = (m[k] || 0) + 1; return m; }, {});
+const wait = ms => new Promise(r => setTimeout(r, ms));
+
+async function openPage(browser, base, url, viewport, mobile) {
+    const ctx = await browser.newContext({ viewport, isMobile: !!mobile, hasTouch: !!mobile });
+    await ctx.route(u => !u.href.startsWith(base), r => r.abort());
+    const page = await ctx.newPage();
+    const errors = [];
+    page.on('pageerror', e => errors.push(String(e).slice(0, 200)));
+    await page.goto(url, { waitUntil: 'load' });
+    await page.evaluate(setUp);
+    await page.evaluate(ids => { window.__HPB = ids[0]; window.__LINE = ids[1]; }, [HPB_BOOK, LINE]);
+    return { ctx, page, errors };
+}
+
+(async () => {
+    const server = await serve();
+    const base = 'http://127.0.0.1:' + server.address().port + '/';
+    const browser = await chromium.launch();
+    const problems = [];
+
+    /* 1. Google 広告のコンバージョン（スマホ幅） */
+    {
+        const { ctx, page, errors } = await openPage(browser, base, base + 'index.html', { width: 390, height: 844 }, true);
+        const r = await page.evaluate(pressEveryLink);
+        for (const id of CONFIGS) {
+            if (!r.configs.includes(id)) { problems.push('config がない: ' + id); }
+        }
+        if (!r.counted.book) { problems.push('ホットペッパーの予約ページへのリンクが見つからない'); }
+        r.bad.forEach(b => problems.push('コンバージョンの送り方が違う: ' + b));
+        console.log('config: ' + r.configs.join(', '));
+        console.log('押したリンク: ホットペッパー予約 ' + r.counted.book + ' 件（送ること）／ホットペッパー口コミ ' + r.counted.review + ' 件・その他 ' + r.counted.other + ' 件（送らないこと）。それぞれリンク本体と中の要素');
+
+        /* 実際の操作に近い形で、画面に見えている予約ボタンを1つ押す */
+        const button = page.locator('a[href*="beauty.hotpepper.jp"]:not([href*="/review/"]) >> visible=true').first();
+        if (!(await button.count())) {
+            problems.push('見えている予約ボタンがない');
+        } else {
+            const from = await page.evaluate(() => window.dataLayer.length);
+            await button.click();
+            const got = await page.evaluate(f => window.__sentSince(f), from);
+            const info = await button.evaluate(a => (a.className || a.tagName) + '「' + a.textContent.trim().replace(/\s+/g, ' ').slice(0, 20) + '」');
+            console.log('実際に押したボタン: ' + info + ' → ' + (got.join(', ') || 'なし'));
+            if (got.length !== 1 || got[0] !== HPB_BOOK) { problems.push('実際に押した時の送り方が違う: ' + (got.join(', ') || 'なし')); }
+        }
+
+        const footerLink = await page.evaluate(() => !!document.querySelector('.foot__note a[href="privacy.html"]'));
+        if (!footerLink) { problems.push('フッターにプライバシーポリシーへのリンクがない'); }
+        errors.forEach(e => problems.push('JSエラー（トップ）: ' + e));
+        await ctx.close();
+    }
+
+    /* 2. Microsoft Clarity のタグと、js/measure.js の GA4 イベント（スマホ幅） */
+    {
+        const { ctx, page, errors } = await openPage(browser, base, base + 'index.html', { width: 390, height: 844 }, true);
+        const clarity = await page.evaluate(id => ({
+            fn: typeof window.clarity === 'function',
+            src: Array.prototype.some.call(document.scripts, s => s.src === 'https://www.clarity.ms/tag/' + id),
+            measure: Array.prototype.some.call(document.scripts, s => /\/js\/measure\.js(\?|$)/.test(s.src)),
+            lp: window.__clarity().some(x => x[0] === 'set' && x[1] === 'lp' && x[2] === 'mens')
+        }), CLARITY_ID);
+        console.log('Clarity: 関数=' + clarity.fn + '  タグ（' + CLARITY_ID + '）=' + clarity.src + '  measure.js=' + clarity.measure + '  lp=mens タグ=' + clarity.lp);
+        if (!clarity.fn || !clarity.src) { problems.push('Microsoft Clarity のタグ（' + CLARITY_ID + '）が入っていない'); }
+        if (!clarity.measure) { problems.push('js/measure.js が読み込まれていない'); }
+        if (!clarity.lp) { problems.push('Clarity に lp=mens のタグが付いていない'); }
+
+        /* 開いた直後：ファーストビューだけが「見た」になる。スクロールはまだ送らない */
+        await wait(1500);
+        let seen = await page.evaluate(() => window.__events('section_view').map(e => e.lp_section));
+        let depth = await page.evaluate(() => window.__events('scroll_depth').map(e => e.percent_scrolled));
+        console.log('開いた直後: section_view=' + (seen.join('、') || 'なし') + '  scroll_depth=' + (depth.join('、') || 'なし'));
+        if (seen.join() !== LABELS[0]) { problems.push('開いた直後の section_view が違う: ' + (seen.join('、') || 'なし')); }
+        if (depth.length) { problems.push('開いた直後に scroll_depth が送られた: ' + depth.join('、')); }
+
+        /* 上から一番下まで 0.8 秒で通り過ぎる：途中のセクションは数えず、スクロールは 10〜100% が一度ずつ */
+        await page.evaluate(async () => {
+            const end = document.documentElement.scrollHeight;
+            for (let i = 1; i <= 40; i++) {
+                window.scrollTo({ top: end * i / 40, behavior: 'instant' });
+                await new Promise(r => setTimeout(r, 20));
+            }
+        });
+        await wait(1600);
+        seen = await page.evaluate(() => window.__events('section_view').map(e => e.lp_section));
+        depth = await page.evaluate(() => window.__events('scroll_depth').map(e => e.percent_scrolled));
+        const atBottom = await page.evaluate(onScreen, SECTIONS);
+        console.log('上から下まで通り過ぎた後: section_view=' + seen.join('、') + '  scroll_depth=' + depth.join('、') + '  （一番下で画面に入っているもの: ' + atBottom.join('、') + '）');
+        if (depth.join() !== SCROLL_MARKS.join()) { problems.push('scroll_depth が違う: ' + depth.join('、') + '（' + SCROLL_MARKS.join('、') + ' のはず）'); }
+        const passed = seen.filter(l => l !== LABELS[0] && !atBottom.includes(l));
+        if (passed.length) { problems.push('通り過ぎただけのセクションを数えた: ' + passed.join('、')); }
+        if (!seen.includes('メンズ14 フッター')) { problems.push('一番下でフッターが数えられていない'); }
+
+        /* セクションを1つずつ画面の中央に置いて 1.2 秒待つ：すべて一度ずつ数えられる */
+        for (const [sel, label] of SECTIONS) {
+            await page.evaluate(s => document.querySelector(s).scrollIntoView({ block: 'center', behavior: 'instant' }), sel);
+            await wait(1200);
+            const got = await page.evaluate(l => window.__events('section_view').filter(e => e.lp_section === l).length, label);
+            if (got !== 1) { problems.push('section_view の回数が違う: ' + label + ' → ' + got + ' 回'); }
+        }
+        seen = await page.evaluate(() => window.__events('section_view').map(e => e.lp_section));
+        const unknown = seen.filter(l => !LABELS.includes(l));
+        if (unknown.length) { problems.push('知らないセクション名: ' + unknown.join('、')); }
+        depth = await page.evaluate(() => window.__events('scroll_depth').map(e => e.percent_scrolled));
+        if (depth.join() !== SCROLL_MARKS.join()) { problems.push('上下に動かした後に scroll_depth が増えた: ' + depth.join('、')); }
+        console.log('セクションを順に見た後: section_view ' + seen.length + ' 件（' + LABELS.length + ' セクション）');
+
+        /* よくある質問：開いた時だけ、質問文つきで送る */
+        await page.evaluate(() => document.querySelector('#faq').scrollIntoView({ block: 'start', behavior: 'instant' }));
+        const q = page.locator('.qa__q');
+        const f0 = await page.evaluate(() => window.dataLayer.length);
+        await q.nth(0).click();
+        await q.nth(0).click();
+        await q.nth(1).click();
+        const faq = await page.evaluate(f => window.__events('faq_open', f).map(e => e.faq_question), f0);
+        console.log('faq_open: ' + faq.join(' / '));
+        if (faq.join('|') !== '男性ひとりでも入りやすいですか？|痛みはありますか？') { problems.push('faq_open が違う（開く→閉じる→次を開く）: ' + faq.join(' / ')); }
+
+        /* 下部固定ボタン：見えている時に押す */
+        await page.evaluate(() => document.querySelector('#menu').scrollIntoView({ block: 'center', behavior: 'instant' }));
+        await wait(500);
+        const s0 = await page.evaluate(() => window.dataLayer.length);
+        const stick = page.locator('#stick a');
+        if (await stick.isVisible()) {
+            await stick.click();
+            const st = await page.evaluate(f => ({ cta: window.__events('cta_click', f), conv: window.__sentSince(f) }), s0);
+            console.log('下部固定ボタン: cta_click=' + st.cta.map(e => e.cta_type + '（' + e.lp_section + '）').join('、') + '  コンバージョン=' + (st.conv.join(', ') || 'なし'));
+            if (st.cta.length !== 1 || st.cta[0].lp_section !== 'メンズ 下部固定ボタン') { problems.push('下部固定ボタンの cta_click が違う: ' + JSON.stringify(st.cta)); }
+            if (st.conv.length !== 1 || st.conv[0] !== HPB_BOOK) { problems.push('下部固定ボタンのコンバージョンが違う: ' + st.conv.join(', ')); }
+        } else {
+            problems.push('メニューの位置で下部固定ボタンが見えていない');
+        }
+
+        /* すべてのホットペッパーのリンクとページ内リンク */
+        const m = await page.evaluate(pressForMeasure, { labels: LABELS, places: PLACES, top: TOP_LABEL });
+        m.bad.forEach(b => problems.push(b));
+        const ctaCount = countBy(m.cta);
+        console.log('cta_click（種類｜押された場所）: ' + Object.entries(ctaCount).map(([k, n]) => k + (n > 1 ? ' ×' + n : '')).join('、'));
+        console.log('lp_nav（移動先｜押された場所）: ' + m.nav.length + ' 件');
+        if (!m.cta.some(x => x.startsWith('hotpepper_review｜'))) { problems.push('口コミページへのリンクの cta_click（hotpepper_review）がない'); }
+        const targets = await page.evaluate(wrongTargets, { names: MEASURE_EVENTS, id: GA4_ID });
+        console.log('計測イベントの送り先: ' + targets.total + ' 件中、GA4 だけでないもの ' + targets.bad.length + ' 件');
+        if (!targets.total) { problems.push('計測イベントが1件もない'); }
+        [...new Set(targets.bad)].forEach(b => problems.push('GA4 だけに送っていない: ' + b));
+        errors.forEach(e => problems.push('JSエラー（計測・スマホ）: ' + e));
+        await ctx.close();
+    }
+
+    /* 3. PC幅：左パネルの予約ボタンと右の目次 */
+    {
+        const { ctx, page, errors } = await openPage(browser, base, base + 'index.html', { width: 1366, height: 800 }, false);
+        await wait(300);
+        const p0 = await page.evaluate(() => window.dataLayer.length);
+        await page.locator('.side--l a.btn--main').click();
+        await page.locator('.side--r a[href="#faq"]').click();
+        const pc = await page.evaluate(f => ({ cta: window.__events('cta_click', f), nav: window.__events('lp_nav', f), conv: window.__sentSince(f) }), p0);
+        console.log('PC: cta_click=' + pc.cta.map(e => e.cta_type + '（' + e.lp_section + '）').join('、') + '  lp_nav=' + pc.nav.map(e => e.nav_to + '（' + e.lp_section + '）').join('、') + '  コンバージョン=' + (pc.conv.join(', ') || 'なし'));
+        if (pc.cta.length !== 1 || pc.cta[0].lp_section !== 'メンズ PC左パネル' || pc.cta[0].cta_type !== 'hotpepper') { problems.push('PC左パネルの cta_click が違う: ' + JSON.stringify(pc.cta)); }
+        if (pc.conv.length !== 1 || pc.conv[0] !== HPB_BOOK) { problems.push('PC左パネルのコンバージョンが違う: ' + pc.conv.join(', ')); }
+        if (pc.nav.length !== 1 || pc.nav[0].nav_to !== 'メンズ12 よくある質問' || pc.nav[0].lp_section !== 'メンズ PC目次') { problems.push('PC目次の lp_nav が違う: ' + JSON.stringify(pc.nav)); }
+        await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
+        await wait(1600);
+        const bottom = await page.evaluate(() => window.__events('section_view').map(e => e.lp_section));
+        if (!bottom.includes('メンズ14 フッター')) { problems.push('PC幅の一番下でフッターが数えられていない: ' + bottom.join('、')); }
+        errors.forEach(e => problems.push('JSエラー（計測・PC）: ' + e));
+        await ctx.close();
+    }
+
+    /* 4. Google 広告のクリックから来た訪問だけ、Clarity に目印を付ける */
+    for (const [query, expected] of [['?gclid=TEST', true], ['', false]]) {
+        const { ctx, page } = await openPage(browser, base, base + 'index.html' + query, { width: 390, height: 844 }, true);
+        await wait(200);
+        const has = await page.evaluate(() => window.__clarity().some(x => x[0] === 'set' && x[1] === 'traffic' && x[2] === 'google_ads'));
+        console.log('Clarity traffic タグ（' + (query || 'パラメータなし') + '）: ' + has);
+        if (has !== expected) { problems.push('Clarity の traffic タグが違う（' + (query || 'パラメータなし') + '）: ' + has); }
+        await ctx.close();
+    }
+
+    /* 5. プライバシーポリシー */
+    for (const [W, H] of [[320, 568], [390, 844], [1366, 800]]) {
+        const c = await browser.newContext({ viewport: { width: W, height: H } });
+        await c.route(url => !url.href.startsWith(base), r2 => r2.abort());
+        const p = await c.newPage();
+        const res = await p.goto(base + 'privacy.html', { waitUntil: 'load' });
+        const info = await p.evaluate(() => ({
+            overflowX: document.documentElement.scrollWidth - window.innerWidth,
+            mail: !!document.querySelector('a[href="mailto:katestagelash2026@gmail.com"]'),
+            back: !!document.querySelector('a[href="./"]'),
+            clarity: /Microsoft Clarity/.test(document.body.textContent) && !!document.querySelector('a[href="https://www.microsoft.com/privacy/privacystatement"]'),
+            line: /LINE/.test(document.body.textContent),
+            scripts: document.scripts.length
+        }));
+        console.log('privacy.html ' + W + 'x' + H + '  status=' + res.status() + '  横スクロール=' + info.overflowX + '  メール=' + info.mail + '  戻るリンク=' + info.back + '  Clarityの説明=' + info.clarity + '  LINEの記述=' + info.line + '  script=' + info.scripts);
+        if (res.status() !== 200) { problems.push('privacy.html が開けない: ' + res.status()); }
+        if (info.overflowX > 0) { problems.push('privacy.html に横スクロール（' + W + 'px）'); }
+        if (!info.mail || !info.back) { problems.push('privacy.html のメールまたは戻るリンクがない'); }
+        if (!info.clarity) { problems.push('privacy.html に Microsoft Clarity の説明かリンクがない'); }
+        if (info.line) { problems.push('privacy.html に、このページにない LINE の記述がある'); }
+        await c.close();
+    }
+
+    await browser.close();
+    server.close();
+    problems.forEach(p => console.log('  - ' + p));
+    console.log(problems.length === 0 ? 'ALL CLEAR' : 'ISSUES: ' + problems.length);
+    process.exit(problems.length === 0 ? 0 : 1);
+})().catch(err => { console.error('FAILED', err); process.exit(1); });
