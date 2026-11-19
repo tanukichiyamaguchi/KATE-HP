@@ -609,6 +609,8 @@ html:not(.js) .tcard__view,html:not(.js) .pstage__sticky,html:not(.js) .shout__s
 .foot__sns a:hover{background:var(--paper);color:var(--ink)}
 .foot__sns svg{width:20px;height:20px}
 .foot__addr{margin-top:20px;font-size:12px;line-height:1.8}
+.foot__note{max-width:32em;margin:16px auto 0;font-size:11.5px;line-height:1.7;text-align:left}
+.foot__note a{color:#d5d1c6}
 .foot__copy{margin-top:10px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em}
 @media (min-width:1024px){.foot{padding-bottom:44px}}
 
