@@ -592,6 +592,7 @@ html:not(.js) .tcard__view,html:not(.js) .pstage__sticky,html:not(.js) .shout__s
 .offer__price span{font-family:var(--f-num);font-weight:800;font-size:25px;color:var(--brass-l)}
 .offer__price b{font-family:var(--f-num);font-style:italic;font-weight:900;font-size:60px;letter-spacing:-.02em;padding-right:.05em;background:var(--gold);-webkit-background-clip:text;background-clip:text;color:transparent}
 .offer__price small{font-weight:700;font-size:12px;color:var(--mute-d)}
+.offer--two .offer__item+.offer__item{margin-top:16px;padding-top:16px;border-top:1px solid rgba(201,164,92,.35)}.offer--two .offer__price b{font-size:clamp(40px,13vw,50px)}.offer--two .offer__price em,.offer--two .offer__price small{flex-shrink:0;white-space:nowrap}.offer__time{margin-top:8px;font-size:12px;line-height:1.6;color:#d5d1c6}.offer__tag{display:inline-block;margin:0 6px 4px 0;padding:2px 8px 3px;border:1px solid var(--brass-l);border-radius:4px;font-size:11px;font-weight:900;line-height:1.3;color:var(--brass-l);vertical-align:2px}.offer__sub{font-size:12px;font-weight:700;color:#d5d1c6}
 .offer__note{margin-top:12px;padding-top:11px;border-top:1px dashed rgba(201,164,92,.6);font-size:12px;line-height:1.7;color:#d5d1c6}
 .close .btns{margin-top:24px}
 .close__meta{margin-top:18px;font-size:11.5px;line-height:1.7;color:var(--mute-d)}
