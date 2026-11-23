@@ -16,9 +16,19 @@
  * lp_section の値の番号はページ上の順番（探索レポートで並べ替えやすくするため）。
  *
  * Clarity には「カスタム タグ」を渡す（録画やヒートマップの絞り込み用）
- *   lp      … このページなら mens
+ *   lp      … このページなら mens（女性向け LP は brand、トップページは top）
  *   cta     … 押したリンクの種類（hotpepper / hotpepper_review）
- *   traffic … Google 広告のクリックから来た訪問なら google_ads
+ *   traffic … どこから来た訪問か
+ *             google_ads … Google 広告のクリック（URL に gclid・gbraid・wbraid がある）
+ *             meta_ads   … Meta 広告（Facebook・Instagram など）のクリック
+ *                          （utm_source が fb・ig など、utm_medium が paid で始まるか cpc・ppc。Meta 広告の URL パラメータ）
+ *             meta_other … Facebook・Instagram のリンクから来たが、Meta 広告の目印がない訪問
+ *                          （fbclid だけがある。投稿やプロフィールのリンクなど。広告かどうかは見分けられない）
+ *
+ * Clarity には「API イベント」も送る（Clarity のスマート イベントとファネルに使う）
+ *   hotpepper_click        … ホットペッパーの予約ページへのリンクが押された時（文字ではなくリンク先で見分ける）
+ *   hotpepper_review_click … ホットペッパーの口コミページ（/review/）へのリンクが押された時
+ *   menu_view              … 「メンズ07 メニュー・料金」を見た時（section_view と同じ数え方で一度だけ）
  *
  * 計測がうまく動かなくても、ページの表示と操作には影響させない（送信はすべて try で包む）。
  */
@@ -55,6 +65,10 @@
     var TOP_LABEL = 'メンズ00 ページの先頭';
     var SCROLL_MARKS = [10, 25, 50, 75, 90, 100];
     var DWELL_MS = 1000;
+    /* ファネルの途中の段にする「メニュー・料金を見た」 */
+    var MENU_LABEL = 'メンズ07 メニュー・料金';
+    /* Meta 広告の utm_source に使われる値（Facebook・Instagram・Messenger・Audience Network・Threads の略と、手で付ける時の名前） */
+    var META_SOURCES = /^(fb|ig|msg|an|th|facebook|instagram|messenger|threads|meta)$/;
 
     function ctaTypeOf(link) {
         if (link.hostname === 'beauty.hotpepper.jp') {
@@ -78,6 +92,17 @@
         try {
             if (typeof window.clarity === 'function') { window.clarity('set', key, value); }
         } catch (err) { /* 同上 */ }
+    }
+    function clarityEvent(name) {
+        try {
+            if (typeof window.clarity === 'function') { window.clarity('event', name); }
+        } catch (err) { /* 同上 */ }
+    }
+    /* URL のパラメータの値（ないときは空の文字） */
+    function query(name) {
+        var m = new RegExp('[?&]' + name + '=([^&#]*)').exec(window.location.search);
+        if (!m) { return ''; }
+        try { return decodeURIComponent(m[1].replace(/\+/g, ' ')); } catch (err) { return m[1]; }
     }
     function clip(text) {
         return String(text || '').replace(/\s+/g, ' ').trim().slice(0, 100);
@@ -157,6 +182,7 @@
                         centerObserver.unobserve(s.el);
                         wholeObserver.unobserve(s.el);
                         send('section_view', { lp_section: s.label });
+                        if (s.label === MENU_LABEL) { clarityEvent('menu_view'); }
                     }, DWELL_MS);
                 }
             } else if (s.timer) {
@@ -202,6 +228,7 @@
                         link_url: link.href
                     });
                     tag('cta', type);
+                    clarityEvent(type + '_click');
                     return;
                 }
                 var href = link.getAttribute('href') || '';
@@ -226,10 +253,16 @@
         });
     }
 
-    /* ---------- このページの目印と、Google 広告から来た訪問の目印（Clarity） ---------- */
+    /* ---------- このページの目印と、どこから来た訪問かの目印（Clarity） ---------- */
     function initTraffic() {
+        var search = window.location.search;
         tag('lp', 'mens');
-        if (/[?&](gclid|gbraid|wbraid)=/.test(window.location.search)) { tag('traffic', 'google_ads'); }
+        if (/[?&](gclid|gbraid|wbraid)=/.test(search)) { tag('traffic', 'google_ads'); }
+        if (META_SOURCES.test(query('utm_source').toLowerCase()) && /^(paid|cpc$|ppc$)/.test(query('utm_medium').toLowerCase())) {
+            tag('traffic', 'meta_ads');
+        } else if (/[?&]fbclid=/.test(search)) {
+            tag('traffic', 'meta_other');
+        }
     }
 
     [initScrollDepth, initSectionView, initClicks, initTraffic].forEach(function (fn) {
