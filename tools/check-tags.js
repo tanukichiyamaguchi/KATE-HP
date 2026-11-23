@@ -11,7 +11,9 @@
  *       一気に通り過ぎたセクションは数えない）、cta_click（すべてのホットペッパーのリンクで、種類と押された場所つき）、
  *       lp_nav（すべてのページ内リンクで、移動先と押された場所つき）、faq_open（開いた時だけ）。
  *       どれも send_to で GA4（G-29VF3FWBLH）だけに送っていること（Google 広告へは送らない）
- *     と、Clarity へのカスタム タグ（押したリンクの種類、Google 広告から来た訪問）
+ *     と、Clarity へのカスタム タグ（押したリンクの種類、Google 広告・Meta 広告などから来た訪問）
+ *     と、Clarity への API イベント（hotpepper_click・hotpepper_review_click はリンクを押すたびに1回、
+ *     それ以外のリンクでは送らない。menu_view は「メンズ07 メニュー・料金」を見た時だけ一度）
  *   - Meta ピクセル（データセット META_PIXEL_ID）のタグが入っていて、init と PageView が1回ずつ呼ばれること。
  *     ホットペッパーの予約ページへのリンクを押すと Lead が送られること（1回のページ表示につき最初の1回だけ。
  *     content_name でボタンの種類、content_category でページを区別）。
@@ -57,6 +59,19 @@ const META_PIXEL_ID = '2010357583154509';
 const META_SRC = 'https://connect.facebook.net/en_US/fbevents.js';
 const META_CATEGORY = 'mens_lp';
 const META_LEAD_TYPES = ['hotpepper', 'line'];
+/* 開いた URL のパラメータと、Clarity の traffic タグに付くはずの値 */
+const TRAFFIC_CASES = [
+    ['', []],
+    ['?gclid=TEST', ['google_ads']],
+    ['?gad_source=1&gbraid=TEST', ['google_ads']],
+    ['?utm_source=ig&utm_medium=paid&utm_id=1&fbclid=TEST', ['meta_ads']],              /* Meta が自動で付ける形 */
+    ['?utm_source=fb&utm_medium=paid_social&utm_campaign=x&fbclid=TEST', ['meta_ads']],  /* 手で付けた形 */
+    ['?utm_source=Instagram&utm_medium=CPC', ['meta_ads']],                             /* 大文字・cpc */
+    ['?fbclid=TEST', ['meta_other']],                                                   /* 投稿やプロフィールのリンクなど */
+    ['?utm_source=ig&utm_medium=social&fbclid=TEST', ['meta_other']],                   /* 広告ではない utm */
+    ['?utm_source=newsletter&utm_medium=paid', []],                                     /* Meta 以外 */
+    ['?utm_source=google&utm_medium=cpc&gclid=TEST', ['google_ads']]
+];
 
 function serve() {
     const server = http.createServer((req, res) => {
@@ -79,6 +94,7 @@ function setUp() {
     window.__events = (name, from) => window.__entries().slice(from || 0)
         .filter(x => x[0] === 'event' && x[1] === name).map(x => x[2] || {});
     window.__clarity = () => (window.clarity && window.clarity.q ? Array.prototype.map.call(window.clarity.q, a => Array.prototype.slice.call(a)) : []);
+    window.__clarityEvents = name => window.__clarity().filter(x => x[0] === 'event' && x[1] === name).length;
     /* リンクごとに、送られるはずのコンバージョンと cta_type */
     window.__expect = a => {
         if (a.hostname === 'beauty.hotpepper.jp') {
@@ -158,7 +174,13 @@ function pressForMeasure(arg) {
             const cta = window.__events('cta_click', from);
             const nav = window.__events('lp_nav', from);
             const tags = window.__clarity().slice(qFrom);
+            const clicks = tags.filter(x => x[0] === 'event' && /_click$/.test(x[1])).map(x => x[1]);
             const where = href + '（' + (t === a ? 'a' : t.tagName.toLowerCase()) + '）';
+            if (type) {
+                if (clicks.join() !== type + '_click') { out.bad.push('Clarity のイベントが違う: ' + where + ' → ' + (clicks.join(', ') || 'なし') + '（' + type + '_click が1回のはず）'); }
+            } else if (clicks.length) {
+                out.bad.push('ホットペッパーへのリンクでないのに Clarity のイベントを送った: ' + where + ' → ' + clicks.join(', '));
+            }
             if (type) {
                 const e = cta[0] || {};
                 if (cta.length !== 1 || nav.length !== 0) { out.bad.push('cta_click の数が違う: ' + where + ' → cta ' + cta.length + ' / nav ' + nav.length); return; }
@@ -287,6 +309,8 @@ async function openPage(browser, base, url, viewport, mobile) {
         const passed = seen.filter(l => l !== LABELS[0] && !atBottom.includes(l));
         if (passed.length) { problems.push('通り過ぎただけのセクションを数えた: ' + passed.join('、')); }
         if (!seen.includes('メンズ14 フッター')) { problems.push('一番下でフッターが数えられていない'); }
+        let menuViews = await page.evaluate(() => window.__clarityEvents('menu_view'));
+        if (menuViews !== 0) { problems.push('通り過ぎただけなのに Clarity の menu_view を送った: ' + menuViews + ' 回'); }
 
         /* セクションを1つずつ画面の中央に置いて 1.2 秒待つ：すべて一度ずつ数えられる */
         for (const [sel, label] of SECTIONS) {
@@ -301,6 +325,9 @@ async function openPage(browser, base, url, viewport, mobile) {
         depth = await page.evaluate(() => window.__events('scroll_depth').map(e => e.percent_scrolled));
         if (depth.join() !== SCROLL_MARKS.join()) { problems.push('上下に動かした後に scroll_depth が増えた: ' + depth.join('、')); }
         console.log('セクションを順に見た後: section_view ' + seen.length + ' 件（' + LABELS.length + ' セクション）');
+        menuViews = await page.evaluate(() => window.__clarityEvents('menu_view'));
+        console.log('Clarity menu_view（メニュー・料金を見た後）: ' + menuViews + ' 回');
+        if (menuViews !== 1) { problems.push('Clarity の menu_view の回数が違う: ' + menuViews + ' 回（1回のはず）'); }
 
         /* よくある質問：開いた時だけ、質問文つきで送る */
         await page.evaluate(() => document.querySelector('#faq').scrollIntoView({ block: 'start', behavior: 'instant' }));
@@ -363,13 +390,13 @@ async function openPage(browser, base, url, viewport, mobile) {
         await ctx.close();
     }
 
-    /* 4. Google 広告のクリックから来た訪問だけ、Clarity に目印を付ける */
-    for (const [query, expected] of [['?gclid=TEST', true], ['', false]]) {
+    /* 4. 広告などから来た訪問に、Clarity の traffic タグを付ける（URL のパラメータごとに、付くはずの値） */
+    for (const [query, expected] of TRAFFIC_CASES) {
         const { ctx, page } = await openPage(browser, base, base + 'index.html' + query, { width: 390, height: 844 }, true);
         await wait(200);
-        const has = await page.evaluate(() => window.__clarity().some(x => x[0] === 'set' && x[1] === 'traffic' && x[2] === 'google_ads'));
-        console.log('Clarity traffic タグ（' + (query || 'パラメータなし') + '）: ' + has);
-        if (has !== expected) { problems.push('Clarity の traffic タグが違う（' + (query || 'パラメータなし') + '）: ' + has); }
+        const got = await page.evaluate(() => window.__clarity().filter(x => x[0] === 'set' && x[1] === 'traffic').map(x => x[2]));
+        console.log('Clarity traffic タグ（' + (query || 'パラメータなし') + '）: ' + (got.join(', ') || 'なし'));
+        if (got.join() !== expected.join()) { problems.push('Clarity の traffic タグが違う（' + (query || 'パラメータなし') + '）: ' + (got.join(', ') || 'なし') + '（' + (expected.join(', ') || 'なし') + ' のはず）'); }
         await ctx.close();
     }
 
