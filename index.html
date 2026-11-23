@@ -37,6 +37,43 @@
   });
 </script>
 
+<!-- Meta ピクセル（Facebook・Instagram 広告の効果測定）。女性向け LP（/Brand/）と同じデータセット「ケイト広告」（2010357583154509） -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2010357583154509');
+  fbq('track', 'PageView');
+
+  /* Meta 広告の成果（Lead）：ホットペッパーの予約ページへのリンクが押された時に送る。
+     Meta 広告は、このイベントが起きやすい人に配信を寄せる。
+     ホットペッパーの口コミページ（/review/）へのリンクは予約ではないので数えない。
+     LINE（エルメの流入経路 s.lmes.jp・直接の友だち追加 lin.ee）は、今はこのページにないが、置いた時に数えられるようにしておく。
+     続けて何度押されても件数がふくらまないよう、1回のページ表示につき最初の1回だけ送る。
+     どちらのボタンだったかは content_name（hotpepper / line）、どのページかは content_category で区別する */
+  (function () {
+    var sent = false;
+    document.addEventListener('click', function (event) {
+      var link = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+      if (!link || sent) { return; }
+      var name = null;
+      if (link.hostname === 'beauty.hotpepper.jp' && link.pathname.indexOf('/review/') === -1) {
+        name = 'hotpepper';
+      } else if (link.hostname === 's.lmes.jp' || link.hostname === 'lin.ee') {
+        name = 'line';
+      }
+      if (!name) { return; }
+      sent = true;
+      fbq('track', 'Lead', { content_name: name, content_category: 'mens_lp' });
+    });
+  })();
+</script>
+
 <!-- Microsoft Clarity（ヒートマップ・操作の再生）。女性向け LP と同じプロジェクト。ページ内の細かい計測は js/measure.js -->
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -806,7 +843,7 @@
         <a href="https://www.instagram.com/katestagelash_kamata/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg></a>
       </div>
       <p class="foot__addr">KATE stage LASH 蒲田西口店<br>東京都大田区西蒲田7-48-10 三晃電機ビル501</p>
-      <p class="foot__note">当サイトでは、サイトの改善と広告の効果測定のため、Google アナリティクス・Google 広告・Microsoft Clarity でご利用状況を記録しています。くわしくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</p>
+      <p class="foot__note">当サイトでは、サイトの改善と広告の効果測定のため、Google アナリティクス・Google 広告・Meta 広告・Microsoft Clarity でご利用状況を記録しています。くわしくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</p>
       <p class="foot__copy">&copy; 2026 KATE stage LASH 蒲田西口店</p>
     </footer>
   </main>
