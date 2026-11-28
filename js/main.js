@@ -20,7 +20,7 @@
   ------------------------------------------------------------------ */
   $$('[data-split-io]').forEach(function (el) {
     var i = 0;
-    el.setAttribute('aria-label', el.textContent);
+    var label = el.textContent;
     (function walk(node) {
       Array.prototype.slice.call(node.childNodes).forEach(function (n) {
         if (n.nodeType === 3) {
@@ -35,6 +35,11 @@
         } else if (n.nodeType === 1) { walk(n); }
       });
     })(el);
+    /* 読み上げ用：1文字ずつの span は aria-hidden なので、元の文を見えない形で添える
+       （<p> には aria-label を付けられないため。見出しも同じしくみにそろえる） */
+    var vh = doc.createElement('span');
+    vh.className = 'vh'; vh.textContent = label;
+    el.appendChild(vh);
   });
 
   /* ------------------------------------------------------------------
